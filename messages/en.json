@@ -1,0 +1,20 @@
+{
+  "Layout": {
+    "title": "Guy Tzruya — Architecture & Interior Design",
+    "description": "Architecture, interior design, and licensing in Israel. Guy Tzruya studio — professional spaces tailored to you."
+  },
+  "Header": {
+    "brand": "Guy Tzruya",
+    "langHe": "עברית",
+    "langEn": "English",
+    "sceneDay": "Day",
+    "sceneNight": "Night",
+    "sceneNavLabel": "Lighting mode"
+  },
+  "Hero": {
+    "brandLine1": "GUY TZRUYA",
+    "brandLine2": "ARCHITECTURE & INTERIOR DESIGN",
+    "cta": "Start a conversation",
+    "imageAlt": "Interior architecture atmosphere"
+  }
+}

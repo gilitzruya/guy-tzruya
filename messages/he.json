@@ -1,0 +1,20 @@
+{
+  "Layout": {
+    "title": "גיא צרויה — אדריכלות ועיצוב פנים",
+    "description": "אדריכלות, עיצוב פנים ורישוי בישראל. משרד גיא צרויה — חללים מקצועיים שמותאמים אליך."
+  },
+  "Header": {
+    "brand": "גיא צרויה",
+    "langHe": "עברית",
+    "langEn": "English",
+    "sceneDay": "יום",
+    "sceneNight": "לילה",
+    "sceneNavLabel": "בחירת תאורה"
+  },
+  "Hero": {
+    "brandLine1": "GUY TZRUYA",
+    "brandLine2": "ARCHITECTURE & INTERIOR DESIGN",
+    "cta": "נתאם שיחה",
+    "imageAlt": "אווירת עיצוב פנים ואדריכלות"
+  }
+}

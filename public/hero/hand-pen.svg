@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Pencil tip at (50, 94); grip / hand above -->
+  <path d="M46 88 L50 94 L54 88 L52 82 Z" fill="#f87060" />
+  <path
+    d="M52 82 L48 70 L44 38 L56 34 L60 66 L54 82 Z"
+    fill="#f4efe8"
+    stroke="#c8ccc8"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M44 38 Q32 34 24 42 Q18 50 20 60 Q22 70 32 74 L40 70 Q42 58 44 38"
+    fill="rgba(253,255,252,0.18)"
+    stroke="#fdfffc"
+    stroke-width="2.4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path d="M24 42 Q18 36 18 28 Q22 22 30 26" stroke="#fdfffc" stroke-width="2" stroke-linecap="round" />
+  <path d="M28 50 Q20 48 16 40" stroke="#fdfffc" stroke-width="2" stroke-linecap="round" />
+  <path d="M34 58 Q26 56 22 50" stroke="#fdfffc" stroke-width="2" stroke-linecap="round" />
+</svg>
