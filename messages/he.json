@@ -5,6 +5,9 @@
   },
   "Header": {
     "brand": "גיא צרויה",
+    "mainNavLabel": "ניווט ראשי",
+    "navHome": "בית",
+    "navInteriorDesign": "עיצוב פנים",
     "langHe": "עברית",
     "langEn": "English",
     "sceneDay": "יום",

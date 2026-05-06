@@ -5,6 +5,9 @@
   },
   "Header": {
     "brand": "Guy Tzruya",
+    "mainNavLabel": "Main navigation",
+    "navHome": "Home",
+    "navInteriorDesign": "Interior Design",
     "langHe": "עברית",
     "langEn": "English",
     "sceneDay": "Day",
