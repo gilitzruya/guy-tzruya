@@ -5,12 +5,19 @@ html[data-scene="night"] {
   --color-bg: #231618;
   --color-text: #fdfffc;
   --color-accent: #f87060;
+  /* Projects listing card: elevated “light black” vs page bg */
+  --color-card-listing-surface: #0a0908;
 }
 
 html[data-scene="day"] {
   --color-bg: #f4efe8;
   --color-text: #1c1614;
   --color-accent: #c24a3d;
+  --color-card-listing-surface: color-mix(
+    in oklab,
+    var(--color-bg) 92%,
+    var(--color-text) 8%
+  );
 }
 
 @theme inline {
@@ -27,4 +34,35 @@ html[data-scene="day"] {
 
 body {
   margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes process-step-in {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .process-step-card:not(.process-step-revealed) {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+
+  .process-step-card.process-step-revealed {
+    animation: process-step-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--step-index, 0) * 110ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-step-card {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }

@@ -8,16 +8,75 @@
     "mainNavLabel": "Main navigation",
     "navHome": "Home",
     "navInteriorDesign": "Interior Design",
+    "navProjects": "Projects",
     "langHe": "עברית",
     "langEn": "English",
+    "langSwitcherNavLabel": "Language switching",
+    "langSwitcherAriaToHebrew": "Switch to Hebrew",
+    "langSwitcherAriaToEnglish": "Switch to English",
     "sceneDay": "Day",
     "sceneNight": "Night",
-    "sceneNavLabel": "Lighting mode"
+    "sceneNavLabel": "Lighting mode",
+    "sceneToggleTooltipToDark": "Switch to dark mode",
+    "sceneToggleTooltipToLight": "Switch to light mode",
+    "mobileNavOpen": "Open menu",
+    "mobileNavClose": "Close menu"
   },
   "Hero": {
     "brandLine1": "GUY TZRUYA",
     "brandLine2": "ARCHITECTURE & INTERIOR DESIGN",
     "cta": "Start a conversation",
     "imageAlt": "Interior architecture atmosphere"
+  },
+  "InteriorDesign": {
+    "heroTitle": "INTERIOR DESIGN",
+    "heroSubtitle": "Spaces shaped around light, material, and the rhythm of everyday life."
+  },
+  "Projects": {
+    "heroTitle": "PROJECTS",
+    "heroSubtitle": "Every project begins with listening, continues with precise planning, and ends in a space that feels right in every detail.",
+    "sliderAriaLabel": "Drag to compare before and after — {title}",
+    "beforeLabel": "Before",
+    "afterLabel": "After",
+    "viewPhotoGallery": "View photo gallery",
+    "galleryDialogTitle": "Photo gallery — {title}",
+    "galleryClose": "Close",
+    "galleryCloseBackdrop": "Close gallery",
+    "galleryPrevious": "Previous image",
+    "galleryNext": "Next image",
+    "gallerySlideAlt": "{title} — image {index} of {total}",
+    "gallerySlideDotLabel": "Image {index} of {total}",
+    "backToProjects": "All projects",
+    "beforeAfterHeading": "Before and after",
+    "metaListingTitle": "Projects — Guy Tzruya",
+    "metaListingDescription": "Selected architecture and interior projects — before and after transformations.",
+    "detailSectionTitle": "Project details",
+    "detailLabelClient": "Client",
+    "detailLabelType": "Project type",
+    "detailLabelAbout": "Description",
+    "testimonialLabel": "Client note",
+    "clientPhotoAlt": "Client portrait",
+    "items": {
+      "maklaf": {
+        "title": "Maklaf",
+        "summary": "Interior project — details to follow.",
+        "cardSubtitle": "Residential interior",
+        "cardBody": "Project Maklaf — full interior design and planning. Placeholder copy; replace with the final project story when ready.",
+        "testimonialLead": "Placeholder —",
+        "testimonialHighlight": "replace with client quote when available.",
+        "testimonialContext": "Residential",
+        "detailBody": "Detailed project narrative for Maklaf will go here.\n\nAdd scope, materials, and outcome in a few short paragraphs.\n\nThis block supports the project detail page and listing card."
+      },
+      "shaki": {
+        "title": "Avner Chayishaki",
+        "summary": "New-build apartment — full replanning and interior design.",
+        "cardSubtitle": "Upgrade and replanning for a contractor apartment",
+        "cardBody": "A project for Avner Chayishaki — a new contractor apartment that went through a full replanning and interior design process, with the aim of creating a modern, precise, and comfortable home for everyday life.",
+        "testimonialLead": "Professional, precise guidance — the result matches exactly what we imagined,",
+        "testimonialHighlight": "and the home feels complete and pleasant to live in.",
+        "testimonialContext": "Residential apartment",
+        "detailBody": "We started from a new-build apartment with a basic layout — the goal was to upgrade the plan and create a coherent, tailored home for the family.\n\nWe carried out a full renovation and comprehensive replanning alongside complete interior design: selective replanning where needed, materials, lighting, and furnishings that support daily life with comfort and clarity.\n\nThe result is a home that feels personal — functional, inviting, and consistent in every room."
+      }
+    }
   }
 }

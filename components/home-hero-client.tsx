@@ -11,19 +11,22 @@ import {
 import { useScene } from "@/components/scene-provider";
 
 /** Crossfade wall clock: illustration opacity 1 → 0 over this duration (starts immediately, no black gate). */
-const CROSSFADE_MS = 7500;
+const CROSSFADE_MS = 5000;
 /**
- * First portion of that window uses a small linear ramp so opacity leaves 1 quickly
- * (ease-in-out is very flat at t≈0, which felt “stuck” on the illustration).
+ * First portion of that window: strong linear ramp (~13% wall clock) so the photo becomes
+ * visibly plausible early (avoids “stuck on illustration”).
  */
-const CROSSFADE_LINEAR_HEAD = 0.07;
-/** Reveal progress reached at end of linear head (then ease-in-out to 1). */
-const CROSSFADE_LINEAR_REVEAL = 0.14;
+const CROSSFADE_LINEAR_HEAD = 0.13;
+/** Reveal progress at end of linear head (illustration opacity ≈ 1 − this). */
+const CROSSFADE_LINEAR_REVEAL = 0.32;
+/** When illustration is visually “gone enough”, end intro (don’t wait for wall-clock tail of ease-out). */
+const REVEAL_VISUAL_DONE = 0.99;
 
 const DESKTOP_BREAKPOINT = 768;
 
-function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+function easeOutCubic(t: number): number {
+  const x = Math.min(1, Math.max(0, t));
+  return 1 - (1 - x) ** 3;
 }
 
 /** Maps elapsed fraction [0,1] → reveal progress [0,1] over full CROSSFADE_MS. */
@@ -34,7 +37,7 @@ function crossfadeRevealProgress(t: number): number {
   }
   const u = (clamped - CROSSFADE_LINEAR_HEAD) / (1 - CROSSFADE_LINEAR_HEAD);
   return (
-    CROSSFADE_LINEAR_REVEAL + (1 - CROSSFADE_LINEAR_REVEAL) * easeInOutCubic(u)
+    CROSSFADE_LINEAR_REVEAL + (1 - CROSSFADE_LINEAR_REVEAL) * easeOutCubic(u)
   );
 }
 
@@ -94,6 +97,7 @@ export function HomeHeroClient({
   const crossfadeStartRef = useRef(0);
   const introRunIdRef = useRef(0);
   const introTimersRef = useRef<{ done?: number }>({});
+  const introVisuallyCompleteRef = useRef(false);
 
   const imageSrc =
     isDesktop === false
@@ -128,9 +132,12 @@ export function HomeHeroClient({
       setPhase("drawing");
       setRevealProgress(0);
       setIntroDone(false);
+      introVisuallyCompleteRef.current = false;
 
       introTimersRef.current.done = window.setTimeout(() => {
         if (introRunIdRef.current !== runId) return;
+        if (introVisuallyCompleteRef.current) return;
+        introVisuallyCompleteRef.current = true;
         setPhase("done");
         setRevealProgress(1);
         finishIntro();
@@ -152,11 +159,32 @@ export function HomeHeroClient({
     }
 
     crossfadeStartRef.current = performance.now();
+    const rafRunId = introRunIdRef.current;
 
     const tick = (now: number) => {
+      if (introRunIdRef.current !== rafRunId) return;
+
       const elapsed = now - crossfadeStartRef.current;
       const t = Math.min(1, elapsed / CROSSFADE_MS);
-      setRevealProgress(crossfadeRevealProgress(t));
+      const progress = crossfadeRevealProgress(t);
+
+      if (
+        !introVisuallyCompleteRef.current &&
+        (progress >= REVEAL_VISUAL_DONE || t >= 1)
+      ) {
+        introVisuallyCompleteRef.current = true;
+        const { done } = introTimersRef.current;
+        if (done !== undefined) {
+          window.clearTimeout(done);
+          introTimersRef.current.done = undefined;
+        }
+        setPhase("done");
+        setRevealProgress(1);
+        finishIntro();
+        return;
+      }
+
+      setRevealProgress(progress);
       if (t < 1) {
         rafRef.current = requestAnimationFrame(tick);
       }
@@ -166,17 +194,23 @@ export function HomeHeroClient({
     return () => {
       cancelAnimationFrame(rafRef.current);
     };
-  }, [phase, reducedMotion, isDesktop]);
+  }, [phase, reducedMotion, isDesktop, finishIntro]);
 
   const showPhoto = phase === "done";
   const illustrationOpacity = 1 - revealProgress;
 
-  const textShadow =
+  /** Readable on busy photos: contrasting stroke + layered glow (especially for thin type / subtitle). */
+  const heroTitleFx =
     scene === "night"
-      ? "drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)]"
-      : "drop-shadow-[0_1px_3px_rgba(255,255,255,0.95)]";
+      ? "[paint-order:stroke_fill] [-webkit-text-stroke:0.4px_rgb(0_0_0/_0.55)] [text-shadow:0_0_22px_rgb(0_0_0/_0.88),0_2px_12px_rgb(0_0_0/_0.6),0_0_6px_rgb(255_255_255/_0.12)]"
+      : "[paint-order:stroke_fill] [-webkit-text-stroke:0.5px_rgb(255_255_255/_0.95)] [text-shadow:0_0_28px_rgb(255_255_255/_0.92),0_1px_10px_rgb(0_0_0/_0.38),0_2px_34px_rgb(255_255_255/_0.55)]";
 
-  const textReveal = `transition-opacity duration-700 ease-out ${
+  const heroSubtitleFx =
+    scene === "night"
+      ? "[paint-order:stroke_fill] [-webkit-text-stroke:0.55px_rgb(0_0_0/_0.65)] [text-shadow:0_0_18px_rgb(0_0_0/_0.92),0_1px_8px_rgb(0_0_0/_0.7),0_0_4px_rgb(255_255_255/_0.1)]"
+      : "[paint-order:stroke_fill] [-webkit-text-stroke:0.7px_rgb(255_255_255/_0.98)] [text-shadow:0_0_24px_rgb(255_255_255/_0.98),0_1px_10px_rgb(0_0_0/_0.45),0_2px_26px_rgb(255_255_255/_0.65)]";
+
+  const textReveal = `transition-opacity duration-300 ease-out ${
     introDone ? "opacity-100" : "opacity-0"
   }`;
 
@@ -226,12 +260,12 @@ export function HomeHeroClient({
           >
             <h1 id="hero-heading" className="contents text-[var(--color-text)]">
               <span
-                className={`block font-light uppercase text-[clamp(1.6rem,9vw,5.5rem)] leading-[0.95] tracking-[0.32em] [word-spacing:0.5em] ${textShadow}`}
+                className={`block font-light uppercase text-[clamp(1.6rem,9vw,5.5rem)] leading-[0.95] tracking-[0.32em] [word-spacing:0.5em] ${heroTitleFx}`}
               >
                 {brandLine1}
               </span>
               <span
-                className={`block font-normal uppercase text-[clamp(0.55rem,2.2vw,1.05rem)] leading-normal tracking-[0.42em] [word-spacing:0.6em] ${textShadow}`}
+                className={`block font-medium uppercase text-[clamp(0.65rem,2.35vw,1.12rem)] leading-snug tracking-[0.42em] [word-spacing:0.6em] ${heroSubtitleFx}`}
               >
                 {brandLine2}
               </span>

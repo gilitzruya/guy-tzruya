@@ -8,16 +8,75 @@
     "mainNavLabel": "ניווט ראשי",
     "navHome": "בית",
     "navInteriorDesign": "עיצוב פנים",
+    "navProjects": "פרויקטים",
     "langHe": "עברית",
     "langEn": "English",
+    "langSwitcherNavLabel": "חלפת שפה",
+    "langSwitcherAriaToHebrew": "מעבר לעברית",
+    "langSwitcherAriaToEnglish": "מעבר לאנגלית",
     "sceneDay": "יום",
     "sceneNight": "לילה",
-    "sceneNavLabel": "בחירת תאורה"
+    "sceneNavLabel": "בחירת תאורה",
+    "sceneToggleTooltipToDark": "מעבר למצב כהה",
+    "sceneToggleTooltipToLight": "מעבר למצב בהיר",
+    "mobileNavOpen": "פתיחת התפריט",
+    "mobileNavClose": "סגירת התפריט"
   },
   "Hero": {
     "brandLine1": "GUY TZRUYA",
     "brandLine2": "ARCHITECTURE & INTERIOR DESIGN",
     "cta": "נתאם שיחה",
     "imageAlt": "אווירת עיצוב פנים ואדריכלות"
+  },
+  "InteriorDesign": {
+    "heroTitle": "INTERIOR DESIGN",
+    "heroSubtitle": "חללים שנרקמים סביב אור, חומר וקצב היום־יום שלכם."
+  },
+  "Projects": {
+    "heroTitle": "PROJECTS",
+    "heroSubtitle": "כל פרויקט מתחיל בהקשבה, ממשיך בתכנון מדויק ומסתיים בחלל שמרגיש נכון בכל פרט.",
+    "sliderAriaLabel": "גרור להשוואת לפני ואחרי — {title}",
+    "beforeLabel": "לפני",
+    "afterLabel": "אחרי",
+    "viewPhotoGallery": "גלריית תמונות",
+    "galleryDialogTitle": "גלריית תמונות — {title}",
+    "galleryClose": "סגירה",
+    "galleryCloseBackdrop": "סגירת הגלריה",
+    "galleryPrevious": "תמונה קודמת",
+    "galleryNext": "תמונה הבאה",
+    "gallerySlideAlt": "{title} — תמונה {index} מתוך {total}",
+    "gallerySlideDotLabel": "תמונה {index} מתוך {total}",
+    "backToProjects": "כל הפרויקטים",
+    "beforeAfterHeading": "לפני ואחרי",
+    "metaListingTitle": "פרויקטים — גיא צרויה",
+    "metaListingDescription": "פרויקטים נבחרים באדריכלות ועיצוב פנים — שינויי לפני ואחרי.",
+    "detailSectionTitle": "פרטי הפרויקט",
+    "detailLabelClient": "לקוח",
+    "detailLabelType": "סוג פרויקט",
+    "detailLabelAbout": "תיאור",
+    "testimonialLabel": "המלצה",
+    "clientPhotoAlt": "תמונת הלקוח",
+    "items": {
+      "maklaf": {
+        "title": "מקלף",
+        "summary": "פרויקט פנים — יתעדכן.",
+        "cardSubtitle": "עיצוב פנים למגורים",
+        "cardBody": "פרויקט מקלף — עיצוב פנים ותכנון מלא. טקסט זמני; להחליף בסיפור הפרויקט הסופי.",
+        "testimonialLead": "טקסט זמני —",
+        "testimonialHighlight": "להחליף בציטוט לקוח כשיהיה זמין.",
+        "testimonialContext": "דירת מגורים",
+        "detailBody": "כאן יופיע תיאור מפורט של פרויקט מקלף.\n\nלהוסיף היקף, חומרים ותוצאה בכמה פסקאות קצרות.\n\nהבלוק משמש גם את כרטיס הרשימה וגם את דף הפרטים."
+      },
+      "shaki": {
+        "title": "אבנר חיישקי",
+        "summary": "דירת קבלן חדשה — תכנון מחדש ועיצוב פנים מלא.",
+        "cardSubtitle": "שדרוג ותכנון מחדש לדירת קבלן",
+        "cardBody": "פרויקט עבור אבנר חיישקי – דירת קבלן חדשה שעברה תהליך מקיף של תכנון מחדש ועיצוב פנים מלא, מתוך רצון ליצור בית מודרני, מדויק ונעים לחיי היום־יום.",
+        "testimonialLead": "ליווי מקצועי ומדויק — התוצאה עונה בדיוק על מה שחלמנו,",
+        "testimonialHighlight": "והבית מרגיש שלם ונעים לחיות בו.",
+        "testimonialContext": "דירת מגורים",
+        "detailBody": "נקודת המוצא הייתה דירת קבלן חדשה עם פריסה בסיסית — רצינו לשדרג את התכנון ולייצר חלל אחיד ומדויק לצרכי המשפחה.\n\nביצענו שיפוץ ושדרוג תכנון מקיף לצד עיצוב פנים מלא לכל הבית: חלוקה מחדש היכן שנדרש, בחירת חומרים, תאורה וריהוט שמשרתים את השגרה בנוחות ובאלגנטיות.\n\nהתוצאה היא בית שמרגיש מותאם אישית — פונקציונלי, נעים ועקבי בכל החדרים."
+      }
+    }
   }
 }
