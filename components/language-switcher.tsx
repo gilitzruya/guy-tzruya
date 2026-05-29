@@ -1,107 +1,167 @@
 "use client";
 
-import {
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, Link } from "@/i18n/navigation";
+import { NavChevron } from "@/components/nav-chevron";
 
-const LOCALES = ["he", "en"] as const;
+const LOCALES = [
+  { locale: "he" as const, labelKey: "langHe" },
+  { locale: "en" as const, labelKey: "langEn" },
+] as const;
 
-function localeCode(locale: string) {
-  return locale.toUpperCase();
-}
+type LanguageSwitcherProps = {
+  /** Compact nav item (desktop) vs stacked mobile panel */
+  variant?: "nav" | "mobile";
+  onNavigate?: () => void;
+};
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({
+  variant = "nav",
+  onNavigate,
+}: LanguageSwitcherProps) {
   const active = useLocale();
   const pathname = usePathname();
   const t = useTranslations("Header");
   const [open, setOpen] = useState(false);
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const listId = useId();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const panelId = useId();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
-    const close = (e: MouseEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
+    const onPointerDown = (event: MouseEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", close);
-    return () => document.removeEventListener("mousedown", close);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
     };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, [open]);
 
-  const others = LOCALES.filter((l) => l !== active);
+  if (variant === "mobile") {
+    return (
+      <div className="rounded-lg">
+        <button
+          type="button"
+          className="flex w-full items-center justify-between rounded-lg py-3.5 ps-2 pe-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
+          onClick={() => setOpen((prev) => !prev)}
+          aria-expanded={open}
+          aria-controls={panelId}
+        >
+          <span>{t("navLanguage")}</span>
+          <NavChevron open={open} className="h-4 w-4" />
+        </button>
+        {open ? (
+          <div
+            id={panelId}
+            className="flex flex-col gap-1 pb-1 ps-4"
+            role="listbox"
+            aria-label={t("navLanguage")}
+          >
+            {LOCALES.map(({ locale, labelKey }) => {
+              const isActive = locale === active;
+              return (
+                <Link
+                  key={locale}
+                  role="option"
+                  href={pathname}
+                  locale={locale}
+                  hrefLang={locale === "he" ? "he-IL" : "en"}
+                  aria-label={
+                    locale === "he"
+                      ? t("langSwitcherAriaToHebrew")
+                      : t("langSwitcherAriaToEnglish")
+                  }
+                  aria-selected={isActive}
+                  className={`rounded-lg py-2.5 ps-3 text-base font-medium transition-colors ${
+                    isActive
+                      ? "text-[var(--color-accent)]"
+                      : "text-[var(--color-text)]/90 hover:text-[var(--color-accent)]"
+                  }`}
+                  onClick={() => {
+                    setOpen(false);
+                    onNavigate?.();
+                  }}
+                >
+                  {t(labelKey)}
+                </Link>
+              );
+            })}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
 
   return (
-    <div ref={wrapRef} className="relative z-[70]">
+    <div
+      ref={containerRef}
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
       <button
         type="button"
-        className="flex min-h-[44px] cursor-pointer items-center gap-1.5 px-1 py-2 text-sm font-semibold tracking-wide text-[var(--color-text)] transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
         aria-expanded={open}
-        aria-haspopup="listbox"
-        aria-controls={listId}
-        aria-label={t("langSwitcherNavLabel")}
-        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="menu"
+        aria-controls={panelId}
+        className={`inline-flex items-center gap-1 text-sm font-medium transition-colors hover:text-[var(--color-accent)] ${
+          open ? "text-[var(--color-accent)]" : "text-[var(--color-text)]/90"
+        }`}
+        onClick={() => setOpen((prev) => !prev)}
+        onFocus={() => setOpen(true)}
       >
-        <span>{localeCode(active)}</span>
-        <svg
-          className={`h-3.5 w-3.5 shrink-0 text-current transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
-          viewBox="0 0 12 12"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          <path d="M2.5 4.5L6 8l3.5-3.5" />
-        </svg>
+        {t("navLanguage")}
+        <NavChevron open={open} />
       </button>
-
-      {open ? (
-        <ul
-          id={listId}
-          role="listbox"
-          aria-label={t("langSwitcherNavLabel")}
-          className="absolute end-0 top-full z-[71] mt-0.5 flex min-w-[3.25rem] flex-col gap-1.5 pt-1 text-sm"
-        >
-          {others.map((locale) => (
-            <li key={locale} role="presentation">
-              <Link
-                role="option"
-                href={pathname}
-                locale={locale}
-                hrefLang={locale === "he" ? "he-IL" : "en"}
-                aria-label={
-                  locale === "he"
-                    ? t("langSwitcherAriaToHebrew")
-                    : t("langSwitcherAriaToEnglish")
-                }
-                aria-selected={false}
-                className="block py-0.5 font-medium text-[color-mix(in_oklab,var(--color-text)_52%,transparent)] transition-colors hover:text-[var(--color-text)]"
-                onClick={() => setOpen(false)}
-              >
-                {localeCode(locale)}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <div
+        id={panelId}
+        role="menu"
+        aria-label={t("navLanguage")}
+        className={`absolute end-0 top-full z-[110] mt-0 min-w-[9rem] rounded-xl border border-[color-mix(in_oklab,var(--color-text)_14%,transparent)] bg-[var(--color-bg)] p-2 shadow-xl transition-[opacity,transform] ${
+          open
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-1 opacity-0"
+        }`}
+      >
+        {LOCALES.map(({ locale, labelKey }) => {
+          const isActive = locale === active;
+          return (
+            <Link
+              key={locale}
+              href={pathname}
+              locale={locale}
+              hrefLang={locale === "he" ? "he-IL" : "en"}
+              role="menuitem"
+              aria-label={
+                locale === "he"
+                  ? t("langSwitcherAriaToHebrew")
+                  : t("langSwitcherAriaToEnglish")
+              }
+              aria-current={isActive ? "true" : undefined}
+              className={`block rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                isActive
+                  ? "text-[var(--color-accent)]"
+                  : "text-[var(--color-text)]/90 hover:text-[var(--color-accent)]"
+              }`}
+              onClick={() => setOpen(false)}
+            >
+              {t(labelKey)}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useMemo } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useScene } from "@/components/scene-provider";
 import {
   projectClientImageSrc,
   type ProjectSlug,
@@ -20,42 +19,50 @@ export type ProjectDetailsSheetProps =
 function DetailRow({
   label,
   children,
-  tone,
-  accentLabel = false,
-  denseMobile = false,
 }: {
   label: string;
   children: React.ReactNode;
-  tone: "paper" | "page";
-  /** Listing card: לקוח / סוג פרויקט / תיאור labels in accent orange */
-  accentLabel?: boolean;
-  /** רשימת פרויקטים: ריווח אנכי צפוף יותר מתחת ל־lg */
-  denseMobile?: boolean;
 }) {
-  const labelClass =
-    tone === "page"
-      ? accentLabel
-        ? "text-[var(--color-accent)]"
-        : "text-[var(--color-text)]/62"
-      : "text-[#6b6560]";
-  const valueWrapClass =
-    tone === "page"
-      ? "text-[var(--color-text)]"
-      : "text-[#1c1917]";
-  const rowPad = denseMobile
-    ? "py-5 max-lg:py-2.5 first:pt-0 last:pb-0"
-    : "py-5 first:pt-0 last:pb-0";
-  const labelGap = denseMobile ? "mt-2 max-lg:mt-1" : "mt-2";
   return (
-    <div className={rowPad}>
-      <p className={`text-sm font-normal ${labelClass}`}>
+    <div className="py-5 first:pt-0 last:pb-0">
+      <p className="text-sm font-normal text-[#6b6560]">
         {label}
         <span aria-hidden>:</span>
       </p>
-      <div
-        className={`${labelGap} text-pretty text-base leading-snug sm:text-[1.05rem] ${valueWrapClass}`}
-      >
+      <div className="mt-2 text-pretty text-base leading-snug text-[#1c1917] sm:text-[1.05rem]">
         {children}
+      </div>
+    </div>
+  );
+}
+
+function ListingField({
+  label,
+  icon,
+  children,
+}: {
+  label: string;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="border-b border-[color-mix(in_oklab,#c4a574_34%,transparent)] py-4 last:border-b-0">
+      <div className="flex items-start gap-3">
+        <span
+          className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center text-[#c4a574]"
+          aria-hidden
+        >
+          {icon}
+        </span>
+        <div className="min-w-0">
+          <p className="text-sm font-medium text-[#c4a574]">
+            {label}
+            <span aria-hidden>:</span>
+          </p>
+          <div className="mt-1.5 text-pretty text-[1.02rem] leading-relaxed text-[var(--color-text)]/92">
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -84,100 +91,195 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
   const showTestimonialBlock = Boolean(
     clientSrc || testimonialLead || testimonialHighlight,
   );
-  const tone = variant === "listing" ? "page" : "paper";
-  const { scene } = useScene();
-  /** זכוכית כהה + טקסט בהיר: דף פרויקט, או רשימת פרויקטים במצב יום */
-  const testimonialDarkGlass =
-    variant === "detail" || (variant === "listing" && scene === "day");
-
-  const rootClass =
-    tone === "page"
-      ? "flex h-full min-h-0 flex-col rounded-sm border border-[color-mix(in_oklab,var(--color-text)_14%,transparent)] bg-[var(--color-card-listing-surface)] px-4 py-5 lg:px-6 lg:py-7"
-      : "flex min-h-0 flex-col rounded-2xl bg-[#fdfbf7] px-5 py-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)] sm:px-7 sm:py-8";
-
-  const titleClass =
-    tone === "page"
-      ? "text-xl font-bold tracking-tight text-[var(--color-text)] sm:text-2xl"
-      : "text-xl font-bold tracking-tight text-[#1c1917] sm:text-2xl";
-
-  /** רשימת פרויקטים: סולם טקסט אחיד ליום ולילה; בדף פרטים נשאר גדול יותר */
-  const listingTestimonial = variant === "listing";
-
-  const barMutedClass =
-    tone === "page"
-      ? "min-h-[3px] flex-1 bg-[color-mix(in_oklab,var(--color-text)_24%,transparent)]"
-      : "min-h-[3px] flex-1 bg-[#d6d3d1]";
-
-  const testimonialLabelClass =
-    tone === "page"
-      ? "text-xs font-normal text-[var(--color-accent)] sm:text-sm"
-      : "text-sm font-normal text-[#6b6560]";
-
   const aboutFirstClass =
-    tone === "page"
-      ? "text-base font-light leading-relaxed text-[var(--color-text)]/88 sm:text-[1.02rem]"
-      : "text-base font-normal leading-relaxed text-[#57534e] sm:text-[1.05rem]";
-
+    "text-base font-normal leading-relaxed text-[#57534e] sm:text-[1.05rem]";
   const aboutRestClass =
-    tone === "page"
-      ? "text-[0.97rem] font-light leading-relaxed text-[var(--color-text)]/78 sm:text-base"
-      : "text-[0.97rem] font-normal leading-relaxed text-[#57534e] sm:text-base";
+    "text-[0.97rem] font-normal leading-relaxed text-[#57534e] sm:text-base";
+
+  if (variant === "listing") {
+    return (
+      <div
+        dir={dir}
+        lang={locale === "he" ? "he" : "en"}
+        className="flex h-full min-h-0 flex-col rounded-[18px] border border-[color-mix(in_oklab,#c4a574_55%,transparent)] bg-[linear-gradient(165deg,rgba(8,9,14,0.97)_0%,rgba(7,9,14,0.95)_48%,rgba(5,7,12,0.97)_100%)] px-4 py-5 shadow-[0_22px_50px_-24px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.08)] sm:px-5 lg:px-6 lg:py-6"
+      >
+        <div className="flex min-h-0 flex-1 flex-col">
+          <div className="shrink-0">
+            <h2 className="text-[1.9rem] font-medium tracking-tight text-[var(--color-text)] max-lg:text-[1.75rem]">
+              {t("detailSectionTitle")}
+            </h2>
+            <div
+              className="mt-3 h-px w-full bg-[linear-gradient(to_left,color-mix(in_oklab,#c4a574_74%,transparent),transparent)]"
+              aria-hidden
+            />
+          </div>
+
+          <div className="mt-2 shrink-0 overflow-y-auto overscroll-contain">
+            <ListingField
+              label={t("detailLabelClient")}
+              icon={
+                <svg viewBox="0 0 24 24" className="size-5" fill="none">
+                  <path
+                    d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                  />
+                  <circle cx="12" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.7" />
+                </svg>
+              }
+            >
+              <span className="font-semibold" id={`project-heading-${slug}`}>
+                {title}
+              </span>
+            </ListingField>
+            <ListingField
+              label={t("detailLabelType")}
+              icon={
+                <svg viewBox="0 0 24 24" className="size-5" fill="none">
+                  <path
+                    d="M20 7.5V4H16.5L4 16.5V20h3.5L20 7.5Z"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                  />
+                  <path d="m13.5 7 3.5 3.5" stroke="currentColor" strokeWidth="1.7" />
+                </svg>
+              }
+            >
+              <span className="font-semibold">{cardSubtitle}</span>
+            </ListingField>
+            <div>
+              <ListingField
+                label={t("detailLabelAbout")}
+                icon={
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none">
+                    <path d="M4.5 5.5h15v13h-15z" stroke="currentColor" strokeWidth="1.7" />
+                    <path d="m8 14 8-8M8 18h8" stroke="currentColor" strokeWidth="1.7" />
+                  </svg>
+                }
+              >
+                <div className="space-y-2.5">
+                  {paragraphs.map((p, i) => (
+                    <p
+                      key={i}
+                      className={
+                        i === 0
+                          ? "text-[0.98rem] font-normal leading-relaxed text-[var(--color-text)]/88"
+                          : "text-[0.93rem] font-light leading-relaxed text-[var(--color-text)]/74"
+                      }
+                    >
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              </ListingField>
+            </div>
+          </div>
+
+          {onOpenGallery ? (
+            <div
+              className="mt-2 flex min-h-0 flex-1 shrink-0 items-center justify-center"
+            >
+              <button
+                type="button"
+                onClick={onOpenGallery}
+                className="inline-flex items-center justify-center gap-1.5 rounded-md border border-[color-mix(in_oklab,#c4a574_85%,transparent)] bg-transparent px-3.5 py-1.5 text-[0.82rem] font-medium text-[#c4a574] transition-[background-color,border-color,color] hover:bg-[color-mix(in_oklab,#c4a574_10%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#c4a574] focus-visible:outline-offset-2"
+              >
+                <span>{t("viewPhotoGallery")}</span>
+                <span aria-hidden className="text-sm leading-none">
+                  {locale === "he" ? "\u2190" : "\u2192"}
+                </span>
+              </button>
+            </div>
+          ) : null}
+
+          {showTestimonialBlock ? (
+            <div className="mt-0 shrink-0 pt-1">
+              <figure className="overflow-hidden rounded-2xl border border-[color-mix(in_oklab,#c4a574_55%,transparent)] bg-[linear-gradient(170deg,rgba(196,165,116,0.12)_0%,rgba(18,20,28,0.72)_32%,rgba(9,11,17,0.9)_100%)] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] sm:px-5">
+                <div className="flex flex-row items-start gap-3" dir="ltr">
+                  <span
+                    aria-hidden
+                    className="shrink-0 select-none font-serif text-[2rem] leading-none text-[#c4a574] sm:text-[2.2rem]"
+                  >
+                    {"\u201c"}
+                  </span>
+                  <blockquote
+                    className="m-0 min-w-0 flex-1"
+                    dir={locale === "he" ? "rtl" : "ltr"}
+                  >
+                    <p
+                      className={`text-pretty text-[1rem] leading-[1.72] text-[var(--color-text)]/90 ${
+                        locale === "he" ? "text-right" : "text-left"
+                      }`}
+                    >
+                      {testimonialLead ? <span>{testimonialLead}</span> : null}
+                      {testimonialHighlight ? (
+                        <span
+                          className={`mt-2.5 block font-medium ${
+                            locale === "he" ? "text-right" : "text-left"
+                          }`}
+                        >
+                          {testimonialHighlight}
+                        </span>
+                      ) : null}
+                    </p>
+                  </blockquote>
+                </div>
+                <figcaption
+                  className={`mt-5 border-t border-[color-mix(in_oklab,#c4a574_42%,transparent)] pt-3 ${
+                    locale === "he" ? "text-left" : "text-right"
+                  }`}
+                >
+                  <p className="text-lg font-semibold text-[#c4a574]">
+                    {title}
+                  </p>
+                  {testimonialContext ? (
+                    <p className="mt-1 text-sm text-[var(--color-text)]/72">
+                      {testimonialContext}
+                    </p>
+                  ) : null}
+                </figcaption>
+              </figure>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
       dir={dir}
       lang={locale === "he" ? "he" : "en"}
-      className={rootClass}
+      className="flex min-h-0 flex-col rounded-2xl bg-[#fdfbf7] px-5 py-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)] sm:px-7 sm:py-8"
     >
       <div className="flex h-full min-h-0 flex-1 flex-col">
         <div className="shrink-0">
-          <h2 className={titleClass}>{t("detailSectionTitle")}</h2>
+          <h2 className="text-xl font-bold tracking-tight text-[#1c1917] sm:text-2xl">
+            {t("detailSectionTitle")}
+          </h2>
 
           <div
-            className={`mt-4 flex h-[3px] w-full overflow-hidden rounded-full ${tone === "page" ? "max-lg:mt-2.5" : ""}`}
+            className="mt-4 flex h-[3px] w-full overflow-hidden rounded-full"
             aria-hidden
           >
-            {tone === "page" ? (
-              <div className={`h-full w-full ${barMutedClass}`} />
-            ) : (
-              <>
-                <div className="h-full w-[min(22%,6rem)] shrink-0 bg-[var(--color-accent)]" />
-                <div className={`h-full ${barMutedClass}`} />
-              </>
-            )}
+            <>
+              <div className="h-full w-[min(22%,6rem)] shrink-0 bg-[var(--color-accent)]" />
+              <div className="min-h-[3px] flex-1 bg-[#d6d3d1]" />
+            </>
           </div>
         </div>
 
         <div className="mt-1 min-h-0 flex-1 overflow-y-auto overscroll-contain">
-          <DetailRow
-            tone={tone}
-            denseMobile={tone === "page"}
-            accentLabel={tone === "page"}
-            label={t("detailLabelClient")}
-          >
+          <DetailRow label={t("detailLabelClient")}>
             <span className="font-bold" id={`project-heading-${slug}`}>
               {title}
             </span>
           </DetailRow>
-          <DetailRow
-            tone={tone}
-            denseMobile={tone === "page"}
-            accentLabel={tone === "page"}
-            label={t("detailLabelType")}
-          >
+          <DetailRow label={t("detailLabelType")}>
             <span className="font-bold">{cardSubtitle}</span>
           </DetailRow>
-          <DetailRow
-            tone={tone}
-            denseMobile={tone === "page"}
-            accentLabel={tone === "page"}
-            label={t("detailLabelAbout")}
-          >
-            <div
-              className={
-                tone === "page" ? "space-y-3 max-lg:space-y-2" : "space-y-3"
-              }
-            >
+          <DetailRow label={t("detailLabelAbout")}>
+            <div className="space-y-3">
               {paragraphs.map((p, i) => (
                 <p
                   key={i}
@@ -188,40 +290,18 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
               ))}
             </div>
           </DetailRow>
-
-          {variant === "listing" && onOpenGallery ? (
-            <div className="flex justify-center pb-1 pt-3 sm:pt-6 lg:pt-7">
-              <button
-                type="button"
-                onClick={onOpenGallery}
-                className="inline-flex items-center justify-center rounded-full border border-[var(--color-accent)] bg-transparent px-3.5 py-1 text-xs font-medium text-[var(--color-text)]/95 shadow-none transition-[background-color,border-color,opacity] hover:bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)] focus-visible:outline-offset-2 sm:px-4 sm:text-[0.8125rem]"
-              >
-                {t("viewPhotoGallery")}
-              </button>
-            </div>
-          ) : null}
         </div>
 
         {showTestimonialBlock ? (
           <div
-            className={
-              tone === "page"
-                ? "mt-5 max-lg:mt-3 shrink-0 max-lg:pt-1 pt-2"
-                : "mt-5 shrink-0 border-t border-stone-200/80 pt-5"
-            }
+            className="mt-5 shrink-0 border-t border-stone-200/80 pt-5"
           >
-            <p
-              className={`${tone === "page" ? "mb-2 max-lg:mb-1.5 sm:mb-3" : "mb-3"} ${testimonialLabelClass}`}
-            >
+            <p className="mb-3 text-sm font-normal text-[#6b6560]">
               {t("testimonialLabel")}
               <span aria-hidden>:</span>
             </p>
             <figure
-              className={
-                testimonialDarkGlass
-                  ? "isolate overflow-hidden rounded-xl border border-white/22 bg-gradient-to-br from-black/92 via-black/84 to-black/76 p-4 shadow-[0_16px_48px_-12px_rgba(0,0,0,0.5),0_6px_24px_-8px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.45)] backdrop-blur-sm backdrop-saturate-110 sm:p-5"
-                  : "isolate overflow-hidden rounded-xl border border-white/55 bg-gradient-to-br from-white/78 via-white/66 to-white/54 p-4 shadow-[0_14px_44px_-10px_rgba(0,0,0,0.45),0_6px_20px_-6px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.65),inset_0_-1px_0_rgba(0,0,0,0.1)] backdrop-blur-sm backdrop-saturate-110 sm:p-5"
-              }
+              className="isolate overflow-hidden rounded-xl border border-white/22 bg-gradient-to-br from-black/92 via-black/84 to-black/76 p-4 shadow-[0_16px_48px_-12px_rgba(0,0,0,0.5),0_6px_24px_-8px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.45)] backdrop-blur-sm backdrop-saturate-110 sm:p-5"
             >
               {/* Physical layout: quote mark left, testimonial text right (Hebrew); mirror via dir=ltr row + inner text dir */}
               <div
@@ -230,15 +310,7 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
               >
                 <span
                   aria-hidden
-                  className={
-                    listingTestimonial
-                      ? testimonialDarkGlass
-                        ? "shrink-0 select-none font-serif text-[1.85rem] leading-none text-white/85 sm:text-[2rem]"
-                        : "shrink-0 select-none font-serif text-[1.85rem] leading-none text-black sm:text-[2rem]"
-                      : testimonialDarkGlass
-                        ? "shrink-0 select-none font-serif text-[2.1rem] leading-none text-white/85 sm:text-[2.35rem]"
-                        : "shrink-0 select-none font-serif text-[2.1rem] leading-none text-black sm:text-[2.35rem]"
-                  }
+                  className="shrink-0 select-none font-serif text-[2.1rem] leading-none text-white/85 sm:text-[2.35rem]"
                 >
                   {"\u201c"}
                 </span>
@@ -247,15 +319,7 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
                   dir={locale === "he" ? "rtl" : "ltr"}
                 >
                   <p
-                    className={
-                      listingTestimonial
-                        ? testimonialDarkGlass
-                          ? `text-pretty text-[0.95rem] font-normal leading-[1.6] antialiased text-white sm:text-[1rem] sm:leading-[1.65] ${locale === "he" ? "text-right" : "text-left"}`
-                          : `text-pretty text-[0.95rem] font-normal leading-[1.6] antialiased text-neutral-950 sm:text-[1rem] sm:leading-[1.65] ${locale === "he" ? "text-right" : "text-left"}`
-                        : testimonialDarkGlass
-                          ? `text-pretty text-[1rem] font-normal leading-[1.65] antialiased text-white sm:text-[1.05rem] sm:leading-[1.7] ${locale === "he" ? "text-right" : "text-left"}`
-                          : `text-pretty text-[1rem] font-normal leading-[1.65] antialiased text-neutral-950 sm:text-[1.05rem] sm:leading-[1.7] ${locale === "he" ? "text-right" : "text-left"}`
-                    }
+                    className={`text-pretty text-[1rem] font-normal leading-[1.65] antialiased text-white sm:text-[1.05rem] sm:leading-[1.7] ${locale === "he" ? "text-right" : "text-left"}`}
                   >
                     {testimonialLead ? (
                       <span>{testimonialLead}</span>
@@ -263,13 +327,7 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
                     {testimonialHighlight ? (
                       <span
                         className={`mt-2.5 block leading-relaxed sm:mt-3 ${locale === "he" ? "text-right" : "text-left"} ${
-                          listingTestimonial
-                            ? testimonialDarkGlass
-                              ? "text-[0.95rem] font-semibold leading-[1.6] text-white antialiased sm:text-[1rem] sm:leading-[1.65]"
-                              : "text-[0.95rem] font-semibold leading-[1.6] text-neutral-950 antialiased sm:text-[1rem] sm:leading-[1.65]"
-                            : testimonialDarkGlass
-                              ? "text-[1rem] font-semibold leading-[1.65] text-white antialiased sm:text-[1.05rem] sm:leading-[1.7]"
-                              : "text-[1rem] font-semibold leading-[1.65] text-neutral-950 antialiased sm:text-[1.05rem] sm:leading-[1.7]"
+                          "text-[1rem] font-semibold leading-[1.65] text-white antialiased sm:text-[1.05rem] sm:leading-[1.7]"
                         }`}
                       >
                         {testimonialHighlight}
@@ -281,21 +339,13 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
 
               <figcaption
                 className={
-                  testimonialDarkGlass
-                    ? `mt-6 flex flex-row items-center gap-6 border-t border-white/18 pt-5 sm:mt-7 sm:gap-8 ${
-                        clientSrc && locale === "he"
-                          ? "flex-row-reverse justify-between"
-                          : clientSrc
-                            ? "justify-between"
-                            : "justify-start"
-                      }`
-                    : `mt-6 flex flex-row items-center gap-6 border-t border-black/10 pt-5 sm:mt-7 sm:gap-8 ${
-                        clientSrc && locale === "he"
-                          ? "flex-row-reverse justify-between"
-                          : clientSrc
-                            ? "justify-between"
-                            : "justify-start"
-                      }`
+                  `mt-6 flex flex-row items-center gap-6 border-t border-white/18 pt-5 sm:mt-7 sm:gap-8 ${
+                    clientSrc && locale === "he"
+                      ? "flex-row-reverse justify-between"
+                      : clientSrc
+                        ? "justify-between"
+                        : "justify-start"
+                  }`
                 }
                 dir="ltr"
               >
@@ -307,11 +357,7 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
                       width={64}
                       height={64}
                       unoptimized
-                      className={`size-16 rounded-full object-cover ring-1 ${
-                        testimonialDarkGlass
-                          ? "ring-white/25"
-                          : "ring-black/12"
-                      }`}
+                      className="size-16 rounded-full object-cover ring-1 ring-white/25"
                     />
                   </div>
                 ) : null}
@@ -329,29 +375,13 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
                     dir={locale === "he" ? "rtl" : "ltr"}
                   >
                     <p
-                      className={
-                        listingTestimonial
-                          ? testimonialDarkGlass
-                            ? "text-sm font-bold text-white sm:text-[0.9375rem]"
-                            : "text-sm font-bold text-black sm:text-[0.9375rem]"
-                          : testimonialDarkGlass
-                            ? "text-base font-bold text-white"
-                            : "text-base font-bold text-black"
-                      }
+                      className="text-base font-bold text-white"
                     >
                       {title}
                     </p>
                     {testimonialContext ? (
                       <p
-                        className={
-                          listingTestimonial
-                            ? testimonialDarkGlass
-                              ? "mt-1 text-xs text-white/80 sm:text-[0.8125rem]"
-                              : "mt-1 text-xs text-black sm:text-[0.8125rem]"
-                            : testimonialDarkGlass
-                              ? "mt-1.5 text-sm text-white/75"
-                              : "mt-1.5 text-sm text-black"
-                        }
+                        className="mt-1.5 text-sm text-white/75"
                       >
                         {testimonialContext}
                       </p>

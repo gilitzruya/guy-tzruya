@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getSiteUrl } from "@/lib/site-url";
 import { HtmlAttributes } from "@/components/html-attributes";
@@ -79,6 +80,7 @@ export default async function LocaleLayout({
         <div className="flex min-h-full flex-col" style={{ fontFamily: fontStack }}>
           <SiteHeader />
           <main className="flex-1">{children}</main>
+          <SiteFooter />
         </div>
       </SceneProvider>
     </NextIntlClientProvider>

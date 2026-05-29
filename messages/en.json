@@ -7,8 +7,15 @@
     "brand": "Guy Tzruya",
     "mainNavLabel": "Main navigation",
     "navHome": "Home",
+    "navServices": "Services",
     "navInteriorDesign": "Interior Design",
     "navProjects": "Projects",
+    "navSimulation": "Simulation",
+    "navBuildingLicensing": "Building Planning & Licensing",
+    "navBusinessLicensing": "Business Planning & Licensing",
+    "navAbout": "About",
+    "navContact": "Contact",
+    "navLanguage": "Language",
     "langHe": "עברית",
     "langEn": "English",
     "langSwitcherNavLabel": "Language switching",
@@ -22,15 +29,169 @@
     "mobileNavOpen": "Open menu",
     "mobileNavClose": "Close menu"
   },
+  "Footer": {
+    "siteLabel": "Site footer",
+    "navTitle": "Site navigation",
+    "servicesTitle": "Services",
+    "contactTitle": "Contact",
+    "socialTitle": "Social networks",
+    "contactWhatsapp": "WhatsApp",
+    "contactPhone": "Phone",
+    "contactEmail": "Email",
+    "developerIntro": "Website design & development",
+    "developerName": "Gili Tzruya",
+    "developerTagline": "Smart digital solutions for businesses"
+  },
   "Hero": {
     "brandLine1": "GUY TZRUYA",
     "brandLine2": "ARCHITECTURE & INTERIOR DESIGN",
-    "cta": "Start a conversation",
+    "scrollCta": "My services",
     "imageAlt": "Interior architecture atmosphere"
+  },
+  "BuildingLicensing": {
+    "heroEyebrow": "Planning & licensing",
+    "heroTitle": "Building planning & licensing",
+    "heroSubtitle": "Professional architectural planning, permit drawings, and authority submissions — from first concept through building approval.",
+    "heroCta": "View our process",
+    "heroScroll": "SCROLL",
+    "heroStatSteps": "6 stages",
+    "heroStatFull": "Full guidance",
+    "heroStatAuthority": "Authority liaison",
+    "processProgressLabel": "Process progress",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Questions & answers",
+    "faqLead": "Practical information on building planning and licensing — so you know what to expect at each stage.",
+    "faq": {
+      "items": {
+        "scope": {
+          "question": "What does building planning and licensing include?",
+          "answer": "The service covers project assessment, architectural drawings, supporting documents, authority submission, and handling comments — through building approval and permits. We guide you through the full planning and regulatory process."
+        },
+        "timeline": {
+          "question": "How long does the licensing process take?",
+          "answer": "Duration depends on project type, local authority, and plan complexity. After an initial briefing we can give a realistic timeline — typically several months."
+        },
+        "authority": {
+          "question": "Do you liaise with the authority and handle comments?",
+          "answer": "Yes. We submit the file, track review status, address comments, and make required revisions until requirements are met — saving you time and miscommunication with officials."
+        },
+        "documents": {
+          "question": "Which documents and drawings are required for approval?",
+          "answer": "Requirements vary by project type and authority. Usually architectural plans, sections, technical appendices, and ownership documents are needed — we prepare a tailored checklist and help complete the package."
+        },
+        "changeOfUse": {
+          "question": "Can you plan an extension or updates to an existing building?",
+          "answer": "In many cases, yes. Extensions and updates require checking rights, zoning, and authority requirements. In the first consultation we review constraints and options before planning begins."
+        },
+        "start": {
+          "question": "How do we get started?",
+          "answer": "Start with a short consultation: define goals, scope, and timeline. Then we build a work plan, survey existing conditions, and move to initial design — reach out using the button below."
+        }
+      }
+    },
+    "ctaEyebrow": "Get in touch",
+    "ctaTitle": "Ready to move forward?",
+    "ctaLead": "We would be glad to support your building planning and licensing — or follow us on social media for updates and inspiration.",
+    "ctaButton": "Schedule a call",
+    "ctaSocialLabel": "Follow us",
+    "ctaSocialInstagram": "Instagram — Guy Tzruya",
+    "ctaSocialFacebook": "Facebook — Guy Tzruya",
+    "ctaSocialLinkedin": "LinkedIn — Guy Tzruya",
+    "ctaSocialWhatsapp": "WhatsApp — Guy Tzruya",
+    "ctaSocialYoutube": "YouTube — Guy Tzruya"
+  },
+  "BusinessLicensing": {
+    "heroEyebrow": "Planning & licensing",
+    "heroTitle": "Business planning & licensing",
+    "heroSubtitle": "Professional architectural planning, permit drawings, and authority submissions — from first concept through final approvals for your business.",
+    "heroCta": "View our process",
+    "heroScroll": "SCROLL",
+    "heroStatSteps": "6 stages",
+    "heroStatFull": "Full guidance",
+    "heroStatAuthority": "Authority liaison",
+    "processProgressLabel": "Process progress",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Questions & answers",
+    "faqLead": "Practical information on business planning and licensing — so you know what to expect at each stage.",
+    "faq": {
+      "items": {
+        "scope": {
+          "question": "What does planning and licensing for businesses include?",
+          "answer": "The service covers needs assessment, architectural drawings, supporting documents, authority submission, and handling comments — through building approvals and permits. We guide you through the full bureaucratic and planning process."
+        },
+        "timeline": {
+          "question": "How long does the licensing process take?",
+          "answer": "Duration depends on project type, local authority, and plan complexity. After an initial briefing we can give a realistic timeline — typically several months rather than weeks."
+        },
+        "authority": {
+          "question": "Do you liaise with the authority and handle comments?",
+          "answer": "Yes. We submit the file, track review status, address comments, and make required revisions until requirements are met — saving you time and miscommunication with officials."
+        },
+        "documents": {
+          "question": "Which documents and drawings are required?",
+          "answer": "Requirements vary by business type, building, and authority. Usually architectural plans, sections, technical appendices, and ownership documents are needed — we prepare a tailored checklist and help complete the package."
+        },
+        "changeOfUse": {
+          "question": "Can you plan a change of use or business expansion?",
+          "answer": "Often yes — change of use, expansion, or adapting an existing space requires checking rights, zoning, and authority rules. In the first consultation we assess options and limits before planning begins."
+        },
+        "start": {
+          "question": "How do we get started?",
+          "answer": "Start with a short consultation: define goals, scope, and timeline. Then we build a work plan, survey existing conditions, and move to initial design — reach out using the button below."
+        }
+      }
+    },
+    "ctaEyebrow": "Get in touch",
+    "ctaTitle": "Ready to move forward?",
+    "ctaLead": "We would be glad to support your business planning and licensing — or follow us on social media for updates and inspiration.",
+    "ctaButton": "Schedule a call",
+    "ctaSocialLabel": "Follow us",
+    "ctaSocialInstagram": "Instagram — Guy Tzruya",
+    "ctaSocialFacebook": "Facebook — Guy Tzruya",
+    "ctaSocialLinkedin": "LinkedIn — Guy Tzruya",
+    "ctaSocialWhatsapp": "WhatsApp — Guy Tzruya",
+    "ctaSocialYoutube": "YouTube — Guy Tzruya"
   },
   "InteriorDesign": {
     "heroTitle": "INTERIOR DESIGN",
-    "heroSubtitle": "Spaces shaped around light, material, and the rhythm of everyday life."
+    "heroSubtitle": "Interior planning and design for homes, apartments, offices and businesses — with precise attention to every detail, from concept through execution.",
+    "heroCtaExplore": "Explore projects",
+    "heroCtaStart": "Start your project",
+    "heroScroll": "SCROLL",
+    "processProgressLabel": "Process progress",
+    "stylesYear": "2026",
+    "stylesSectionTitle": "Interior design styles",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Questions & answers",
+    "faqLead": "Practical information on interior design — so you know what to expect at each stage.",
+    "faq": {
+      "items": {
+        "scope": {
+          "question": "What does the interior design service include?",
+          "answer": "The service covers needs assessment, space planning, materials and finishes, execution drawings, furniture and lighting selection — and on-site support through completion. We guide you from concept to a finished space."
+        },
+        "timeline": {
+          "question": "How long does an interior design project take?",
+          "answer": "Duration depends on scope, property type, and design complexity. After an initial briefing we can give a realistic timeline — typically several months from planning through execution."
+        },
+        "authority": {
+          "question": "Do you support execution and contractor supervision?",
+          "answer": "Yes. We support the build phase, check alignment with plans, handle site questions, and coordinate with contractors and suppliers — so the result matches the design."
+        },
+        "documents": {
+          "question": "Do you help select materials, furniture, and lighting?",
+          "answer": "Yes. We guide choices for finishes, furniture, lighting, and accessories — aligned with your budget, style, and needs, with emphasis on quality and design consistency."
+        },
+        "changeOfUse": {
+          "question": "Can you design an existing apartment or only a full renovation?",
+          "answer": "In many cases, yes — partial or full renovations, existing homes, or new properties are all possible. In the first consultation we review the current space, options, and the right scope for you."
+        },
+        "start": {
+          "question": "How do we get started?",
+          "answer": "Start with a short consultation: define goals, scope, and budget. Then we build a work plan, survey the space, and move to initial design — reach out using the button above."
+        }
+      }
+    }
   },
   "Projects": {
     "heroTitle": "PROJECTS",
@@ -78,5 +239,292 @@
         "detailBody": "We started from a new-build apartment with a basic layout — the goal was to upgrade the plan and create a coherent, tailored home for the family.\n\nWe carried out a full renovation and comprehensive replanning alongside complete interior design: selective replanning where needed, materials, lighting, and furnishings that support daily life with comfort and clarity.\n\nThe result is a home that feels personal — functional, inviting, and consistent in every room."
       }
     }
+  },
+  "Simulation": {
+    "heroEyebrow": "Smart preview",
+    "heroTitle": "Room simulation",
+    "heroSubtitle": "Upload a room photo, choose a room type and design style — and get a visual preview.",
+    "quotaRemaining": "{remaining} of {max} runs remaining",
+    "quotaRemainingShort": "{remaining} runs left",
+    "quotaExceeded": "You have used all available runs. Please try again later.",
+    "stepImageTitle": "1. Room photo",
+    "roomTypeLabel": "Room type",
+    "roomTypeLivingRoom": "Living room",
+    "roomTypeBedroom": "Bedroom",
+    "roomTypeKitchen": "Kitchen",
+    "roomTypeBathroom": "Bathroom",
+    "dropzoneHint": "Drag an image here or choose a file",
+    "uploadButton": "Choose image",
+    "uploadPreviewAlt": "Room preview",
+    "openCamera": "Use camera",
+    "capturePhoto": "Capture",
+    "cancelCamera": "Cancel",
+    "clearImage": "Remove image",
+    "cameraUnavailable": "Camera access is unavailable. Try uploading an image instead.",
+    "stepStyleTitle": "2. Room type and style",
+    "styleHint": "Choose a room type and a design style from the list.",
+    "generateButton": "Generate simulation",
+    "missingRoomType": "Choose a room type to generate a simulation.",
+    "missingStyleForGenerate": "Choose a design style to generate a simulation.",
+    "missingRoomAndStyle": "Choose a room type and design style to generate a simulation.",
+    "generating": "Generating…",
+    "generatingHint": "This can take a few moments. Keep this window open.",
+    "resultTitle": "Simulation",
+    "backToForm": "New simulation",
+    "errors": {
+      "invalidType": "Unsupported file type. Use JPEG, PNG, or WebP.",
+      "missingStyle": "Select a design style.",
+      "fileTooLarge": "File is too large (max 8MB).",
+      "quotaExceeded": "No runs remaining.",
+      "generateFailed": "Simulation failed. Please try again shortly."
+    }
+  },
+  "Home": {
+    "services": {
+      "eyebrow": "My services",
+      "title": "Planning and design services in one place",
+      "displayTitlePrefix": "All planning, all approvals,",
+      "displayTitleAccent": "all design",
+      "displayTitleSuffix": "— in one place.",
+      "lead": "Interior design is the core service, supported by full planning and licensing guidance for building and business projects.",
+      "featuredBadge": "Featured service",
+      "learnMore": "Learn more",
+      "highlights": {
+        "0": "Personal guidance at every stage",
+        "1": "Structured process and time savings",
+        "2": "Experience and professionalism",
+        "3": "Precise design for impressive spaces"
+      },
+      "interiorDesign": {
+        "title": "Interior design",
+        "description": "Precise planning and interior design for homes, apartments, and businesses - from concept to a complete, functional, and inspiring space."
+      },
+      "buildingLicensing": {
+        "title": "Building planning & licensing",
+        "description": "Professional support with drawings, authority submissions, and licensing workflows through final approvals."
+      },
+      "businessLicensing": {
+        "title": "Business planning & licensing",
+        "description": "Commercial space planning aligned with licensing requirements, with a structured process that saves time and reduces uncertainty."
+      }
+    },
+    "about": {
+      "eyebrow": "About",
+      "name": "Guy Tzruya",
+      "subtitle": "Planning with personal thought",
+      "body1": "A unique blend of architecture and interior design, seeing the full picture from initial planning through finishing details.",
+      "body2": "My approach is built on precision, quality materials, and full transparency throughout the journey.",
+      "learnMore": "Learn more",
+      "signature": "Guy Tzruya",
+      "role": "Architect & interior designer",
+      "portraitAlt": "Guy Tzruya — architect and interior designer",
+      "features": {
+        "0": {
+          "title": "Precise design",
+          "desc": "Tailored design aligned with how you live"
+        },
+        "1": {
+          "title": "Experience & craft",
+          "desc": "Years of expertise in planning and interiors"
+        },
+        "2": {
+          "title": "Structured process",
+          "desc": "Full transparency and rigorous planning"
+        },
+        "3": {
+          "title": "Personal guidance",
+          "desc": "Close support at every project stage"
+        }
+      }
+    },
+    "projects": {
+      "eyebrow": "Selected projects",
+      "title": "Clean lines. Precise materials. A flawless result.",
+      "lead": "A curated selection of interior and architecture projects — precise process, rich material language, and results that feel right in every detail.",
+      "learnMore": "All projects",
+      "viewProject": "View project",
+      "items": {
+        "maklaf": {
+          "title": "Maklaf",
+          "summary": "An interior project focused on clear spatial flow and a clean design language tailored to everyday living.",
+          "imageAlt": "Maklaf interior design project"
+        },
+        "shaki": {
+          "title": "Avner Chayishaki",
+          "summary": "A contractor apartment re-planned and fully redesigned with emphasis on comfort, natural light, and detail accuracy.",
+          "imageAlt": "Avner Chayishaki interior design project"
+        }
+      }
+    },
+    "contact": {
+      "eyebrow": "Let's begin",
+      "titlePrefix": "Every project starts with a ",
+      "titleAccent": "good conversation",
+      "lead1": "You're welcome to write, call, or leave your details.",
+      "lead2": "We'd love to get to know you and turn your vision into reality.",
+      "channels": {
+        "hours": {
+          "title": "Hours",
+          "line1": "Sun–Thu 09:00–18:00",
+          "line2": "By appointment"
+        },
+        "phone": {
+          "title": "Phone",
+          "line1": "054-528-7755",
+          "line2": "Give us a call"
+        },
+        "email": {
+          "title": "Email",
+          "line1": "guytzruya@gmail.com",
+          "line2": "Send us an email"
+        },
+        "office": {
+          "title": "Studio",
+          "line1": "Jerusalem, Israel",
+          "line2": "Coffee on us?"
+        }
+      }
+    }
+  },
+  "About": {
+    "metaTitle": "About — Guy Tzruya",
+    "metaDescription": "Meet Guy Tzruya — personal story, professional journey, and values in architecture and interior design.",
+    "heroEyebrow": "Welcome",
+    "heroTitle": "About",
+    "heroSubtitle": "Architecture, interior design & professional guidance",
+    "heroLead": "An invitation to discover the personal and professional story — from first concept to a space that feels right in every detail.",
+    "heroScroll": "SCROLL",
+    "heroScrollCta": "Scroll down",
+    "heroFeatures": {
+      "0": { "label": "Precise planning" },
+      "1": { "label": "Meticulous design" },
+      "2": { "label": "Material selection" },
+      "3": { "label": "Personal guidance" }
+    },
+    "portraitAlt": "Guy Tzruya — architecture & interior design",
+    "portraitFallback": "Guy Tzruya",
+    "storyEyebrow": "The story",
+    "storyTitle": "My personal story",
+    "storyLead": "I believe good architecture starts with listening — to needs, daily life, and the dream of those who live in the space.",
+    "storyBody": "I'm Guy Tzruya, architect and interior designer. Over the years I've guided diverse projects — from residential homes to commercial spaces — with planning precision, quality materials, and a living experience that feels natural.\n\nMy approach combines accurate architectural planning with interior design that serves real life: the right layout, lighting, materials, and details that create lasting coherence.",
+    "storyQuote": "Every project begins with listening — and ends in a space that feels whole.",
+    "stats": {
+      "0": { "value": "15+", "label": "Years of experience" },
+      "1": { "value": "50+", "label": "Projects" },
+      "2": { "value": "3", "label": "Areas of expertise" },
+      "3": { "value": "1", "label": "Personal guidance" }
+    },
+    "journeyEyebrow": "The journey",
+    "journeyTitle": "My professional journey",
+    "journeyLead": "Key milestones along the way — from studies to end-to-end client guidance.",
+    "journeyProgressLabel": "Journey progress",
+    "journeySteps": {
+      "0": {
+        "year": "2010",
+        "title": "Where it began",
+        "body": "Architecture and design studies — building foundations in planning, materials, and architectural detail."
+      },
+      "1": {
+        "year": "2014",
+        "title": "Field experience",
+        "body": "Studio work and residential projects — from concept through on-site execution."
+      },
+      "2": {
+        "year": "2018",
+        "title": "Full interior design",
+        "body": "Expanded service to complete interiors — materials, lighting, furniture, and a unified atmosphere."
+      },
+      "3": {
+        "year": "2022",
+        "title": "Planning & licensing",
+        "body": "Authority liaison, permits, and drawings — transparent integration of bureaucracy and design."
+      },
+      "4": {
+        "year": "Today",
+        "title": "Guy Tzruya studio",
+        "body": "Independent practice — architecture, interiors, and visualization — personal end-to-end guidance."
+      }
+    },
+    "valuesEyebrow": "Values",
+    "valuesTitle": "Values & philosophy",
+    "valuesLead": "The approach behind every project — professionalism, transparency, and spaces that feel right.",
+    "values": {
+      "0": {
+        "title": "Precision & professionalism",
+        "body": "Accurate planning, clear documents, and transparent guidance at every stage."
+      },
+      "1": {
+        "title": "Genuine listening",
+        "body": "Understanding needs, routine, and vision — before the first line is drawn."
+      },
+      "2": {
+        "title": "Spatial wholeness",
+        "body": "Layout, materials, lighting, and details that create a unified, comfortable living experience."
+      }
+    },
+    "testimonialsEyebrow": "Testimonials",
+    "testimonialsTitle": "Client recommendations",
+    "testimonialsLead": "From clients who experienced the process and the result — in their own words.",
+    "ctaEyebrow": "Let's talk",
+    "ctaTitle": "Join our journey",
+    "ctaLead": "Whether you're planning a renovation, a new project, or a professional partnership — we'd love to hear from you.",
+    "ctaButton": "Start a conversation",
+    "ctaSocialLabel": "Follow us",
+    "ctaSocialInstagram": "Instagram",
+    "ctaSocialFacebook": "Facebook",
+    "ctaSocialLinkedin": "LinkedIn",
+    "ctaSocialWhatsapp": "WhatsApp",
+    "ctaSocialYoutube": "YouTube"
+  },
+  "Contact": {
+    "metaTitle": "Contact — Guy Tzruya",
+    "metaDescription": "Get in touch with Guy Tzruya — phone, WhatsApp, email, and a message form. We'd love to hear about your project.",
+    "heroEyebrow": "Welcome",
+    "heroTitle": "Contact",
+    "heroLead": "Reach out anytime — we'd love to hear about your project, answer questions, and schedule an initial conversation.",
+    "contactHeadline": "Let's create something precise for you",
+    "contactIntro": "Every project begins with listening. Tell us about your vision, and we'll be happy to guide you through the process.",
+    "heroScrollCta": "Scroll down",
+    "detailsEyebrow": "Get in touch",
+    "detailsTitle": "Contact details",
+    "detailsLead": "Choose what works best — we're available by phone, WhatsApp, and email.",
+    "details": {
+      "whatsapp": {
+        "title": "WhatsApp",
+        "hint": "Send a WhatsApp message"
+      },
+      "phone": {
+        "title": "Phone",
+        "hint": "Give us a call"
+      },
+      "email": {
+        "title": "Email",
+        "hint": "Send us an email"
+      }
+    },
+    "formEyebrow": "Write to us",
+    "formTitle": "Contact form",
+    "formLead": "Fill in your details and we'll get back to you soon.",
+    "formNameLabel": "Name",
+    "formNamePlaceholder": "Your full name",
+    "phoneFieldLabel": "Phone",
+    "formEmailLabel": "Email",
+    "formEmailPlaceholder": "name@example.com",
+    "formMessageLabel": "Message",
+    "formMessagePlaceholder": "Tell us about your project or question…",
+    "formSubmit": "Send",
+    "formSuccess": "Your email app should open — send the message to finish.",
+    "formMailSubject": "Contact — {name}",
+    "formMailBody": "Name: {name}\nPhone: {phone}\nEmail: {email}\n\n{message}",
+    "studioTitle": "Studio",
+    "studioValue": "Jerusalem, Israel",
+    "socialEyebrow": "Follow us",
+    "socialTitle": "Social media",
+    "socialLead": "Updates, inspiration, and studio projects — on every channel.",
+    "socialInstagram": "Instagram",
+    "socialFacebook": "Facebook",
+    "socialLinkedin": "LinkedIn",
+    "socialWhatsapp": "WhatsApp",
+    "socialYoutube": "YouTube"
   }
 }

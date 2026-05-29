@@ -8,7 +8,12 @@ import {
   useSyncExternalStore,
 } from "react";
 import type { Scene } from "@/lib/scene-storage";
-import { SCENE_STORAGE_KEY, isScene } from "@/lib/scene-storage";
+import {
+  DEFAULT_SCENE,
+  SCENE_STORAGE_KEY,
+  SCENE_TOGGLE_ENABLED,
+  isScene,
+} from "@/lib/scene-storage";
 
 const SCENE_EVENT = "gt-scene-change";
 
@@ -20,9 +25,10 @@ type SceneContextValue = {
 const SceneContext = createContext<SceneContextValue | null>(null);
 
 function readSceneFromDom(): Scene {
-  if (typeof document === "undefined") return "night";
+  if (!SCENE_TOGGLE_ENABLED) return DEFAULT_SCENE;
+  if (typeof document === "undefined") return DEFAULT_SCENE;
   const v = document.documentElement.getAttribute("data-scene");
-  return isScene(v) ? v : "night";
+  return isScene(v) ? v : DEFAULT_SCENE;
 }
 
 function subscribe(onChange: () => void) {
@@ -33,7 +39,7 @@ function subscribe(onChange: () => void) {
 }
 
 function getServerSnapshot(): Scene {
-  return "night";
+  return DEFAULT_SCENE;
 }
 
 export function SceneProvider({ children }: { children: React.ReactNode }) {
@@ -44,6 +50,7 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
   );
 
   const setScene = useCallback((next: Scene) => {
+    if (!SCENE_TOGGLE_ENABLED) return;
     document.documentElement.setAttribute("data-scene", next);
     try {
       localStorage.setItem(SCENE_STORAGE_KEY, next);

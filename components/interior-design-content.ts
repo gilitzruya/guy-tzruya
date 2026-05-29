@@ -12,6 +12,10 @@ export type InteriorProcessStep = {
 
 export const INTERIOR_STYLES_TITLE = "סגנונות עיצוב פנים מובילים (2026)";
 
+export function findInteriorStyle(slug: string): InteriorStyle | undefined {
+  return INTERIOR_STYLES.find((s) => s.slug === slug);
+}
+
 export const INTERIOR_STYLES: InteriorStyle[] = [
   {
     slug: "modern-minimalist",
@@ -64,7 +68,12 @@ export const INTERIOR_STYLES: InteriorStyle[] = [
   },
 ];
 
-export const INTERIOR_PROCESS_TITLE = "תהליך עיצוב פנים";
+export const INTERIOR_PROCESS_EYEBROW = "PROCESS";
+export const INTERIOR_PROCESS_TITLE = "תהליך העבודה שלנו";
+export const INTERIOR_PROCESS_SUBTITLE =
+  "מתכנון ראשוני ועד מסירת חלל מושלם — ליווי מלא, מדויק ומוקפד בכל שלב.";
+export const INTERIOR_PROCESS_CTA_LEAD = "בואו נתחיל לתכנן את החלל שלכם";
+export const INTERIOR_PROCESS_CTA_BUTTON = "לקביעת פגישת ייעוץ";
 
 export const INTERIOR_PROCESS_STEPS: InteriorProcessStep[] = [
   {

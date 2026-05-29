@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useTranslations } from "next-intl";
 import { useScene } from "@/components/scene-provider";
 
-function HeaderSunGraphic() {
+function HeaderLampGraphic({ lit }: { lit: boolean }) {
   return (
     <svg
       viewBox="0 0 128 128"
@@ -19,10 +19,12 @@ function HeaderSunGraphic() {
       <path
         d="M77.547 113.65H49.591v-4.279h27.956v4.279zm0-11.711H49.591v4.279h27.956v-4.279zm38.587-32.576-12.209-3.271.92-3.434 12.209 3.271-.92 3.434zm-104.268 0-.92-3.434 12.209-3.271.92 3.434-12.209 3.271zm92.979-24.913-.92-3.434 12.209-3.272.92 3.434-12.209 3.272zm-81.69 0-12.209-3.272.92-3.434 12.209 3.272-.92 3.434zM94.82 25.247l-2.514-2.514 8.938-8.938 2.514 2.514-8.938 8.938zm-61.64 0-8.937-8.938 2.514-2.514 8.937 8.938-2.514 2.514zm43.358-11.618-3.434-.92L76.376.5l3.434.92-3.272 12.209zm-25.076 0L48.191 1.42 51.625.5l3.272 12.209-3.435.92z"
         fill="#a7a79b"
+        className={`transition-opacity duration-700 ${lit ? "opacity-100" : "opacity-0"}`}
       />
       <path
         d="M59.802 64.141h7.535v34.934h-7.535V64.141zm3.767-44.754c-18.485-.53-33.631 14.817-33.631 33.824 0 9.781 4.016 18.581 10.431 24.753 5.637 5.423 9.222 13.147 9.222 21.111h7.84V64.141H51.75c-4.44 0-8.051-3.612-8.051-8.051s3.612-8.051 8.051-8.051 8.052 3.612 8.052 8.051v5.681h7.535V56.09c0-4.44 3.612-8.051 8.052-8.051 4.44 0 8.051 3.612 8.051 8.051s-3.612 8.051-8.051 8.051h-5.682v34.934h7.84c0-7.964 3.584-15.688 9.222-21.111C93.184 71.792 97.2 62.992 97.2 53.211c0-19.008-15.146-34.355-33.631-33.824zM51.75 50.408a5.687 5.687 0 0 0-5.681 5.681 5.687 5.687 0 0 0 5.681 5.681h5.682v-5.681a5.688 5.688 0 0 0-5.682-5.681zM75.389 61.77h-5.682v-5.681a5.688 5.688 0 0 1 5.682-5.681 5.687 5.687 0 0 1 5.681 5.681 5.687 5.687 0 0 1-5.681 5.681z"
-        fill="#ffffff"
+        fill={lit ? "#ffffff" : "#7a7a74"}
+        className="transition-[fill] duration-700"
       />
     </svg>
   );
@@ -47,9 +49,13 @@ export function SceneToggle() {
       />
       <label
         htmlFor={checkboxId}
-        className="relative z-[1] flex w-fit cursor-pointer rounded-full bg-[rgb(46,46,46)] p-2.5 transition-all duration-[700ms] peer-checked:bg-[rgb(161,91,0)] peer-checked:shadow-[0px_0px_100px_rgb(255,196,0)]"
+        className={`relative z-[1] flex w-fit cursor-pointer rounded-full p-2.5 transition-all duration-[700ms] ${
+          scene === "night"
+            ? "bg-[rgb(161,91,0)] shadow-[0px_0px_100px_rgb(255,196,0)]"
+            : "bg-[rgb(46,46,46)] shadow-none"
+        }`}
       >
-        <HeaderSunGraphic />
+        <HeaderLampGraphic lit={scene === "night"} />
       </label>
       <span
         id={tooltipId}

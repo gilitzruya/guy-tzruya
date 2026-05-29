@@ -1,5 +1,6 @@
 import { HomeHero } from "@/components/home-hero";
 import { HomeJsonLd } from "@/components/home-json-ld";
+import { HomePage as HomeSections } from "@/components/home-page";
 
 export default async function HomePage({
   params,
@@ -12,6 +13,7 @@ export default async function HomePage({
     <>
       <HomeJsonLd locale={locale} />
       <HomeHero />
+      <HomeSections />
     </>
   );
 }

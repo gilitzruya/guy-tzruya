@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Assistant, Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
-import { SCENE_STORAGE_KEY } from "@/lib/scene-storage";
+import { DEFAULT_SCENE, SCENE_STORAGE_KEY, SCENE_TOGGLE_ENABLED } from "@/lib/scene-storage";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -27,7 +27,9 @@ type Props = {
   children: ReactNode;
 };
 
-const sceneBootstrap = `(function(){try{var k=${JSON.stringify(SCENE_STORAGE_KEY)},s=localStorage.getItem(k);if(s==="day"||s==="night")document.documentElement.setAttribute("data-scene",s);else document.documentElement.setAttribute("data-scene","night");}catch(e){document.documentElement.setAttribute("data-scene","night");}})();`;
+const sceneBootstrap = SCENE_TOGGLE_ENABLED
+  ? `(function(){try{var k=${JSON.stringify(SCENE_STORAGE_KEY)},s=localStorage.getItem(k);if(s==="day"||s==="night")document.documentElement.setAttribute("data-scene",s);else document.documentElement.setAttribute("data-scene",${JSON.stringify(DEFAULT_SCENE)});}catch(e){document.documentElement.setAttribute("data-scene",${JSON.stringify(DEFAULT_SCENE)});}})();`
+  : `(function(){try{document.documentElement.setAttribute("data-scene",${JSON.stringify(DEFAULT_SCENE)});}catch(e){}})();`;
 
 export default function RootLayout({ children }: Props) {
   return (

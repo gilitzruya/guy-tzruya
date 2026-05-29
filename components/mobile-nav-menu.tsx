@@ -9,15 +9,25 @@ import {
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { NavChevron } from "@/components/nav-chevron";
+import {
+  HEADER_NAV_LINKS,
+  HEADER_NAV_LINKS_AFTER_SERVICES,
+  HEADER_SERVICE_LINKS,
+} from "@/lib/header-nav";
 
 export function MobileNavMenu() {
   const t = useTranslations("Header");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const panelId = useId();
 
   useEffect(() => {
-    startTransition(() => setOpen(false));
+    startTransition(() => {
+      setOpen(false);
+      setServicesOpen(false);
+    });
   }, [pathname]);
 
   useEffect(() => {
@@ -37,6 +47,9 @@ export function MobileNavMenu() {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
+
+  const linkClass =
+    "rounded-lg py-3.5 ps-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]";
 
   return (
     <div className="md:hidden">
@@ -93,37 +106,59 @@ export function MobileNavMenu() {
             className="absolute end-0 top-0 flex h-[100svh] w-[min(20rem,calc(100vw-3rem))] flex-col gap-8 border-[color-mix(in_oklab,var(--color-text)_14%,transparent)] border-s bg-[var(--color-bg)] px-6 py-8 pb-10 shadow-xl"
           >
             <nav className="flex flex-col gap-1">
-              <Link
-                href="/"
-                className="rounded-lg py-3.5 ps-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
-                onClick={() => setOpen(false)}
-              >
-                {t("navHome")}
-              </Link>
-              <Link
-                href="/interior-design"
-                className="rounded-lg py-3.5 ps-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
-                onClick={() => setOpen(false)}
-              >
-                {t("navInteriorDesign")}
-              </Link>
-              <Link
-                href="/projects"
-                className="rounded-lg py-3.5 ps-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
-                onClick={() => setOpen(false)}
-              >
-                {t("navProjects")}
-              </Link>
-            </nav>
-
-            <div className="mt-auto flex flex-col gap-3 border-[color-mix(in_oklab,var(--color-text)_12%,transparent)] border-t pt-6">
-              <p className="ps-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--color-text)]/55">
-                {t("langSwitcherNavLabel")}
-              </p>
-              <div className="ps-1">
-                <LanguageSwitcher />
+              {HEADER_NAV_LINKS.map(({ href, labelKey }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={linkClass}
+                  onClick={() => setOpen(false)}
+                >
+                  {t(labelKey)}
+                </Link>
+              ))}
+              <div className="rounded-lg">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between rounded-lg py-3.5 ps-2 pe-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
+                  onClick={() => setServicesOpen((prev) => !prev)}
+                  aria-expanded={servicesOpen}
+                >
+                  <span>{t("navServices")}</span>
+                  <NavChevron open={servicesOpen} className="h-4 w-4" />
+                </button>
+                {servicesOpen ? (
+                  <div className="flex flex-col gap-1 pb-1 ps-4">
+                    {HEADER_SERVICE_LINKS.map(({ href, labelKey }) => (
+                      <Link
+                        key={href}
+                        href={href}
+                        className="rounded-lg py-2.5 ps-3 text-base font-medium text-[var(--color-text)]/90 transition-colors hover:text-[var(--color-accent)]"
+                        onClick={() => {
+                          setServicesOpen(false);
+                          setOpen(false);
+                        }}
+                      >
+                        {t(labelKey)}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
               </div>
-            </div>
+              {HEADER_NAV_LINKS_AFTER_SERVICES.map(({ href, labelKey }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={linkClass}
+                  onClick={() => setOpen(false)}
+                >
+                  {t(labelKey)}
+                </Link>
+              ))}
+              <LanguageSwitcher
+                variant="mobile"
+                onNavigate={() => setOpen(false)}
+              />
+            </nav>
           </aside>
         </div>
       ) : null}

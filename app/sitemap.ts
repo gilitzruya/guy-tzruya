@@ -5,10 +5,14 @@ import { getSiteUrl } from "@/lib/site-url";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
 
-  return routing.locales.map((locale) => ({
-    url: `${base}/${locale}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 1,
-  }));
+  const paths = ["", "/about", "/contact"] as const;
+
+  return routing.locales.flatMap((locale) =>
+    paths.map((path) => ({
+      url: `${base}/${locale}${path}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: path === "" ? 1 : 0.8,
+    })),
+  );
 }

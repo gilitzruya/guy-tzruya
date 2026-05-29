@@ -8,7 +8,7 @@ export async function HomeHero() {
     <HomeHeroClient
       brandLine1={t("brandLine1")}
       brandLine2={t("brandLine2")}
-      ctaLabel={t("cta")}
+      scrollCtaLabel={t("scrollCta")}
       imageAlt={t("imageAlt")}
     />
   );

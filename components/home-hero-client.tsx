@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import {
-  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
+import { useLocale } from "next-intl";
 import { useScene } from "@/components/scene-provider";
 
 /** Crossfade wall clock: illustration opacity 1 → 0 over this duration (starts immediately, no black gate). */
@@ -47,7 +47,7 @@ type Props = {
   /** English lockup — same copy in both locales */
   brandLine1: string;
   brandLine2: string;
-  ctaLabel: string;
+  scrollCtaLabel: string;
   imageAlt: string;
 };
 
@@ -82,15 +82,16 @@ function usePrefersReducedMotion() {
 export function HomeHeroClient({
   brandLine1,
   brandLine2,
-  ctaLabel,
+  scrollCtaLabel,
   imageAlt,
 }: Props) {
   const { scene } = useScene();
+  const locale = useLocale();
+  const isRtl = locale === "he";
   const isDesktop = useIsDesktop();
   const reducedMotion = usePrefersReducedMotion();
 
   const [phase, setPhase] = useState<Phase>("drawing");
-  const [introDone, setIntroDone] = useState(false);
   /** 0 = illustration fully visible, 1 = illustration fully faded (eased). */
   const [revealProgress, setRevealProgress] = useState(0);
   const rafRef = useRef<number>(0);
@@ -109,10 +110,6 @@ export function HomeHeroClient({
       ? "/hero/mobile-illustration.webp"
       : "/hero/desktop-illustration.webp";
 
-  const finishIntro = useCallback(() => {
-    setIntroDone(true);
-  }, []);
-
   useEffect(() => {
     if (isDesktop === null) return;
 
@@ -125,13 +122,11 @@ export function HomeHeroClient({
       if (reducedMotion) {
         setPhase("done");
         setRevealProgress(1);
-        finishIntro();
         return;
       }
 
       setPhase("drawing");
       setRevealProgress(0);
-      setIntroDone(false);
       introVisuallyCompleteRef.current = false;
 
       introTimersRef.current.done = window.setTimeout(() => {
@@ -140,7 +135,6 @@ export function HomeHeroClient({
         introVisuallyCompleteRef.current = true;
         setPhase("done");
         setRevealProgress(1);
-        finishIntro();
       }, CROSSFADE_MS);
     });
 
@@ -151,7 +145,7 @@ export function HomeHeroClient({
       introTimersRef.current = {};
       cancelAnimationFrame(rafRef.current);
     };
-  }, [isDesktop, reducedMotion, finishIntro]);
+  }, [isDesktop, reducedMotion]);
 
   useEffect(() => {
     if (phase !== "drawing" || reducedMotion || isDesktop === null) {
@@ -180,7 +174,6 @@ export function HomeHeroClient({
         }
         setPhase("done");
         setRevealProgress(1);
-        finishIntro();
         return;
       }
 
@@ -194,7 +187,7 @@ export function HomeHeroClient({
     return () => {
       cancelAnimationFrame(rafRef.current);
     };
-  }, [phase, reducedMotion, isDesktop, finishIntro]);
+  }, [phase, reducedMotion, isDesktop]);
 
   const showPhoto = phase === "done";
   const illustrationOpacity = 1 - revealProgress;
@@ -210,13 +203,11 @@ export function HomeHeroClient({
       ? "[paint-order:stroke_fill] [-webkit-text-stroke:0.55px_rgb(0_0_0/_0.65)] [text-shadow:0_0_18px_rgb(0_0_0/_0.92),0_1px_8px_rgb(0_0_0/_0.7),0_0_4px_rgb(255_255_255/_0.1)]"
       : "[paint-order:stroke_fill] [-webkit-text-stroke:0.7px_rgb(255_255_255/_0.98)] [text-shadow:0_0_24px_rgb(255_255_255/_0.98),0_1px_10px_rgb(0_0_0/_0.45),0_2px_26px_rgb(255_255_255/_0.65)]";
 
-  const textReveal = `transition-opacity duration-300 ease-out ${
-    introDone ? "opacity-100" : "opacity-0"
-  }`;
+  const contentVisible = showPhoto;
 
   return (
     <section
-      className="relative min-h-[100svh] overflow-hidden"
+      className="home-hero relative min-h-[100svh] overflow-hidden"
       aria-labelledby="hero-heading"
     >
       <div className="absolute inset-0" aria-hidden>
@@ -251,11 +242,15 @@ export function HomeHeroClient({
       </div>
 
       <div
-        className={`relative z-20 flex min-h-[100svh] flex-col pt-16 ${textReveal}`}
+        className={`relative z-20 flex min-h-[100svh] flex-col pt-16 ${
+          contentVisible
+            ? "opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
       >
-        <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-4 pb-16 sm:px-6 sm:pb-20">
+        <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-4 sm:px-6">
           <div
-            className="mx-auto flex w-full max-w-5xl flex-col items-center gap-10 text-center [font-family:var(--font-plus-jakarta),ui-sans-serif,system-ui,sans-serif]"
+            className="mx-auto flex w-full max-w-5xl flex-col items-center text-center [font-family:var(--font-plus-jakarta),ui-sans-serif,system-ui,sans-serif]"
             dir="ltr"
           >
             <h1 id="hero-heading" className="contents text-[var(--color-text)]">
@@ -265,18 +260,38 @@ export function HomeHeroClient({
                 {brandLine1}
               </span>
               <span
-                className={`block font-medium uppercase text-[clamp(0.65rem,2.35vw,1.12rem)] leading-snug tracking-[0.42em] [word-spacing:0.6em] ${heroSubtitleFx}`}
+                className={`mt-4 block font-medium uppercase text-[clamp(0.65rem,2.35vw,1.12rem)] leading-snug tracking-[0.42em] [word-spacing:0.6em] sm:mt-5 ${heroSubtitleFx}`}
               >
                 {brandLine2}
               </span>
             </h1>
-            <a
-              href="mailto:studio@guytzruya.com?subject=Project%20inquiry"
-              className="inline-flex min-h-[48px] min-w-[min(100%,12rem)] shrink-0 items-center justify-center rounded-full bg-[var(--color-accent)] px-8 text-base font-semibold text-[var(--color-bg)] transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-            >
-              {ctaLabel}
-            </a>
           </div>
+        </div>
+
+        <div className="flex shrink-0 justify-center px-4 pb-10 sm:px-6 sm:pb-12">
+          <a
+            href="#home-services"
+            className="about-hero__scroll-cta"
+            dir={isRtl ? "rtl" : "ltr"}
+          >
+            <span>{scrollCtaLabel}</span>
+            <svg
+              className="about-hero__scroll-cta-arrow scroll-arrow-hint"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden
+            >
+              <path
+                d="M12 5v14M6 13l6 6 6-6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </section>

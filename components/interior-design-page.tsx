@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import {
+  type CSSProperties,
   useCallback,
   useEffect,
   useId,
@@ -11,12 +13,14 @@ import {
   useState,
 } from "react";
 import { useScene } from "@/components/scene-provider";
-import {
-  INTERIOR_STYLES,
-  INTERIOR_STYLES_TITLE,
-} from "@/components/interior-design-content";
+import { INTERIOR_STYLES } from "@/components/interior-design-content";
 import { InteriorDesignProcessSection } from "@/components/interior-design-process-section";
-import { interiorDesignPageBackgroundStyle } from "@/lib/interior-page-background";
+import { TypewriterText } from "@/components/typewriter-text";
+import {
+  interiorDesignHeroImageUrl,
+  interiorDesignPageBackgroundUrl,
+  interiorDesignPageBackgroundStyle,
+} from "@/lib/interior-page-background";
 
 /**
  * Align with gallery layout (`lg:grid-cols-2` = min-width 1024px).
@@ -124,6 +128,14 @@ export function InteriorDesignPage() {
     () => interiorDesignPageBackgroundStyle(scene),
     [scene],
   );
+  const processHeaderBgVar = useMemo(
+    () =>
+      ({
+        "--bl-header-bg-url": `url("${interiorDesignPageBackgroundUrl(scene)}")`,
+      }) as CSSProperties,
+    [scene],
+  );
+  const heroImageSrc = interiorDesignHeroImageUrl(scene);
   const [cardSceneBySlug, setCardSceneBySlug] = useState<Record<string, CardScene>>({});
   const [lightboxSlug, setLightboxSlug] = useState<string | null>(null);
   const lightboxTitleId = useId();
@@ -179,18 +191,25 @@ export function InteriorDesignPage() {
   }, []);
 
   const heroTitleFx =
-    scene === "night"
-      ? "[paint-order:stroke_fill] [-webkit-text-stroke:0.4px_rgb(0_0_0/_0.55)] [text-shadow:0_0_22px_rgb(0_0_0/_0.88),0_2px_12px_rgb(0_0_0/_0.6),0_0_6px_rgb(255_255_255/_0.12)]"
-      : "[paint-order:stroke_fill] [-webkit-text-stroke:0.5px_rgb(255_255_255/_0.95)] [text-shadow:0_0_28px_rgb(255_255_255/_0.92),0_1px_10px_rgb(0_0_0/_0.38),0_2px_34px_rgb(255_255_255/_0.55)]";
+    scene === "night" || scene === "day"
+    ? "[paint-order:stroke_fill] [-webkit-text-stroke:0.4px_rgb(0_0_0/_0.55)] [text-shadow:0_0_22px_rgb(0_0_0/_0.88),0_2px_12px_rgb(0_0_0/_0.6),0_0_6px_rgb(255_255_255/_0.12)]"
+    : "";
   const heroSubtitleFx =
-    scene === "night"
-      ? "[paint-order:stroke_fill] [-webkit-text-stroke:0.55px_rgb(0_0_0/_0.65)] [text-shadow:0_0_18px_rgb(0_0_0/_0.92),0_1px_8px_rgb(0_0_0/_0.7),0_0_4px_rgb(255_255_255/_0.1)]"
-      : "[paint-order:stroke_fill] [-webkit-text-stroke:0.7px_rgb(255_255_255/_0.98)] [text-shadow:0_0_24px_rgb(255_255_255/_0.98),0_1px_10px_rgb(0_0_0/_0.45),0_2px_26px_rgb(255_255_255/_0.65)]";
+    scene === "night" || scene === "day"
+    ? "[paint-order:stroke_fill] [-webkit-text-stroke:0.55px_rgb(0_0_0/_0.65)] [text-shadow:0_0_18px_rgb(0_0_0/_0.92),0_1px_8px_rgb(0_0_0/_0.7),0_0_4px_rgb(255_255_255/_0.1)]"
+    : "";
 
   const subtitleLang = locale === "he" ? "he" : "en";
 
+  const heroGhostBtn =
+    scene === "day"
+      ? "inline-flex min-h-[3rem] min-w-[10.5rem] items-center justify-center border border-white/55 bg-black/15 px-6 text-center text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[3px] transition-[background-color,border-color] hover:border-white/80 hover:bg-black/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:min-h-[3.25rem] sm:px-8 sm:text-[0.8125rem]"
+      : "inline-flex min-h-[3rem] min-w-[10.5rem] items-center justify-center border border-[color-mix(in_oklab,var(--color-text)_50%,transparent)] bg-transparent px-6 text-center text-xs font-medium uppercase tracking-[0.22em] text-[var(--color-text)] backdrop-blur-[2px] transition-[background-color,border-color] hover:border-[color-mix(in_oklab,var(--color-text)_75%,transparent)] hover:bg-[color-mix(in_oklab,var(--color-text)_6%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:min-h-[3.25rem] sm:px-8 sm:text-[0.8125rem]";
+  const styleCardGhostBtn =
+    "inline-flex min-h-[38px] items-center justify-center rounded-none border border-[color-mix(in_oklab,var(--color-text)_40%,transparent)] bg-transparent px-4 text-sm font-medium text-[var(--color-text)] transition-[background-color,border-color] hover:border-[color-mix(in_oklab,var(--color-text)_72%,transparent)] hover:bg-[color-mix(in_oklab,var(--color-text)_6%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]";
+
   return (
-    <div className="relative">
+    <div className="relative" style={processHeaderBgVar}>
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         style={pageBgStyle}
@@ -198,32 +217,114 @@ export function InteriorDesignPage() {
       />
       <section
         aria-labelledby={interiorHeroHeadingId}
-        className="mx-auto w-full max-w-6xl px-4 pb-8 sm:px-6"
+        className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden"
       >
-        <div className="flex flex-col justify-center pb-8 pt-28 sm:pt-32 lg:min-h-[50svh] lg:pb-10 lg:pt-28">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <Image
+            src={heroImageSrc}
+            alt=""
+            fill
+            priority
+            unoptimized
+            sizes="100vw"
+            className={`interior-hero-image${scene === "day" ? " interior-hero-image--day" : ""}`}
+            key={heroImageSrc}
+          />
+          {scene === "day" ? (
+            <div className="absolute inset-0 bg-black/40" />
+          ) : null}
+          <div
+            className={`absolute inset-0 ${
+              scene === "night"
+                ? "bg-gradient-to-b from-black/50 via-black/35 to-[color-mix(in_oklab,var(--color-bg)_72%,transparent)]"
+                : "bg-gradient-to-b from-black/55 via-black/40 to-black/30"
+            }`}
+          />
+        </div>
+        <div
+          className={`relative z-10 mx-auto flex min-h-[min(72svh,44rem)] w-full max-w-6xl flex-col justify-start px-4 pb-6 pt-40 sm:px-6 sm:pt-44 lg:pb-8 lg:pt-48 ${
+            scene === "day" ? "text-white" : "text-[var(--color-text)]"
+          }`}
+        >
           <div
             dir="ltr"
             className="mx-auto flex w-full max-w-5xl flex-col items-center text-center [font-family:var(--font-interior-display),ui-serif,Georgia,serif]"
           >
-            <h1 id={interiorHeroHeadingId} className="text-[var(--color-text)]">
-              <span
-                className={`block uppercase leading-[0.92] tracking-[0.14em] [word-spacing:0.35em] text-[clamp(1.75rem,6.8vw,4.25rem)] font-semibold ${heroTitleFx}`}
-              >
-                {t("heroTitle")}
-              </span>
+            <h1 id={interiorHeroHeadingId}>
+              <TypewriterText
+                text={t("heroTitle")}
+                charDelayMs={165}
+                className={`block uppercase leading-[0.92] tracking-[0.14em] [word-spacing:0.35em] text-[clamp(2rem,7.8vw,5rem)] font-semibold ${heroTitleFx}`}
+              />
             </h1>
           </div>
           <p
             lang={subtitleLang}
             dir={locale === "he" ? "rtl" : "ltr"}
-            className={`mx-auto mt-5 max-w-2xl text-pretty text-center text-base leading-7 text-[var(--color-text)]/92 sm:text-lg ${heroSubtitleFx}`}
+            className={`mx-auto mt-10 max-w-2xl text-pretty text-center text-base leading-8 opacity-92 sm:mt-12 sm:text-lg lg:mt-14 ${heroSubtitleFx}`}
           >
             {t("heroSubtitle")}
           </p>
+          <div
+            className={`mx-auto mt-10 flex w-full max-w-xl flex-wrap items-center justify-center gap-4 sm:mt-12 sm:gap-5 ${locale === "he" ? "flex-row-reverse" : ""}`}
+          >
+            <Link href="/projects" className={heroGhostBtn}>
+              {t("heroCtaExplore")}
+            </Link>
+            <Link href="/simulation" className={heroGhostBtn}>
+              {t("heroCtaStart")}
+            </Link>
+          </div>
+          <div
+            className="mx-auto mt-12 flex flex-col items-center gap-2 opacity-75 sm:mt-14 lg:mt-auto lg:pt-10"
+            aria-hidden
+          >
+            <span className="text-[0.65rem] font-medium uppercase tracking-[0.42em]">
+              {t("heroScroll")}
+            </span>
+            <svg
+              width="18"
+              height="28"
+              viewBox="0 0 18 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="scroll-arrow-hint opacity-80"
+            >
+              <path
+                d="M9 1v22M9 23l-6-6M9 23l6-6"
+                stroke="currentColor"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
-        <h2 className="mt-10 text-start text-xl font-semibold text-[var(--color-text)] sm:text-2xl">
-          {INTERIOR_STYLES_TITLE}
-        </h2>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-4 pb-8 sm:px-6">
+        <header className="border-t border-[color-mix(in_oklab,var(--color-text)_12%,transparent)] pt-14 text-center sm:pt-16">
+          <p
+            dir="ltr"
+            className="text-sm tracking-[0.35em] text-[var(--color-text)]/70 sm:text-base"
+          >
+            ( {t("stylesYear")} )
+          </p>
+          <h2
+            dir={locale === "he" ? "rtl" : "ltr"}
+            className={`mx-auto mt-4 max-w-4xl leading-[0.95] text-[clamp(1.35rem,4.5vw,2.75rem)] font-semibold text-[var(--color-text)] [font-family:var(--font-interior-display),ui-serif,Georgia,serif] ${
+              locale === "he"
+                ? "tracking-normal"
+                : "uppercase tracking-[0.12em] [word-spacing:0.28em]"
+            }`}
+          >
+            {t("stylesSectionTitle")}
+          </h2>
+          <div
+            className="mx-auto mt-5 h-px w-16 bg-[color-mix(in_oklab,var(--color-text)_35%,transparent)]"
+            aria-hidden
+          />
+        </header>
       </section>
 
       <section className="w-full px-4 pb-10 sm:px-6 sm:pb-12 lg:px-8">
@@ -256,17 +357,19 @@ export function InteriorDesignPage() {
                 </div>
               </div>
               <div className="space-y-3 pb-2 pt-4">
-                <h3 className="text-3xl font-semibold text-[var(--color-text)]">{card.title}</h3>
+                <div className="flex flex-wrap items-center gap-x-[4.5rem] gap-y-3">
+                  <h3 className="text-3xl font-semibold text-[var(--color-text)]">{card.title}</h3>
+                  <div className={`flex flex-wrap items-center gap-x-[2.25rem] gap-y-3 ${locale === "he" ? "flex-row-reverse" : ""}`}>
+                    <Link
+                      href={`/simulation?style=${card.slug}`}
+                      className={styleCardGhostBtn}
+                    >
+                      להדמיה
+                    </Link>
+                  </div>
+                </div>
                 <p className="text-lg text-[var(--color-text)]/85">{card.subtitle}</p>
                 <p className="text-base leading-7 text-[var(--color-text)]/75">{card.description}</p>
-                <button
-                  type="button"
-                  disabled
-                  aria-disabled="true"
-                  className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[var(--color-accent)] px-6 text-base font-semibold text-[var(--color-bg)] opacity-60 cursor-not-allowed"
-                >
-                  להדמיה
-                </button>
               </div>
             </article>
           ))}
