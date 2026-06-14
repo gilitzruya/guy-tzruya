@@ -7,7 +7,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { useTranslations } from "next-intl";
+import { createPortal } from "react-dom";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { NavChevron } from "@/components/nav-chevron";
@@ -19,12 +20,18 @@ import {
 
 export function MobileNavMenu() {
   const t = useTranslations("Header");
+  const locale = useLocale();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const panelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     startTransition(() => {
@@ -58,6 +65,82 @@ export function MobileNavMenu() {
 
   const linkClass =
     "rounded-lg py-3.5 ps-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]";
+
+  const overlay =
+    open && mounted ? (
+      <div className="fixed inset-0 z-[200] md:hidden">
+        <button
+          type="button"
+          aria-label={t("mobileNavClose")}
+          className="absolute inset-0 bg-[color-mix(in_oklab,var(--color-text)_38%,transparent)] backdrop-blur-[2px]"
+          onClick={() => setOpen(false)}
+        />
+        <aside
+          ref={panelRef}
+          id={panelId}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("mainNavLabel")}
+          dir={locale === "he" ? "rtl" : "ltr"}
+          className="absolute right-0 top-0 flex h-[100svh] w-[min(20rem,calc(100vw-3rem))] flex-col gap-8 overflow-y-auto border-l border-[color-mix(in_oklab,var(--color-text)_14%,transparent)] bg-[var(--color-bg)] px-6 py-8 pb-10 shadow-xl"
+        >
+          <nav className="flex flex-col gap-1">
+            {HEADER_NAV_LINKS.map(({ href, labelKey }) => (
+              <Link
+                key={href}
+                href={href}
+                className={linkClass}
+                onClick={() => setOpen(false)}
+              >
+                {t(labelKey)}
+              </Link>
+            ))}
+            <div className="rounded-lg">
+              <button
+                type="button"
+                className="flex w-full items-center justify-between rounded-lg py-3.5 ps-2 pe-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
+                onClick={() => setServicesOpen((prev) => !prev)}
+                aria-expanded={servicesOpen}
+              >
+                <span>{t("navServices")}</span>
+                <NavChevron open={servicesOpen} className="h-4 w-4" />
+              </button>
+              {servicesOpen ? (
+                <div className="flex flex-col gap-1 pb-1 ps-4">
+                  {HEADER_SERVICE_LINKS.map(({ href, labelKey }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      className="rounded-lg py-2.5 ps-3 text-base font-medium text-[var(--color-text)]/90 transition-colors hover:text-[var(--color-accent)]"
+                      onClick={() => {
+                        setServicesOpen(false);
+                        setOpen(false);
+                      }}
+                    >
+                      {t(labelKey)}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+            {HEADER_NAV_LINKS_AFTER_SERVICES.map(({ href, labelKey }) => (
+              <Link
+                key={href}
+                href={href}
+                className={linkClass}
+                onClick={() => setOpen(false)}
+              >
+                {t(labelKey)}
+              </Link>
+            ))}
+            <LanguageSwitcher
+              variant="mobile"
+              onNavigate={() => setOpen(false)}
+            />
+          </nav>
+        </aside>
+      </div>
+    ) : null;
 
   return (
     <div className="md:hidden">
@@ -99,79 +182,7 @@ export function MobileNavMenu() {
         )}
       </button>
 
-      {open ? (
-        <div className="fixed inset-0 z-[100] md:hidden">
-          <button
-            type="button"
-            aria-label={t("mobileNavClose")}
-            className="absolute inset-0 bg-[color-mix(in_oklab,var(--color-text)_38%,transparent)] backdrop-blur-[2px]"
-            onClick={() => setOpen(false)}
-          />
-          <aside
-            ref={panelRef}
-            id={panelId}
-            role="dialog"
-            aria-modal="true"
-            aria-label={t("mainNavLabel")}
-            className="absolute end-0 top-0 flex h-[100svh] w-[min(20rem,calc(100vw-3rem))] flex-col gap-8 border-[color-mix(in_oklab,var(--color-text)_14%,transparent)] border-s bg-[var(--color-bg)] px-6 py-8 pb-10 shadow-xl"
-          >
-            <nav className="flex flex-col gap-1">
-              {HEADER_NAV_LINKS.map(({ href, labelKey }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={linkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  {t(labelKey)}
-                </Link>
-              ))}
-              <div className="rounded-lg">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between rounded-lg py-3.5 ps-2 pe-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
-                  onClick={() => setServicesOpen((prev) => !prev)}
-                  aria-expanded={servicesOpen}
-                >
-                  <span>{t("navServices")}</span>
-                  <NavChevron open={servicesOpen} className="h-4 w-4" />
-                </button>
-                {servicesOpen ? (
-                  <div className="flex flex-col gap-1 pb-1 ps-4">
-                    {HEADER_SERVICE_LINKS.map(({ href, labelKey }) => (
-                      <Link
-                        key={href}
-                        href={href}
-                        className="rounded-lg py-2.5 ps-3 text-base font-medium text-[var(--color-text)]/90 transition-colors hover:text-[var(--color-accent)]"
-                        onClick={() => {
-                          setServicesOpen(false);
-                          setOpen(false);
-                        }}
-                      >
-                        {t(labelKey)}
-                      </Link>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-              {HEADER_NAV_LINKS_AFTER_SERVICES.map(({ href, labelKey }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={linkClass}
-                  onClick={() => setOpen(false)}
-                >
-                  {t(labelKey)}
-                </Link>
-              ))}
-              <LanguageSwitcher
-                variant="mobile"
-                onNavigate={() => setOpen(false)}
-              />
-            </nav>
-          </aside>
-        </div>
-      ) : null}
+      {mounted ? createPortal(overlay, document.body) : null}
     </div>
   );
 }

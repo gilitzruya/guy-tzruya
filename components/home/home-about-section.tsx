@@ -53,7 +53,7 @@ export function HomeAboutSection() {
       id="home-about"
       aria-labelledby={titleId}
       dir={isRtl ? "rtl" : "ltr"}
-      className="home-about-premium-section relative scroll-mt-24 py-16 sm:scroll-mt-28 sm:py-20 lg:py-24"
+      className="home-about-premium-section relative scroll-mt-24 py-10 sm:scroll-mt-28 sm:py-20 lg:py-24"
     >
       <div className="home-about-premium-section__veil" aria-hidden />
       <div className="home-about-premium-section__inner">
@@ -64,10 +64,26 @@ export function HomeAboutSection() {
               <span className="home-about-premium__eyebrow-line" aria-hidden />
               {t("eyebrow")}
             </p>
-            <h2 id={titleId} className="home-about-premium__name">
-              {t("name")}
-            </h2>
-            <p className="home-about-premium__subtitle">{t("subtitle")}</p>
+
+            <div className="home-about-premium__title-row">
+              <div className="home-about-premium__portrait-wrap home-about-premium__portrait-wrap--title">
+                <Image
+                  src={homeAboutPortraitSrc(scene)}
+                  alt={t("portraitAlt")}
+                  width={420}
+                  height={520}
+                  unoptimized
+                  className="home-about-premium__portrait"
+                />
+              </div>
+              <div className="home-about-premium__title-block">
+                <h2 id={titleId} className="home-about-premium__name">
+                  {t("name")}
+                </h2>
+                <p className="home-about-premium__subtitle">{t("subtitle")}</p>
+              </div>
+            </div>
+
             <div className="home-about-premium__rule" aria-hidden />
             <p className="home-about-premium__body">{t("body1")}</p>
             <p className="home-about-premium__body">{t("body2")}</p>
@@ -83,7 +99,7 @@ export function HomeAboutSection() {
 
           <div className="home-about-premium__visual">
             <div className="home-about-premium__arch-bg" aria-hidden />
-            <div className="home-about-premium__portrait-wrap">
+            <div className="home-about-premium__portrait-wrap home-about-premium__portrait-wrap--visual">
               <Image
                 src={homeAboutPortraitSrc(scene)}
                 alt={t("portraitAlt")}
