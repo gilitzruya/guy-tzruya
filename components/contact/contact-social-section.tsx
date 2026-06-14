@@ -5,27 +5,16 @@ import { useId } from "react";
 import {
   IconFacebook,
   IconInstagram,
-  IconLinkedin,
-  IconWhatsapp,
-  IconYoutube,
 } from "@/components/building-licensing-social-icons";
 import { SITE_SOCIAL, type SiteSocialPlatform } from "@/lib/site-social";
 
 const SOCIAL_LINKS: {
-  platform: SiteSocialPlatform;
+  platform: Extract<SiteSocialPlatform, "instagram" | "facebook">;
   Icon: typeof IconInstagram;
-  labelKey:
-    | "socialInstagram"
-    | "socialFacebook"
-    | "socialLinkedin"
-    | "socialWhatsapp"
-    | "socialYoutube";
+  labelKey: "socialInstagram" | "socialFacebook";
 }[] = [
   { platform: "instagram", Icon: IconInstagram, labelKey: "socialInstagram" },
   { platform: "facebook", Icon: IconFacebook, labelKey: "socialFacebook" },
-  { platform: "linkedin", Icon: IconLinkedin, labelKey: "socialLinkedin" },
-  { platform: "whatsapp", Icon: IconWhatsapp, labelKey: "socialWhatsapp" },
-  { platform: "youtube", Icon: IconYoutube, labelKey: "socialYoutube" },
 ];
 
 export function ContactSocialSection() {

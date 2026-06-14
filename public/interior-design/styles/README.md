@@ -9,7 +9,6 @@ For each style slug, add exactly these files:
 Expected slugs:
 - modern-minimalist
 - rustic-country
-- classic
 - organic-natural
 - industrial
 - high-tech-smart-home

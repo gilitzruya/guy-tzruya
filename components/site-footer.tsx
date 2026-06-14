@@ -6,9 +6,7 @@ import { Link } from "@/i18n/navigation";
 import {
   IconFacebook,
   IconInstagram,
-  IconLinkedin,
   IconWhatsapp,
-  IconYoutube,
 } from "@/components/building-licensing-social-icons";
 import { HomeContactCtaSection } from "@/components/home/home-contact-cta-section";
 import { useScene } from "@/components/scene-provider";
@@ -21,7 +19,7 @@ import {
 } from "@/lib/site-contact";
 import { SITE_SOCIAL, type SiteSocialPlatform } from "@/lib/site-social";
 
-const GILI_DEV_SITE_URL = "https://gili-s-vision.lovable.app";
+const GILI_DEV_SITE_URL = "https://gili-digital.com/";
 
 const FOOTER_NAV = [
   { href: "/", labelKey: "navHome" as const },
@@ -88,20 +86,12 @@ type FooterContactItem = {
 };
 
 const FOOTER_SOCIAL: {
-  platform: SiteSocialPlatform;
+  platform: Extract<SiteSocialPlatform, "instagram" | "facebook">;
   Icon: typeof IconInstagram;
-  labelKey:
-    | "socialInstagram"
-    | "socialFacebook"
-    | "socialLinkedin"
-    | "socialWhatsapp"
-    | "socialYoutube";
+  labelKey: "socialInstagram" | "socialFacebook";
 }[] = [
   { platform: "instagram", Icon: IconInstagram, labelKey: "socialInstagram" },
   { platform: "facebook", Icon: IconFacebook, labelKey: "socialFacebook" },
-  { platform: "linkedin", Icon: IconLinkedin, labelKey: "socialLinkedin" },
-  { platform: "whatsapp", Icon: IconWhatsapp, labelKey: "socialWhatsapp" },
-  { platform: "youtube", Icon: IconYoutube, labelKey: "socialYoutube" },
 ];
 
 export function SiteFooter() {
@@ -144,6 +134,11 @@ export function SiteFooter() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link href="/accessibility" className="site-footer__link">
+                    {t("navAccessibility")}
+                  </Link>
+                </li>
               </ul>
             </nav>
 
@@ -257,8 +252,8 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span className="site-footer__developer-name">{t("developerName")}</span>
-              <span className="site-footer__developer-sep" aria-hidden>
+              <span className="site-footer__developer-name text-white">{t("developerName")}</span>
+              <span className="site-footer__developer-sep text-white" aria-hidden>
                 {" "}
                 —{" "}
               </span>

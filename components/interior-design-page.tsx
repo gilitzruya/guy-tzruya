@@ -61,16 +61,18 @@ function DayNightToggle({
   ariaScopeName,
   scene,
   onChange,
+  ariaLabel,
 }: {
   ariaScopeName: string;
   scene: CardScene;
   onChange: (next: CardScene) => void;
+  ariaLabel: string;
 }) {
   return (
     <label
       dir="ltr"
       className="inline-flex h-[30px] w-[140px] cursor-pointer items-center rounded-full border border-black/10 bg-white/90 px-1 text-xs font-medium text-[#222] shadow-sm backdrop-blur-sm"
-      aria-label={`החלפת מצב יום/לילה עבור ${ariaScopeName}`}
+      aria-label={ariaLabel}
     >
       <input
         type="checkbox"
@@ -107,7 +109,7 @@ function DayNightToggle({
       <svg
         viewBox="0 0 16 16"
         width={23}
-        className="ms-1 shrink-0 text-amber-500"
+        className="ms-1 shrink-0 text-[#c4a574]"
         fill="currentColor"
         aria-hidden
       >
@@ -119,6 +121,7 @@ function DayNightToggle({
 
 export function InteriorDesignPage() {
   const t = useTranslations("InteriorDesign");
+  const tA11y = useTranslations("Accessibility");
   const locale = useLocale();
   const { scene } = useScene();
   const galleryViewport = useGalleryUsesDesktopImageAssets();
@@ -146,7 +149,10 @@ export function InteriorDesignPage() {
   const cards = useMemo(
     () =>
       INTERIOR_STYLES.map((style) => ({
-        ...style,
+        slug: style.slug,
+        title: t(`styles.${style.slug}.title`),
+        subtitle: t(`styles.${style.slug}.subtitle`),
+        description: t(`styles.${style.slug}.description`),
         cardScene: cardSceneBySlug[style.slug] ?? scene,
         src: buildStyleImageSrc(
           style.slug,
@@ -154,11 +160,11 @@ export function InteriorDesignPage() {
           cardSceneBySlug[style.slug] ?? scene,
         ),
       })),
-    [useDesktopStyleImages, scene, cardSceneBySlug],
+    [useDesktopStyleImages, scene, cardSceneBySlug, t],
   );
 
   const lightboxStyle = lightboxSlug
-    ? INTERIOR_STYLES.find((s) => s.slug === lightboxSlug)
+    ? cards.find((c) => c.slug === lightboxSlug)
     : undefined;
   const lightboxScene = lightboxSlug
     ? (cardSceneBySlug[lightboxSlug] ?? scene)
@@ -205,8 +211,8 @@ export function InteriorDesignPage() {
     scene === "day"
       ? "inline-flex min-h-[3rem] min-w-[10.5rem] items-center justify-center border border-white/55 bg-black/15 px-6 text-center text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[3px] transition-[background-color,border-color] hover:border-white/80 hover:bg-black/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:min-h-[3.25rem] sm:px-8 sm:text-[0.8125rem]"
       : "inline-flex min-h-[3rem] min-w-[10.5rem] items-center justify-center border border-[color-mix(in_oklab,var(--color-text)_50%,transparent)] bg-transparent px-6 text-center text-xs font-medium uppercase tracking-[0.22em] text-[var(--color-text)] backdrop-blur-[2px] transition-[background-color,border-color] hover:border-[color-mix(in_oklab,var(--color-text)_75%,transparent)] hover:bg-[color-mix(in_oklab,var(--color-text)_6%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:min-h-[3.25rem] sm:px-8 sm:text-[0.8125rem]";
-  const styleCardGhostBtn =
-    "inline-flex min-h-[38px] items-center justify-center rounded-none border border-[color-mix(in_oklab,var(--color-text)_40%,transparent)] bg-transparent px-4 text-sm font-medium text-[var(--color-text)] transition-[background-color,border-color] hover:border-[color-mix(in_oklab,var(--color-text)_72%,transparent)] hover:bg-[color-mix(in_oklab,var(--color-text)_6%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]";
+  const simulationCtaBtn =
+    "inline-flex min-h-[3rem] items-center justify-center gap-2 border border-[color-mix(in_oklab,#c4a574_80%,transparent)] bg-transparent px-8 text-sm font-medium tracking-[0.12em] text-[#c4a574] backdrop-blur-[2px] transition-[background-color,border-color,box-shadow] hover:border-[#c4a574] hover:bg-[color-mix(in_oklab,#c4a574_10%,transparent)] hover:shadow-[0_0_28px_-6px_rgba(196,165,116,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c4a574] sm:min-h-[3.25rem] sm:px-10 sm:text-[0.9375rem]";
 
   return (
     <div className="relative" style={processHeaderBgVar}>
@@ -271,7 +277,7 @@ export function InteriorDesignPage() {
             <Link href="/projects" className={heroGhostBtn}>
               {t("heroCtaExplore")}
             </Link>
-            <Link href="/simulation" className={heroGhostBtn}>
+            <Link href="/contact" className={heroGhostBtn}>
               {t("heroCtaStart")}
             </Link>
           </div>
@@ -331,7 +337,7 @@ export function InteriorDesignPage() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
           {cards.map((card) => (
             <article key={card.slug} className="overflow-hidden rounded-2xl">
-              <div className="relative w-full overflow-hidden max-lg:aspect-[16/10] max-lg:max-h-[min(52svh,420px)] lg:aspect-[16/10] lg:h-auto lg:max-h-none lg:min-h-0">
+              <div className="group relative w-full overflow-hidden max-lg:aspect-[16/10] max-lg:max-h-[min(52svh,420px)] lg:aspect-[16/10] lg:h-auto lg:max-h-none lg:min-h-0">
                 <Image
                   key={card.src}
                   src={card.src}
@@ -339,40 +345,101 @@ export function InteriorDesignPage() {
                   fill
                   unoptimized
                   sizes="(min-width: 1024px) calc((100vw - 2rem - 2rem - 1rem) / 2), 100vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05] group-focus-within:scale-[1.05] motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-focus-within:scale-100"
                   priority
                 />
                 <button
                   type="button"
-                  aria-label={`הצגת ${card.title} במסך מלא`}
-                  className="absolute inset-0 z-[1] cursor-zoom-in rounded-[inherit]"
+                  aria-label={tA11y("viewFullImage", { title: card.title })}
+                  className="absolute inset-0 z-[1] cursor-zoom-in rounded-[inherit] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
                   onClick={() => setLightboxSlug(card.slug)}
                 />
+                <div
+                  className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center bg-black/0 transition-[background-color] duration-300 group-hover:bg-black/30 group-focus-within:bg-black/30 motion-reduce:transition-none"
+                  aria-hidden
+                >
+                  <span className="flex size-14 scale-90 items-center justify-center rounded-full border border-white/75 bg-black/40 text-white opacity-0 shadow-[0_8px_32px_rgb(0_0_0/_0.35)] backdrop-blur-[6px] transition-[opacity,transform] duration-300 group-hover:scale-100 group-hover:opacity-100 group-focus-within:scale-100 group-focus-within:opacity-100 motion-reduce:scale-100 motion-reduce:opacity-100 motion-reduce:transition-none sm:size-16">
+                    <svg
+                      className="size-6 sm:size-7"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      aria-hidden
+                    >
+                      <path
+                        d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
                 <div className="pointer-events-auto absolute start-3 top-3 z-10 sm:start-4 sm:top-4">
                   <DayNightToggle
                     ariaScopeName={card.title}
+                    ariaLabel={tA11y("dayNightToggle", { name: card.title })}
                     scene={card.cardScene}
                     onChange={(next) => setSlugScene(card.slug, next)}
                   />
                 </div>
               </div>
               <div className="space-y-3 pb-2 pt-4">
-                <div className="flex flex-wrap items-center gap-x-[4.5rem] gap-y-3">
-                  <h3 className="text-3xl font-semibold text-[var(--color-text)]">{card.title}</h3>
-                  <div className={`flex flex-wrap items-center gap-x-[2.25rem] gap-y-3 ${locale === "he" ? "flex-row-reverse" : ""}`}>
-                    <Link
-                      href={`/simulation?style=${card.slug}`}
-                      className={styleCardGhostBtn}
-                    >
-                      להדמיה
-                    </Link>
-                  </div>
-                </div>
+                <h3 className="text-3xl font-semibold text-[var(--color-text)]">{card.title}</h3>
                 <p className="text-lg text-[var(--color-text)]/85">{card.subtitle}</p>
                 <p className="text-base leading-7 text-[var(--color-text)]/75">{card.description}</p>
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section
+        className="w-full px-4 pb-14 sm:px-6 sm:pb-20 lg:px-8"
+        aria-labelledby="interior-simulation-cta-heading"
+      >
+        <div className="rounded-2xl border border-[color-mix(in_oklab,#c4a574_42%,transparent)] bg-transparent px-6 py-11 text-center sm:px-10 sm:py-14 lg:px-14">
+          <p
+            dir="ltr"
+            className="text-[0.7rem] font-medium uppercase tracking-[0.38em] text-[#c4a574] sm:text-xs"
+          >
+            {t("simulationCtaEyebrow")}
+          </p>
+          <h2
+            id="interior-simulation-cta-heading"
+            dir={locale === "he" ? "rtl" : "ltr"}
+            className="mx-auto mt-4 text-[clamp(1.2rem,2.35vw,2.05rem)] font-semibold leading-[1.2] text-[var(--color-text)] [font-family:var(--font-interior-display),ui-serif,Georgia,serif] lg:whitespace-nowrap"
+          >
+            {t("simulationCtaTitle")}
+          </h2>
+          <p
+            dir={locale === "he" ? "rtl" : "ltr"}
+            className="mx-auto mt-3 max-w-md text-base leading-7 text-[var(--color-text)]/72 sm:mt-4"
+          >
+            {t("simulationCtaLead")}
+          </p>
+          <div className="mt-8 sm:mt-9">
+            <Link href="/simulation" className={simulationCtaBtn}>
+              {t("simulationCtaButton")}
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className={locale === "he" ? "rotate-180" : ""}
+                aria-hidden
+              >
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -386,12 +453,12 @@ export function InteriorDesignPage() {
         >
           <button
             type="button"
-            aria-label="סגירת תצוגה מלאה"
+            aria-label={tA11y("lightboxClose")}
             className="absolute inset-0 z-0 cursor-zoom-out"
             onClick={closeLightbox}
           />
           <h2 id={lightboxTitleId} className="sr-only">
-            {lightboxStyle.title} — תצוגה מלאה
+            {tA11y("lightboxTitle", { title: lightboxStyle.title })}
           </h2>
           <div className="pointer-events-none absolute inset-0 z-[1] min-h-0">
             <Image
@@ -409,13 +476,14 @@ export function InteriorDesignPage() {
             <div className="pointer-events-auto">
               <DayNightToggle
                 ariaScopeName={lightboxStyle.title}
+                ariaLabel={tA11y("dayNightToggle", { name: lightboxStyle.title })}
                 scene={lightboxScene}
                 onChange={(next) => setSlugScene(lightboxSlug, next)}
               />
             </div>
             <button
               type="button"
-              aria-label="סגור"
+              aria-label={tA11y("lightboxCloseShort")}
               className="pointer-events-auto flex size-11 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--color-text)_24%,transparent)] text-2xl leading-none text-[var(--color-text)] backdrop-blur-sm transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
               onClick={closeLightbox}
             >

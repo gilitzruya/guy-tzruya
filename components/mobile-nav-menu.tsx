@@ -4,6 +4,7 @@ import {
   startTransition,
   useEffect,
   useId,
+  useRef,
   useState,
 } from "react";
 import { useTranslations } from "next-intl";
@@ -22,6 +23,8 @@ export function MobileNavMenu() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const panelId = useId();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     startTransition(() => {
@@ -48,12 +51,18 @@ export function MobileNavMenu() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    panelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+  }, [open]);
+
   const linkClass =
     "rounded-lg py-3.5 ps-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]";
 
   return (
     <div className="md:hidden">
       <button
+        ref={toggleRef}
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
@@ -99,6 +108,7 @@ export function MobileNavMenu() {
             onClick={() => setOpen(false)}
           />
           <aside
+            ref={panelRef}
             id={panelId}
             role="dialog"
             aria-modal="true"

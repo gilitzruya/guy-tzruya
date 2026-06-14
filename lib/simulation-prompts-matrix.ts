@@ -9,7 +9,6 @@ export type SimulationRoomTypeId =
 export type SimulationStyleSlug =
   | "modern-minimalist"
   | "rustic-country"
-  | "classic"
   | "organic-natural"
   | "industrial"
   | "high-tech-smart-home"
@@ -25,9 +24,6 @@ export const SIMULATION_PROMPTS_MATRIX: Record<
 
     "rustic-country":
       "Interior photography of a cozy furnished rustic country living room, staged architectural layout with a heavy solid wood sofa, woven textiles, raw wood grain accents, farmhouse charm.",
-
-    classic:
-      "Interior photography of a furnished classic living room, tailored sofa, brass lamp accents, polished wood side tables, luxurious layered textiles, warm neutral tones.",
 
     "organic-natural":
       "Interior photography of a furnished organic natural living room, linen sofa, woven rattan accents, lush indoor plants, natural stone textures, calming earth tones.",
@@ -49,9 +45,6 @@ export const SIMULATION_PROMPTS_MATRIX: Record<
     "rustic-country":
       "Interior photography of a furnished rustic bedroom, wooden bed frame, cozy quilted textiles, raw wood grain nightstands, farmhouse warmth, earthy tones.",
 
-    classic:
-      "Interior photography of a furnished classic bedroom, upholstered bed, brass bedside lamps, polished wood dresser, luxurious layered textiles, warm neutrals.",
-
     "organic-natural":
       "Interior photography of a furnished biophilic bedroom, low bed with linen bedding, woven baskets, indoor greenery, natural stone and wood textures.",
 
@@ -72,9 +65,6 @@ export const SIMULATION_PROMPTS_MATRIX: Record<
     "rustic-country":
       "Interior photography of a furnished rustic kitchen, wooden cabinetry, farmhouse sink, raw wood grain open shelves, copper accents, warm earthy palette.",
 
-    classic:
-      "Interior photography of a furnished classic kitchen, raised panel cabinetry, marble counters, brass hardware, polished wood details, warm elegant tones.",
-
     "organic-natural":
       "Interior photography of a furnished organic kitchen, light wood cabinets, stone counters, herb planters, woven storage baskets, natural earth-tone palette.",
 
@@ -94,9 +84,6 @@ export const SIMULATION_PROMPTS_MATRIX: Record<
 
     "rustic-country":
       "Interior photography of a furnished rustic bathroom, wood vanity accents, stone basin, raw wood grain details, farmhouse textiles, warm earthy palette.",
-
-    classic:
-      "Interior photography of a furnished classic bathroom, marble vanity top, brass fixtures, polished wood mirror frame, luxurious soft textiles, warm neutrals.",
 
     "organic-natural":
       "Interior photography of a furnished organic bathroom, stone vanity, woven bath accessories, potted greenery, natural textures, calming earth tones.",

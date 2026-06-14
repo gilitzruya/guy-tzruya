@@ -55,7 +55,10 @@ export function TypewriterText({
   const visible = text.slice(0, visibleLength);
 
   return (
-    <span className={className} aria-label={text}>
+    <span
+      className={className}
+      aria-label={visibleLength < text.length ? text : undefined}
+    >
       {visible}
     </span>
   );

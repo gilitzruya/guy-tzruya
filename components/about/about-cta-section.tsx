@@ -5,9 +5,6 @@ import { useId } from "react";
 import {
   IconFacebook,
   IconInstagram,
-  IconLinkedin,
-  IconWhatsapp,
-  IconYoutube,
 } from "@/components/building-licensing-social-icons";
 import { SITE_SOCIAL, type SiteSocialPlatform } from "@/lib/site-social";
 
@@ -15,20 +12,12 @@ const MAILTO =
   "mailto:studio@guytzruya.com?subject=Architecture%20and%20design%20inquiry";
 
 const SOCIAL_LINKS: {
-  platform: SiteSocialPlatform;
+  platform: Extract<SiteSocialPlatform, "instagram" | "facebook">;
   Icon: typeof IconInstagram;
-  labelKey:
-    | "ctaSocialInstagram"
-    | "ctaSocialFacebook"
-    | "ctaSocialLinkedin"
-    | "ctaSocialWhatsapp"
-    | "ctaSocialYoutube";
+  labelKey: "ctaSocialInstagram" | "ctaSocialFacebook";
 }[] = [
   { platform: "instagram", Icon: IconInstagram, labelKey: "ctaSocialInstagram" },
   { platform: "facebook", Icon: IconFacebook, labelKey: "ctaSocialFacebook" },
-  { platform: "linkedin", Icon: IconLinkedin, labelKey: "ctaSocialLinkedin" },
-  { platform: "whatsapp", Icon: IconWhatsapp, labelKey: "ctaSocialWhatsapp" },
-  { platform: "youtube", Icon: IconYoutube, labelKey: "ctaSocialYoutube" },
 ];
 
 function CtaArrow({ rtl }: { rtl: boolean }) {

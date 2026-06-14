@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import {
@@ -29,6 +30,16 @@ type Phase = "form" | "generating" | "result";
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const STYLE_ASSET_DESKTOP_MIN_WIDTH = 1024;
+
+function preloadSimulationImage(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const img = document.createElement("img");
+    img.decoding = "async";
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error("image_preload_failed"));
+    img.src = src;
+  });
+}
 
 function buildStyleImageSrc(
   slug: string,
@@ -329,6 +340,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
       }
 
       if (data.afterImageUrl && data.beforeImageUrl) {
+        void preloadSimulationImage(data.afterImageUrl).catch(() => undefined);
         setBeforeSrc(data.beforeImageUrl);
         setAfterSrc(data.afterImageUrl);
         setPhase("result");
@@ -525,20 +537,26 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
   }
 
   return (
-    <main
+    <div
       className="flex h-[100dvh] flex-col overflow-hidden pt-16"
       style={pageBgStyle}
     >
       <header className="shrink-0 border-b border-[color-mix(in_oklab,var(--color-text)_10%,transparent)] px-4 py-3 sm:px-6">
         <div
-          className="mx-auto flex max-w-[1600px] flex-col items-center gap-1 text-center"
+          className="mx-auto flex max-w-[1600px] flex-col items-center gap-1.5 text-center"
           dir={controlsDir}
         >
-            <h1 className="text-2xl font-semibold text-[var(--color-text)] sm:text-3xl lg:text-[1.65rem] lg:leading-tight">
-              {t("heroTitle")}
-            </h1>
-          <p className="max-w-xl text-sm leading-snug text-[var(--color-text)]/75">
-            {t("heroSubtitle")}
+          <h1 className="text-2xl font-semibold text-[var(--color-text)] sm:text-3xl lg:text-[1.65rem] lg:leading-tight">
+            {t("heroTitle")}
+          </h1>
+          <p className="flex max-w-[min(100%,52rem)] flex-wrap items-center justify-center gap-x-2 text-sm leading-snug text-[var(--color-text)]/75 lg:flex-nowrap">
+            <span>{t("heroSubtitlePrefix")}</span>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[2rem] shrink-0 items-center justify-center border border-white/70 bg-transparent px-4 text-sm font-medium text-white transition-[background-color,border-color] hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              {t("heroContactCta")}
+            </Link>
           </p>
         </div>
       </header>
@@ -574,6 +592,9 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
           dir={controlsDir}
           className="flex min-h-0 max-h-[min(42svh,480px)] flex-col gap-3 max-lg:shrink-0 lg:max-h-none lg:h-full"
         >
+          <p className="shrink-0 text-base font-semibold text-[var(--color-text)] sm:text-lg">
+            {t("instructionsTitle")}
+          </p>
           <div className="shrink-0 space-y-3">
             <fieldset className="space-y-2">
               <legend className="sr-only">
@@ -603,13 +624,13 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
                       onClick={() => setRoomType(id)}
                       className={`inline-flex min-h-[42px] items-center justify-center gap-2 rounded-[0.28rem] border px-3 py-2 text-xs font-semibold shadow-[inset_0_1px_0_rgb(255_255_255/_0.05)] transition-[background-color,border-color,color,box-shadow] sm:text-sm ${
                         selected
-                          ? "border-[#d7b46d] bg-gradient-to-b from-[#efd18d] to-[#d0a85c] text-[#17120b] shadow-[0_0_18px_rgb(212_175_55/_0.2),inset_0_1px_0_rgb(255_255_255/_0.38)]"
-                          : "border-white/10 bg-[#171717]/90 text-white/88 hover:border-[#d7b46d]/45 hover:text-[#e4c47a]"
+                          ? "border-[#c4a574] bg-gradient-to-b from-[#e8d9c4] to-[#c4a574] text-[#17120b] shadow-[0_0_18px_rgb(196_165_116/_0.2),inset_0_1px_0_rgb(255_255_255/_0.38)]"
+                          : "border-white/10 bg-[#171717]/90 text-white/88 hover:border-[#c4a574]/45 hover:text-[#c4a574]"
                       }`}
                     >
                       <RoomTypeIcon
                         id={id}
-                        className={`size-4 shrink-0 ${selected ? "text-[#17120b]" : "text-[#d7b46d]"}`}
+                        className={`size-4 shrink-0 ${selected ? "text-[#17120b]" : "text-[#c4a574]"}`}
                       />
                       {t(labelKey)}
                     </button>
@@ -677,7 +698,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
         </aside>
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -694,6 +715,12 @@ function SimulationResultView({
   t: ReturnType<typeof useTranslations<"Simulation">>;
   tProjects: ReturnType<typeof useTranslations<"Projects">>;
 }) {
+  const [imagesReady, setImagesReady] = useState(false);
+
+  useEffect(() => {
+    setImagesReady(false);
+  }, [beforeSrc, afterSrc]);
+
   return (
     <div className="fixed inset-0 z-[150] flex flex-col bg-black pt-16">
       <div className="flex shrink-0 items-center justify-between gap-3 px-4 py-3">
@@ -706,6 +733,18 @@ function SimulationResultView({
         </button>
       </div>
       <div className="relative min-h-0 flex-1 px-3 pb-3 lg:px-5">
+        {!imagesReady ? (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-black px-6 text-center text-white">
+            <div
+              className="size-12 animate-spin rounded-full border-2 border-white/20 border-t-white"
+              aria-hidden
+            />
+            <div>
+              <p className="text-base font-semibold">{t("generating")}</p>
+              <p className="mt-1 text-sm text-white/75">{t("generatingHint")}</p>
+            </div>
+          </div>
+        ) : null}
         <BeforeAfterSlider
           beforeSrc={beforeSrc}
           afterSrc={afterSrc}
@@ -715,9 +754,11 @@ function SimulationResultView({
           sliderAriaLabel={tProjects("sliderAriaLabel", {
             title: t("resultTitle"),
           })}
+          onImagesReady={() => setImagesReady(true)}
+          priority
           fillHeight
           imageObjectFit="contain"
-          className="h-full min-h-0"
+          className={`h-full min-h-0 ${imagesReady ? "" : "invisible"}`}
           sizes="100vw"
         />
       </div>

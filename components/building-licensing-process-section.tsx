@@ -2,29 +2,14 @@
 
 import type { CSSProperties } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { BuildingLicensingStepIcon } from "@/components/building-licensing-icons";
-import {
-  BUILDING_LICENSING_PROCESS_CTA_BUTTON,
-  BUILDING_LICENSING_PROCESS_CTA_LEAD,
-  BUILDING_LICENSING_PROCESS_EYEBROW,
-  BUILDING_LICENSING_PROCESS_STEPS,
-  BUILDING_LICENSING_PROCESS_SUBTITLE,
-  BUILDING_LICENSING_PROCESS_TITLE,
-  type BuildingLicensingProcessStep,
-} from "@/components/building-licensing-content";
+import type { BuildingLicensingProcessStep } from "@/components/building-licensing-content";
+import { Link } from "@/i18n/navigation";
 import { useScene } from "@/components/scene-provider";
 import { buildingLicensingHeroButtonClass } from "@/lib/building-licensing-hero-button";
-import type {
-  LicensingProcessContent,
-  PageTranslationNamespace,
-} from "@/lib/licensing-page-config";
+import { buildProcessContentFromTranslations } from "@/lib/licensing-process-content";
+import type { PageTranslationNamespace } from "@/lib/licensing-page-config";
 
 function subscribeNoop(): () => void {
   return () => {};
@@ -53,25 +38,16 @@ function usePrefersReducedMotion() {
 
 type BuildingLicensingProcessSectionProps = {
   namespace?: PageTranslationNamespace;
-  content?: LicensingProcessContent;
-  mailtoSubject?: string;
-};
-
-const DEFAULT_CONTENT: LicensingProcessContent = {
-  eyebrow: BUILDING_LICENSING_PROCESS_EYEBROW,
-  title: BUILDING_LICENSING_PROCESS_TITLE,
-  subtitle: BUILDING_LICENSING_PROCESS_SUBTITLE,
-  ctaLead: BUILDING_LICENSING_PROCESS_CTA_LEAD,
-  ctaButton: BUILDING_LICENSING_PROCESS_CTA_BUTTON,
-  steps: BUILDING_LICENSING_PROCESS_STEPS,
 };
 
 export function BuildingLicensingProcessSection({
   namespace = "BuildingLicensing",
-  content = DEFAULT_CONTENT,
-  mailtoSubject = "Building planning inquiry",
 }: BuildingLicensingProcessSectionProps) {
   const t = useTranslations(namespace);
+  const content = useMemo(
+    () => buildProcessContentFromTranslations(t),
+    [t],
+  );
   const locale = useLocale();
   const isRtl = locale === "he";
   const hydrated = useHydrated();
@@ -234,12 +210,12 @@ export function BuildingLicensingProcessSection({
 
         <footer className="bl-process__footer">
           <p>{content.ctaLead}</p>
-          <a
-            href={`mailto:studio@guytzruya.com?subject=${encodeURIComponent(mailtoSubject)}`}
+          <Link
+            href="/contact"
             className={`mt-5 ${ctaButtonClass}`}
           >
             {content.ctaButton}
-          </a>
+          </Link>
         </footer>
       </div>
     </section>

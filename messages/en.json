@@ -40,7 +40,8 @@
     "contactEmail": "Email",
     "developerIntro": "Website design & development",
     "developerName": "Gili Tzruya",
-    "developerTagline": "Smart digital solutions for businesses"
+    "developerTagline": "Smart digital solutions for businesses",
+    "navAccessibility": "Accessibility Statement"
   },
   "Hero": {
     "brandLine1": "GUY TZRUYA",
@@ -58,6 +59,39 @@
     "heroStatFull": "Full guidance",
     "heroStatAuthority": "Authority liaison",
     "processProgressLabel": "Process progress",
+    "process": {
+      "eyebrow": "PROCESS",
+      "title": "Our work process",
+      "subtitle": "From initial planning through authority approval — precise, transparent, professional guidance at every stage.",
+      "ctaLead": "Ready to get started? We would be glad to support you from day one.",
+      "ctaButton": "Schedule a call",
+      "steps": {
+        "1": {
+          "title": "Initial consultation & project briefing",
+          "description": "Define goals, constraints, timelines, and budget — and establish a clear plan for what comes next."
+        },
+        "2": {
+          "title": "Existing conditions survey & initial planning",
+          "description": "Review current conditions, authority requirements, and constraints — and shape an initial planning direction."
+        },
+        "3": {
+          "title": "Architectural plans & supporting documents",
+          "description": "Prepare plans, sections, and required documents according to authority and project requirements."
+        },
+        "4": {
+          "title": "Authority submission & comment handling",
+          "description": "Submit the file, address comments, and make revisions until all requirements are met."
+        },
+        "5": {
+          "title": "Permit / building approvals",
+          "description": "Guide the process through to the building permits and approvals required for execution."
+        },
+        "6": {
+          "title": "Final approval & handover for execution",
+          "description": "Complete the regulatory process and deliver a plan package ready for on-site execution. Scope can be extended to execution plans and site supervision."
+        }
+      }
+    },
     "faqEyebrow": "FAQ",
     "faqTitle": "Questions & answers",
     "faqLead": "Practical information on building planning and licensing — so you know what to expect at each stage.",
@@ -110,6 +144,39 @@
     "heroStatFull": "Full guidance",
     "heroStatAuthority": "Authority liaison",
     "processProgressLabel": "Process progress",
+    "process": {
+      "eyebrow": "PROCESS",
+      "title": "Our work process",
+      "subtitle": "From initial planning through authority approval — professional, precise guidance for business licensing at every stage.",
+      "ctaLead": "Ready to move forward with licensing? We would be glad to support you from day one.",
+      "ctaButton": "Schedule a call",
+      "steps": {
+        "1": {
+          "title": "Initial consultation & business briefing",
+          "description": "Define business goals, operational needs, timelines, and budget to build a clear work plan."
+        },
+        "2": {
+          "title": "Existing conditions, rights & uses survey",
+          "description": "Review on-site conditions, use compliance, and planning requirements with the local authority."
+        },
+        "3": {
+          "title": "Licensing plans & documents",
+          "description": "Prepare architectural plans, appendices, and supporting documents according to business type and authority requirements."
+        },
+        "4": {
+          "title": "Authority submission & comment handling",
+          "description": "Submit the file, support professional review, and make revisions until all requirements are met."
+        },
+        "5": {
+          "title": "Permit / business approvals",
+          "description": "Guide the process through to the permits and approvals required for lawful business operation."
+        },
+        "6": {
+          "title": "Final approval & handover",
+          "description": "Complete the regulatory process and deliver a document and plan package ready for execution. Scope can be extended to execution plans and site supervision."
+        }
+      }
+    },
     "faqEyebrow": "FAQ",
     "faqTitle": "Questions & answers",
     "faqLead": "Practical information on business planning and licensing — so you know what to expect at each stage.",
@@ -159,8 +226,77 @@
     "heroCtaStart": "Start your project",
     "heroScroll": "SCROLL",
     "processProgressLabel": "Process progress",
+    "process": {
+      "eyebrow": "PROCESS",
+      "title": "Our work process",
+      "subtitle": "From initial planning through a finished space — full, precise, meticulous guidance at every stage.",
+      "ctaLead": "Let's start planning your space",
+      "ctaButton": "Book a consultation",
+      "steps": {
+        "1": {
+          "title": "Needs & budget briefing",
+          "description": "Define goals, lifestyle, space constraints, and budget to establish a clear, actionable plan."
+        },
+        "2": {
+          "title": "Design concept & mood boards",
+          "description": "Shape a visual language, color palette, and core materials through sketches and inspiration boards."
+        },
+        "3": {
+          "title": "Functional planning & zoning",
+          "description": "Plan proper flow, area division, and comfortable daily function tailored to your needs."
+        },
+        "4": {
+          "title": "Materials, colors & furniture selection",
+          "description": "Choose pieces, finishes, and textures that balance aesthetics, durability, and maintenance."
+        },
+        "5": {
+          "title": "Execution plans & supplier coordination",
+          "description": "Prepare detailed plans and coordinate with trades and suppliers through to build start."
+        },
+        "6": {
+          "title": "Styling, quality control & handover",
+          "description": "Final styling, quality checks on every detail, and delivery of a complete, harmonious space."
+        }
+      }
+    },
     "stylesYear": "2026",
     "stylesSectionTitle": "Interior design styles",
+    "styles": {
+      "modern-minimalist": {
+        "title": "Modern Minimalist Design",
+        "subtitle": "Clean lines, open spaces, and natural light",
+        "description": "Defined by straight, clean lines, bright open spaces, and materials such as glass and metal."
+      },
+      "rustic-country": {
+        "title": "Rustic / Country Design",
+        "subtitle": "Natural materials and a warm, homely atmosphere",
+        "description": "Extensive use of natural materials like raw wood and stone to create a warm, inviting, homely feel."
+      },
+      "organic-natural": {
+        "title": "Organic & Natural Design",
+        "subtitle": "Biophilic design with calm and harmony",
+        "description": "A strong 2026 trend focused on bringing nature indoors (Biophilic Design) for harmony and calm — rounded forms, natural textures, and greenery."
+      },
+      "industrial": {
+        "title": "Industrial Design",
+        "subtitle": "Concrete, exposed brick, and raw metal",
+        "description": "Exposed structural elements such as pipes, brick walls, and raw concrete, paired with leather and metal furnishings."
+      },
+      "high-tech-smart-home": {
+        "title": "High-Tech / Smart Home Design",
+        "subtitle": "Smart technology in an elegant look",
+        "description": "Advanced technology and smart systems woven into the space's aesthetics — luxurious, not laboratory-like."
+      },
+      "modern-office": {
+        "title": "Modern Office Design",
+        "subtitle": "Flexible workspaces with a focus on well-being",
+        "description": "Flexible workspaces that encourage creativity and collaboration, with a strong emphasis on employee well-being."
+      }
+    },
+    "simulationCtaEyebrow": "Smart visualization",
+    "simulationCtaTitle": "Want to get a sense of how your home could look?",
+    "simulationCtaLead": "Upload a photo, pick a style — and get a preview in minutes.",
+    "simulationCtaButton": "Try visualization",
     "faqEyebrow": "FAQ",
     "faqTitle": "Questions & answers",
     "faqLead": "Practical information on interior design — so you know what to expect at each stage.",
@@ -194,7 +330,7 @@
     }
   },
   "Projects": {
-    "heroTitle": "PROJECTS",
+    "heroTitle": "MY PROJECTS",
     "heroSubtitle": "Every project begins with listening, continues with precise planning, and ends in a space that feels right in every detail.",
     "sliderAriaLabel": "Drag to compare before and after — {title}",
     "beforeLabel": "Before",
@@ -214,19 +350,29 @@
     "detailSectionTitle": "Project details",
     "detailLabelClient": "Client",
     "detailLabelType": "Project type",
-    "detailLabelAbout": "Description",
+    "detailLabelAbout": "General description",
     "testimonialLabel": "Client note",
     "clientPhotoAlt": "Client portrait",
     "items": {
       "maklaf": {
         "title": "Maklaf",
-        "summary": "Interior project — details to follow.",
-        "cardSubtitle": "Residential interior",
-        "cardBody": "Project Maklaf — full interior design and planning. Placeholder copy; replace with the final project story when ready.",
-        "testimonialLead": "Placeholder —",
-        "testimonialHighlight": "replace with client quote when available.",
-        "testimonialContext": "Residential",
-        "detailBody": "Detailed project narrative for Maklaf will go here.\n\nAdd scope, materials, and outcome in a few short paragraphs.\n\nThis block supports the project detail page and listing card."
+        "summary": "Residential interior design and renovation — flow between spaces and a clean material language.",
+        "cardSubtitle": "Residential interior design and renovation",
+        "cardBody": "The Maklaf project — a home that went through full replanning and interior design, with an emphasis on natural flow between spaces, daylight, and a refined material palette for everyday family life.\n\nThe plan connected living areas, introduced smart storage, and selected finishes and lighting that give the home a cohesive, modern, and welcoming feel.",
+        "testimonialLead": "Smart, precise planning turned the apartment into a real home —",
+        "testimonialHighlight": "connected, comfortable spaces tailored exactly to how we live.",
+        "testimonialContext": "Residential apartment",
+        "detailBody": "We started from a layout that did not use the home's full potential — the goal was a flowing, bright, and precise home for daily family life.\n\nWe carried out full replanning and interior design: revised zoning, tailored cabinetry and storage, and coordinated flooring, lighting, and furnishings across the living, kitchen, and private areas.\n\nThe result is a home with one clear design language — clean, warm, and functional in every corner."
+      },
+      "maklaf-2": {
+        "title": "Maklaf 2",
+        "summary": "Continuation of a residential interior — same language, additional spaces.",
+        "cardSubtitle": "Residential interior — project continuation",
+        "cardBody": "Maklaf 2 continues the original home project — completing design and planning in additional areas while keeping the same material language, details, and clean line throughout.\n\nThe focus was on precision, continuity between rooms, and storage and lighting solutions that complete the living experience.",
+        "testimonialLead": "Perfect continuity from the first phase —",
+        "testimonialHighlight": "every part of the home now feels part of the same precise design family.",
+        "testimonialContext": "Residential apartment",
+        "detailBody": "After the first Maklaf phase, we continued into additional areas of the home — with the same design principles and visual language.\n\nThe plan aligned materials, color, and lighting in the new spaces, added smart storage, and preserved flow between zones.\n\nThe result completes the home as one consistent, comfortable, and tailored whole."
       },
       "shaki": {
         "title": "Avner Chayishaki",
@@ -237,13 +383,75 @@
         "testimonialHighlight": "and the home feels complete and pleasant to live in.",
         "testimonialContext": "Residential apartment",
         "detailBody": "We started from a new-build apartment with a basic layout — the goal was to upgrade the plan and create a coherent, tailored home for the family.\n\nWe carried out a full renovation and comprehensive replanning alongside complete interior design: selective replanning where needed, materials, lighting, and furnishings that support daily life with comfort and clarity.\n\nThe result is a home that feels personal — functional, inviting, and consistent in every room."
+      },
+      "hulda-hanavia-4": {
+        "title": "Hulda Hanavia 4",
+        "summary": "Residential upgrade and interior design — a brighter, more precise home.",
+        "cardSubtitle": "Residential upgrade and interior design",
+        "cardBody": "An apartment on Hulda Hanavia Street that underwent a full upgrade — replanned layout, materials, and lighting to create a brighter, more organized, and comfortable home.\n\nThe design combined storage solutions, tailored furnishings, and a cohesive material language that makes the apartment feel spacious and inviting.",
+        "testimonialLead": "Professional guidance from planning through the smallest details —",
+        "testimonialHighlight": "the apartment feels completely renewed, precise, and comfortable to live in.",
+        "testimonialContext": "Residential apartment",
+        "detailBody": "The project began with a home that needed both planning and design upgrades — the goal was a bright, functional, and precise living space.\n\nWe adjusted the layout and selected materials, lighting, and furnishings, alongside storage that supports an organized daily routine.\n\nThe result is an apartment with a clean design line — comfortable, updated, and tailored to the residents' lifestyle."
+      },
+      "atliz-bereshit": {
+        "title": "Atliz Bereshit",
+        "summary": "Butcher shop interior — product display, hygiene, and a welcoming atmosphere.",
+        "cardSubtitle": "Food retail and butcher shop interior",
+        "cardBody": "Atliz Bereshit — a retail space planned from the ground up with an emphasis on product presentation, hygiene, customer flow, and a warm atmosphere that invites purchase.\n\nDurable, easy-to-maintain materials, lighting that highlights the product, and a clean design line distinguish the shop and strengthen the customer experience.",
+        "testimonialLead": "The shop came out precise, welcoming, and professional —",
+        "testimonialHighlight": "customers feel the difference the moment they walk in.",
+        "testimonialContext": "Retail space",
+        "detailBody": "The project had to balance commercial function, hygiene standards, and a quality customer experience — all within one coherent design language.\n\nWe planned display, work, and service zones, precise lighting, and materials suited to a busy daily operation.\n\nThe result is a clear, clean, and inviting shop — presenting product with care and strengthening the brand."
+      },
+      "ein-gedi-tama-38-1": {
+        "title": "Ein Gedi - TAMA 38-1",
+        "summary": "TAMA 38/1 — planning and interior design for renewed apartments.",
+        "cardSubtitle": "TAMA 38/1 — planning and interior design",
+        "cardBody": "An urban renewal project on Ein Gedi Street — planning and interior design for the renewed apartments, balancing regulatory requirements, living comfort, and a contemporary architectural language.\n\nThe plan focused on efficient use of space, natural light, and materials that give the home a modern, pleasant feel.",
+        "testimonialLead": "A clear, organized process throughout —",
+        "testimonialHighlight": "we received an updated apartment that truly fits our needs.",
+        "testimonialContext": "TAMA 38/1 project",
+        "detailBody": "As part of a TAMA 38/1 project, we supported planning and interior design for the renewed apartments — aiming for a modern, functional, and comfortable home.\n\nThe plan combined regulatory requirements with real living needs: efficient layout, materials, lighting, and storage.\n\nThe result is an apartment that feels new — precise, bright, and suited to life in the upgraded building."
+      },
+      "tzidkiyahu": {
+        "title": "Tzidkiyahu",
+        "summary": "Renovation and interior design — a modern kitchen and luxury bathroom.",
+        "cardSubtitle": "Kitchen and bathroom renovation and interior design",
+        "cardBody": "A comprehensive home renovation — a modern kitchen with deep navy cabinetry, light marble countertops, integrated appliances, and layered lighting; alongside a luxury bathroom with a walk-in shower, freestanding tub, and a green-teal tiled feature wall.\n\nThe design combined full storage, clean lines, and quality materials for a bright, updated home tailored to everyday living.",
+        "testimonialLead": "The home came out precise, updated, and a pleasure to live in —",
+        "testimonialHighlight": "a kitchen and bathroom that feel like a dream come true.",
+        "testimonialContext": "Private residence",
+        "detailBody": "The project included a full renovation and interior design — with emphasis on a modern kitchen and luxury bathroom.\n\nThe kitchen features floor-to-ceiling navy cabinetry, marble surfaces, double sinks, built-in appliances, a glass display cabinet, and layered lighting. The bathroom includes a walk-in shower, freestanding tub, green-teal feature wall, and clean, spa-like materials.\n\nThe result is an updated home — functional, elegant, and comfortable for daily life."
+      },
+      "motza": {
+        "title": "Motza Offices",
+        "summary": "Office interior design — a professional and comfortable work environment.",
+        "cardSubtitle": "Office interior design",
+        "cardBody": "Motza Offices — a modern workspace with clean lines, precise planning of seating and meeting areas, and lighting that creates a professional, comfortable environment for everyday work.\n\nThe design combined durable materials, storage solutions, and a unified language that supports the firm's image and the team's experience.",
+        "testimonialLead": "The office came out precise, inviting, and professional —",
+        "testimonialHighlight": "an environment where we work comfortably and proudly welcome clients.",
+        "testimonialContext": "Office space",
+        "detailBody": "The project included planning and interior design for offices — with an emphasis on flow between work, meeting, and reception areas.\n\nWe selected materials, lighting, and furnishings that support long daily work alongside a professional, updated appearance.\n\nThe result is an organized, pleasant workspace — conveying reliability, order, and quality."
+      },
+      "haran-18-tama-38-1": {
+        "title": "Haran 18 - TAMA 38-1",
+        "summary": "TAMA 38/1 — planning and interior design in an urban renewal project.",
+        "cardSubtitle": "TAMA 38/1 — planning and interior design",
+        "cardBody": "An urban renewal project on Haran Street — planning and interior design for the renewed apartments, with an emphasis on space efficiency, lighting, and an updated living experience.\n\nThe plan delivered precise, functional, and comfortable homes — aligned with TAMA requirements and the residents' real needs.",
+        "testimonialLead": "Clear, professional guidance at every stage —",
+        "testimonialHighlight": "the new apartment feels tailored, modern, and comfortable for the long term.",
+        "testimonialContext": "TAMA 38/1 project",
+        "detailBody": "As part of TAMA 38/1 on Haran Street, we supported planning and interior design for apartments after renewal — aiming for an updated, comfortable home.\n\nThe plan focused on efficient layout, materials, lighting, and storage for everyday living.\n\nThe result is an apartment that feels new — precise, bright, and suited to life in the upgraded building."
       }
     }
   },
   "Simulation": {
     "heroEyebrow": "Smart preview",
-    "heroTitle": "Room simulation",
-    "heroSubtitle": "Upload a room photo, choose a room type and design style — and get a visual preview.",
+    "heroTitle": "Room preview for inspiration",
+    "heroSubtitlePrefix": "Get an initial preview for feel and design direction only. For professional, precise planning —",
+    "heroContactCta": "Contact us",
+    "instructionsTitle": "Choose a room type and design style",
     "quotaRemaining": "{remaining} of {max} runs remaining",
     "quotaRemainingShort": "{remaining} runs left",
     "quotaExceeded": "You have used all available runs. Please try again later.",
@@ -365,7 +573,7 @@
       "channels": {
         "hours": {
           "title": "Hours",
-          "line1": "Sun–Thu 09:00–18:00",
+          "line1": "Sun–Thu",
           "line2": "By appointment"
         },
         "phone": {
@@ -409,8 +617,8 @@
     "storyBody": "I'm Guy Tzruya, architect and interior designer. Over the years I've guided diverse projects — from residential homes to commercial spaces — with planning precision, quality materials, and a living experience that feels natural.\n\nMy approach combines accurate architectural planning with interior design that serves real life: the right layout, lighting, materials, and details that create lasting coherence.",
     "storyQuote": "Every project begins with listening — and ends in a space that feels whole.",
     "stats": {
-      "0": { "value": "15+", "label": "Years of experience" },
-      "1": { "value": "50+", "label": "Projects" },
+      "0": { "value": "10", "label": "Years of experience" },
+      "1": { "value": "20+", "label": "Projects" },
       "2": { "value": "3", "label": "Areas of expertise" },
       "3": { "value": "1", "label": "Personal guidance" }
     },
@@ -420,22 +628,22 @@
     "journeyProgressLabel": "Journey progress",
     "journeySteps": {
       "0": {
-        "year": "2010",
+        "year": "2017",
         "title": "Where it began",
         "body": "Architecture and design studies — building foundations in planning, materials, and architectural detail."
       },
       "1": {
-        "year": "2014",
+        "year": "",
         "title": "Field experience",
         "body": "Studio work and residential projects — from concept through on-site execution."
       },
       "2": {
-        "year": "2018",
+        "year": "",
         "title": "Full interior design",
         "body": "Expanded service to complete interiors — materials, lighting, furniture, and a unified atmosphere."
       },
       "3": {
-        "year": "2022",
+        "year": "",
         "title": "Planning & licensing",
         "body": "Authority liaison, permits, and drawings — transparent integration of bureaucracy and design."
       },
@@ -513,6 +721,7 @@
     "formMessageLabel": "Message",
     "formMessagePlaceholder": "Tell us about your project or question…",
     "formSubmit": "Send",
+    "formValidationError": "Please fill in your name, email, and message before sending.",
     "formSuccess": "Your email app should open — send the message to finish.",
     "formMailSubject": "Contact — {name}",
     "formMailBody": "Name: {name}\nPhone: {phone}\nEmail: {email}\n\n{message}",
@@ -525,6 +734,57 @@
     "socialFacebook": "Facebook",
     "socialLinkedin": "LinkedIn",
     "socialWhatsapp": "WhatsApp",
-    "socialYoutube": "YouTube"
+    "socialYoutube": "YouTube",
+    "floatingWhatsappLabel": "Send a WhatsApp message"
+  },
+  "Accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open accessibility menu",
+    "closeMenu": "Close accessibility menu",
+    "menuTitle": "Accessibility settings",
+    "fontSize": "Text size",
+    "fontScale": {
+      "normal": "Normal",
+      "large": "Large",
+      "xlarge": "Extra large"
+    },
+    "highContrast": "High contrast",
+    "highlightLinks": "Highlight links",
+    "readableFont": "Readable font",
+    "reduceMotion": "Stop animations",
+    "reset": "Reset settings",
+    "metaTitle": "Accessibility Statement — Guy Tzruya",
+    "metaDescription": "Accessibility statement for Guy Tzruya website — Israeli Standard 5568, WCAG 2.0 Level AA.",
+    "statementEyebrow": "Accessibility",
+    "statementTitle": "Accessibility Statement",
+    "lastUpdated": "Last updated: June 2026",
+    "commitmentTitle": "Our commitment",
+    "commitmentBody": "We are committed to making this website accessible to everyone, including people with disabilities. The site was built and is maintained with efforts to comply with Israeli Standard 5568, based on WCAG 2.0 Level AA.",
+    "standardTitle": "Compliance level",
+    "standardBody": "This website aims to meet Israeli Standard 5568 for web content accessibility at Level AA, implementing WCAG 2.0 principles.",
+    "measuresTitle": "Accessibility measures on this site",
+    "measureMenu": "Custom accessibility menu — text size, contrast, link highlighting, readable font, and motion reduction",
+    "measureKeyboard": "Full keyboard navigation",
+    "measureAria": "ARIA labels and relationships on interactive components",
+    "measureSkip": "Skip to content link at the top of each page",
+    "measureContrast": "Design that considers contrast and readability",
+    "browsersTitle": "Supported browsers",
+    "browsersBody": "The site was tested on current versions of Chrome, Firefox, Safari, and Edge.",
+    "coordinatorTitle": "Accessibility coordinator",
+    "coordinatorBody": "For questions, feedback, and accessibility improvement requests, please contact:",
+    "coordinatorNameLabel": "Name",
+    "coordinatorName": "Guy Tzruya",
+    "coordinatorEmailLabel": "Email",
+    "coordinatorPhoneLabel": "Phone",
+    "feedbackTitle": "Report an accessibility issue",
+    "feedbackBody": "We welcome accessibility feedback. You can reach us via the contact form, email, or phone.",
+    "feedbackContactLink": "Go to contact form",
+    "limitationsTitle": "Known limitations",
+    "limitationsBody": "Despite our efforts, some parts of the site — especially third-party content or external files — may not yet be fully accessible. We continue working to improve accessibility.",
+    "dayNightToggle": "Switch day/night mode for {name}",
+    "viewFullImage": "View {title} full screen",
+    "lightboxClose": "Close full-screen view",
+    "lightboxCloseShort": "Close",
+    "lightboxTitle": "{title} — full-screen view"
   }
 }

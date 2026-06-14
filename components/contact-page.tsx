@@ -6,9 +6,7 @@ import { useState, type FormEvent } from "react";
 import {
   IconFacebook,
   IconInstagram,
-  IconLinkedin,
   IconWhatsapp,
-  IconYoutube,
 } from "@/components/building-licensing-social-icons";
 import { interiorDesignPageBackgroundStyle } from "@/lib/interior-page-background";
 import {
@@ -76,27 +74,20 @@ function ContactIconPin({ className }: { className?: string }) {
   );
 }
 
-const SOCIAL_LINKS: {
-  platform: SiteSocialPlatform;
+const INFO_SOCIAL_LINKS: {
+  platform: Extract<SiteSocialPlatform, "instagram" | "facebook">;
   Icon: typeof IconInstagram;
-  labelKey:
-    | "socialInstagram"
-    | "socialFacebook"
-    | "socialLinkedin"
-    | "socialWhatsapp"
-    | "socialYoutube";
+  labelKey: "socialInstagram" | "socialFacebook";
 }[] = [
   { platform: "instagram", Icon: IconInstagram, labelKey: "socialInstagram" },
   { platform: "facebook", Icon: IconFacebook, labelKey: "socialFacebook" },
-  { platform: "linkedin", Icon: IconLinkedin, labelKey: "socialLinkedin" },
-  { platform: "whatsapp", Icon: IconWhatsapp, labelKey: "socialWhatsapp" },
-  { platform: "youtube", Icon: IconYoutube, labelKey: "socialYoutube" },
 ];
 
 export function ContactPage() {
   const t = useTranslations("Contact");
   const locale = useLocale();
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const isRtl = locale === "he";
   const pageBackgroundStyle = interiorDesignPageBackgroundStyle("night");
   const whatsappHref =
@@ -104,6 +95,7 @@ export function ContactPage() {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setFormError(null);
     const form = event.currentTarget;
     const data = new FormData(form);
     const name = String(data.get("name") ?? "").trim();
@@ -111,7 +103,11 @@ export function ContactPage() {
     const email = String(data.get("email") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
 
-    if (!name || !email || !message) return;
+    if (!name || !email || !message) {
+      setFormError(t("formValidationError"));
+      form.querySelector<HTMLElement>("input[name='name'], textarea[name='message'], input[name='email']")?.focus();
+      return;
+    }
 
     window.location.href = buildContactMailto({
       subject: t("formMailSubject", { name }),
@@ -141,7 +137,12 @@ export function ContactPage() {
             <p className="contact-redesign-lead">{t("contactIntro")}</p>
           </div>
 
-          <form className="contact-redesign-form" onSubmit={onSubmit}>
+          <form className="contact-redesign-form" onSubmit={onSubmit} noValidate>
+            {formError ? (
+              <p className="contact-redesign-form-error" role="alert">
+                {formError}
+              </p>
+            ) : null}
             <div className="contact-redesign-form-row">
               <label className="contact-redesign-field">
                 <span>{t("formNameLabel")}</span>
@@ -187,19 +188,21 @@ export function ContactPage() {
               />
             </label>
 
-            <button type="submit" className="contact-redesign-submit">
-              <span>{t("formSubmit")}</span>
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
-                <path
-                  d="M5 12h14M13 6l6 6-6 6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+            <div className="contact-redesign-submit-wrap">
+              <button type="submit" className="contact-redesign-submit">
+                <span>{t("formSubmit")}</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
+                  <path
+                    d="M5 12h14M13 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
 
             {submitted ? (
               <p className="contact-redesign-success" role="status">
@@ -207,29 +210,6 @@ export function ContactPage() {
               </p>
             ) : null}
           </form>
-
-          <div className="contact-redesign-social">
-            <p className="contact-redesign-social-title">
-              <span aria-hidden />
-              {t("socialEyebrow")}
-              <span aria-hidden />
-            </p>
-            <ul aria-label={t("socialTitle")}>
-              {SOCIAL_LINKS.map(({ platform, Icon, labelKey }) => (
-                <li key={platform}>
-                  <a
-                    href={SITE_SOCIAL[platform]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={t(labelKey)}
-                  >
-                    <Icon />
-                    <span>{t(labelKey)}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
         <div className="contact-redesign-panel contact-redesign-panel--image">
@@ -243,50 +223,68 @@ export function ContactPage() {
             className="contact-redesign-image"
           />
           <div className="contact-redesign-image-overlay" aria-hidden />
-          <address className="contact-redesign-info" aria-label={t("detailsTitle")}>
-            <a href={sitePhoneTelHref()} className="contact-redesign-info-item">
-              <span className="contact-redesign-info-icon" aria-hidden>
-                <ContactIconPhone />
-              </span>
-              <span>
-                <strong>{t("details.phone.title")}</strong>
-                <span dir="ltr">{SITE_PHONE_DISPLAY}</span>
-              </span>
-            </a>
-            <a href={`mailto:${SITE_EMAIL}`} className="contact-redesign-info-item">
-              <span className="contact-redesign-info-icon" aria-hidden>
-                <ContactIconEmail />
-              </span>
-              <span>
-                <strong>{t("details.email.title")}</strong>
-                <span dir="ltr">{SITE_EMAIL}</span>
-              </span>
-            </a>
+        </div>
+
+        <address className="contact-redesign-info" aria-label={t("detailsTitle")}>
+          <a href={sitePhoneTelHref()} className="contact-redesign-info-item">
+            <span className="contact-redesign-info-icon" aria-hidden>
+              <ContactIconPhone />
+            </span>
+            <span>
+              <strong>{t("details.phone.title")}</strong>
+              <span dir="ltr">{SITE_PHONE_DISPLAY}</span>
+            </span>
+          </a>
+          <a href={`mailto:${SITE_EMAIL}`} className="contact-redesign-info-item">
+            <span className="contact-redesign-info-icon" aria-hidden>
+              <ContactIconEmail />
+            </span>
+            <span>
+              <strong>{t("details.email.title")}</strong>
+              <span dir="ltr">{SITE_EMAIL}</span>
+            </span>
+          </a>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-redesign-info-item"
+          >
+            <span className="contact-redesign-info-icon" aria-hidden>
+              <IconWhatsapp />
+            </span>
+            <span>
+              <strong>{t("details.whatsapp.title")}</strong>
+              <span>{t("details.whatsapp.hint")}</span>
+            </span>
+          </a>
+          {INFO_SOCIAL_LINKS.map(({ platform, Icon, labelKey }) => (
             <a
-              href={whatsappHref}
+              key={platform}
+              href={SITE_SOCIAL[platform]}
               target="_blank"
               rel="noopener noreferrer"
               className="contact-redesign-info-item"
             >
               <span className="contact-redesign-info-icon" aria-hidden>
-                <IconWhatsapp />
+                <Icon />
               </span>
               <span>
-                <strong>{t("details.whatsapp.title")}</strong>
-                <span>{t("details.whatsapp.hint")}</span>
+                <strong>{t(labelKey)}</strong>
+                <span>{t("socialEyebrow")}</span>
               </span>
             </a>
-            <div className="contact-redesign-info-item">
-              <span className="contact-redesign-info-icon" aria-hidden>
-                <ContactIconPin />
-              </span>
-              <span>
-                <strong>{t("studioTitle")}</strong>
-                <span>{t("studioValue")}</span>
-              </span>
-            </div>
-          </address>
-        </div>
+          ))}
+          <div className="contact-redesign-info-item">
+            <span className="contact-redesign-info-icon" aria-hidden>
+              <ContactIconPin />
+            </span>
+            <span>
+              <strong>{t("studioTitle")}</strong>
+              <span>{t("studioValue")}</span>
+            </span>
+          </div>
+        </address>
       </section>
     </div>
   );

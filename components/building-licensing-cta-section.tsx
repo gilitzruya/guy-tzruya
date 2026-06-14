@@ -5,28 +5,18 @@ import { useId } from "react";
 import {
   IconFacebook,
   IconInstagram,
-  IconLinkedin,
-  IconWhatsapp,
-  IconYoutube,
 } from "@/components/building-licensing-social-icons";
+import { Link } from "@/i18n/navigation";
 import type { LicensingNamespace } from "@/lib/licensing-page-config";
 import { SITE_SOCIAL, type SiteSocialPlatform } from "@/lib/site-social";
 
 const SOCIAL_LINKS: {
-  platform: SiteSocialPlatform;
+  platform: Extract<SiteSocialPlatform, "instagram" | "facebook">;
   Icon: typeof IconInstagram;
-  labelKey:
-    | "ctaSocialInstagram"
-    | "ctaSocialFacebook"
-    | "ctaSocialLinkedin"
-    | "ctaSocialWhatsapp"
-    | "ctaSocialYoutube";
+  labelKey: "ctaSocialInstagram" | "ctaSocialFacebook";
 }[] = [
   { platform: "instagram", Icon: IconInstagram, labelKey: "ctaSocialInstagram" },
   { platform: "facebook", Icon: IconFacebook, labelKey: "ctaSocialFacebook" },
-  { platform: "linkedin", Icon: IconLinkedin, labelKey: "ctaSocialLinkedin" },
-  { platform: "whatsapp", Icon: IconWhatsapp, labelKey: "ctaSocialWhatsapp" },
-  { platform: "youtube", Icon: IconYoutube, labelKey: "ctaSocialYoutube" },
 ];
 
 function CtaArrow({ rtl }: { rtl: boolean }) {
@@ -63,7 +53,6 @@ export function BuildingLicensingCtaSection({
   const locale = useLocale();
   const isRtl = locale === "he";
   const titleId = useId();
-  const mailtoHref = `mailto:studio@guytzruya.com?subject=${encodeURIComponent(mailtoSubject)}`;
 
   return (
     <section
@@ -99,10 +88,10 @@ export function BuildingLicensingCtaSection({
             </header>
 
             <div className="bl-cta__actions">
-              <a href={mailtoHref} className="bl-cta__button">
+              <Link href="/contact" className="bl-cta__button">
                 <span className="bl-cta__button-text">{t("ctaButton")}</span>
                 <CtaArrow rtl={isRtl} />
-              </a>
+              </Link>
             </div>
 
             <div className="bl-cta__social-block">

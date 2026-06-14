@@ -4,7 +4,8 @@
 html[data-scene="night"] {
   --color-bg: #231618;
   --color-text: #fdfffc;
-  --color-accent: #f87060;
+  --color-gold: #c4a574;
+  --color-accent: #c4a574;
   /* Projects listing card: elevated “light black” vs page bg */
   --color-card-listing-surface: #0a0908;
 }
@@ -12,7 +13,8 @@ html[data-scene="night"] {
 html[data-scene="day"] {
   --color-bg: #f4efe8;
   --color-text: #1c1614;
-  --color-accent: #c24a3d;
+  --color-gold: #c4a574;
+  --color-accent: #c4a574;
   --color-card-listing-surface: color-mix(
     in oklab,
     var(--color-bg) 92%,
@@ -34,6 +36,11 @@ html[data-scene="day"] {
 
 body {
   margin: 0;
+}
+
+/* Hebrew display titles — same font stack as .home-projects-showcase__title (do not override --font-interior-display). */
+html:lang(he) .home-services-premium__title {
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
 }
 
 .interior-process-section {
@@ -135,7 +142,7 @@ body {
 }
 
 html[data-scene="day"] .home-hero {
-  --about-hero-gold: #b8925c;
+  --about-hero-gold: #c4a574;
 }
 
 .home-hero .about-hero__scroll-cta {
@@ -156,8 +163,8 @@ html[data-scene="day"] .home-hero {
 
 /* ─── Building licensing page (unique design system) ─── */
 .building-licensing-page {
-  --bl-copper: #c9a227;
-  --bl-copper-soft: #e8d5a3;
+  --bl-copper: #c4a574;
+  --bl-copper-soft: #e8d9c4;
   --bl-ink: #06080c;
   --bl-ink-elevated: #0e1219;
   --bl-blueprint: #1a3a5c;
@@ -175,8 +182,8 @@ html[data-scene="day"] .home-hero {
 
 /* Night — cool, deep, cinematic */
 .building-licensing-page--night {
-  --bl-copper: #d4af37;
-  --bl-copper-soft: #f0dfa0;
+  --bl-copper: #c4a574;
+  --bl-copper-soft: #e8d9c4;
   --bl-ink: #04060a;
   --bl-ink-elevated: #0c1018;
   --bl-blueprint: #1e4a7a;
@@ -184,13 +191,13 @@ html[data-scene="day"] .home-hero {
   --bl-text: #eef2fa;
   --bl-text-muted: rgb(220 228 245 / 0.72);
   --bl-panel-text: #fff;
-  --bl-accent-cta: #d4af37;
+  --bl-accent-cta: #c4a574;
 }
 
 /* Day — warm, bright, editorial */
 .building-licensing-page--day {
-  --bl-copper: #8b5a14;
-  --bl-copper-soft: #c4922a;
+  --bl-copper: #c4a574;
+  --bl-copper-soft: #e8d9c4;
   --bl-ink: #f3ebe0;
   --bl-ink-elevated: #fffdf9;
   --bl-blueprint: #5a7a9a;
@@ -198,12 +205,16 @@ html[data-scene="day"] .home-hero {
   --bl-text: #1a1410;
   --bl-text-muted: rgb(26 20 16 / 0.72);
   --bl-panel-text: #1a1410;
-  --bl-accent-cta: #b83828;
+  --bl-accent-cta: #c4a574;
 }
 
 .building-licensing-page:lang(he) .bl-process__title {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
   letter-spacing: -0.01em;
+}
+
+.building-licensing-page:lang(he) .bl-process__index {
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
 }
 
 /* Full-bleed sections without transform (transform breaks position: sticky) */
@@ -585,7 +596,7 @@ html[data-scene="day"] .home-hero {
 }
 
 .building-licensing-page:lang(he) .bl-faq__title {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
   letter-spacing: -0.01em;
 }
 
@@ -940,7 +951,7 @@ html[data-scene="day"] .home-hero {
 }
 
 .building-licensing-page:lang(he) .bl-cta__title {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
   letter-spacing: -0.02em;
   font-weight: 700;
 }
@@ -1265,13 +1276,13 @@ html[data-scene="day"] .home-hero {
 }
 
 html[data-scene="day"] .about-page {
-  --about-gold: #9a7348;
-  --about-gold-soft: #d4bc96;
+  --about-gold: #c4a574;
+  --about-gold-soft: #e8d9c4;
 }
 
 html[data-scene="night"] .about-page {
-  --about-gold: #d4b88a;
-  --about-gold-soft: #f0e2c8;
+  --about-gold: #c4a574;
+  --about-gold-soft: #e8d9c4;
 }
 
 .about-page__header-backdrop {
@@ -1325,7 +1336,7 @@ html[data-scene="night"] .about-page {
 }
 
 .about-page:lang(he) .about-display {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
   letter-spacing: -0.02em;
 }
 
@@ -1352,7 +1363,7 @@ html[data-scene="night"] .about-page {
   --about-hero-ink: #121110;
   --about-hero-ink-soft: #1a1816;
   --about-hero-gold: #c4a574;
-  --about-hero-gold-muted: #9a7d52;
+  --about-hero-gold-muted: #c4a574;
   --about-hero-text: #f6f4f1;
   --about-hero-text-muted: rgb(246 244 241 / 0.78);
   isolation: isolate;
@@ -1362,7 +1373,7 @@ html[data-scene="night"] .about-page {
 .about-hero--split[data-scene="day"] {
   --about-hero-ink: #161412;
   --about-hero-ink-soft: #201c19;
-  --about-hero-gold: #b8925c;
+  --about-hero-gold: #c4a574;
   --about-hero-text: #faf8f5;
 }
 
@@ -1775,7 +1786,7 @@ html[data-scene="night"] .about-page {
 
 .about-stats__icon {
   display: inline-flex;
-  color: color-mix(in oklab, var(--about-gold) 74%, #8a6a42);
+  color: var(--about-gold);
   opacity: 0.92;
 }
 
@@ -2117,7 +2128,7 @@ html[data-scene="night"] .about-page {
 
 .about-values-editorial__icon {
   display: inline-flex;
-  color: color-mix(in oklab, var(--about-gold) 82%, #8a6a42);
+  color: var(--about-gold);
 }
 
 .about-values-editorial__index {
@@ -2379,7 +2390,7 @@ html[data-scene="night"] .about-testimonial__glass {
 }
 
 .about-page:lang(he) .about-cta__title {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
 }
 
 .about-cta__lead {
@@ -2494,7 +2505,7 @@ html[data-scene="night"] .about-testimonial__glass {
   --home-surface: color-mix(in oklab, var(--color-bg) 88%, var(--color-text) 12%);
   --home-surface-strong: color-mix(in oklab, var(--color-bg) 78%, var(--color-text) 22%);
   --home-muted: color-mix(in oklab, var(--color-text) 72%, transparent);
-  --home-gold: #b89364;
+  --home-gold: #c4a574;
   color: var(--color-text);
 }
 
@@ -2561,7 +2572,7 @@ html[data-scene="night"] .about-testimonial__glass {
 
 .home-services-premium__eyebrow {
   margin: 0;
-  color: color-mix(in oklab, #cea677 86%, var(--color-text) 14%);
+  color: color-mix(in oklab, #c4a574 86%, var(--color-text) 14%);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -2579,7 +2590,7 @@ html[data-scene="night"] .about-testimonial__glass {
 
 .home-services-premium__title em {
   font-style: normal;
-  color: #b98b58;
+  color: #c4a574;
 }
 
 .home-services-premium__lead {
@@ -2655,7 +2666,7 @@ html[data-scene="night"] .about-testimonial__glass {
   padding: 0.26rem 0.75rem;
   border: 1px solid rgb(194 151 101 / 0.58);
   background: rgb(19 17 16 / 0.75);
-  color: #d5ad7d;
+  color: #c4a574;
   font-size: 0.73rem;
   font-weight: 600;
 }
@@ -2671,7 +2682,7 @@ html[data-scene="night"] .about-testimonial__glass {
   aspect-ratio: 1 / 1;
   border: 1px solid rgb(187 140 89 / 0.52);
   border-radius: 999px;
-  color: rgb(186 137 83 / 0.9);
+  color: rgb(196 165 116 / 0.9);
 }
 
 .home-services-premium-card__icon-ring svg {
@@ -2737,7 +2748,7 @@ html[data-scene="night"] .about-testimonial__glass {
   min-height: 2.8rem;
   padding: 0 1.3rem;
   border: 1px solid rgb(180 136 87 / 0.45);
-  color: #d4ab79;
+  color: #c4a574;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 600;
@@ -2754,7 +2765,7 @@ html[data-scene="night"] .about-testimonial__glass {
 
 .home-services-premium-card__link:hover {
   border-color: rgb(203 160 111 / 0.82);
-  color: #e7c194;
+  color: #c4a574;
   background: rgb(183 137 86 / 0.08);
 }
 
@@ -2776,7 +2787,7 @@ html[data-scene="night"] .about-testimonial__glass {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  color: color-mix(in oklab, #e2ccb2 66%, transparent);
+  color: color-mix(in oklab, #c4a574 66%, transparent);
   font-size: 0.98rem;
 }
 
@@ -2785,7 +2796,7 @@ html[data-scene="night"] .about-testimonial__glass {
   place-items: center;
   width: 1.45rem;
   height: 1.45rem;
-  color: rgb(188 143 95 / 0.9);
+  color: rgb(196 165 116 / 0.9);
 }
 
 .home-services-premium-highlight__icon svg {
@@ -3002,8 +3013,8 @@ html[data-scene="night"] .about-testimonial__glass {
 }
 
 .home-about-premium {
-  --home-about-copper: #b8925c;
-  --home-about-copper-soft: #d4ad7d;
+  --home-about-copper: #c4a574;
+  --home-about-copper-soft: #e8d9c4;
   --home-about-ink: #0c0d10;
   --home-about-muted: color-mix(in oklab, var(--color-text) 68%, transparent);
   position: relative;
@@ -3045,7 +3056,7 @@ html[data-scene="night"] .about-testimonial__glass {
   align-items: center;
   gap: 0.65rem;
   margin: 0;
-  color: var(--home-about-copper-soft);
+  color: var(--home-about-copper);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -3069,7 +3080,7 @@ html[data-scene="night"] .about-testimonial__glass {
 
 .home-about-premium__subtitle {
   margin: 0.55rem 0 0;
-  color: var(--home-about-copper-soft);
+  color: var(--home-about-copper);
   font-size: clamp(1.05rem, 2vw, 1.35rem);
   font-weight: 500;
   line-height: 1.35;
@@ -3098,7 +3109,7 @@ html[data-scene="night"] .about-testimonial__glass {
   min-height: 2.75rem;
   padding: 0 1.15rem;
   border: 1px solid color-mix(in oklab, var(--home-about-copper) 58%, transparent);
-  color: var(--home-about-copper-soft);
+  color: var(--home-about-copper);
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 600;
@@ -3109,7 +3120,7 @@ html[data-scene="night"] .about-testimonial__glass {
 }
 
 .home-about-premium__cta:hover {
-  color: #e8c89a;
+  color: #c4a574;
   border-color: color-mix(in oklab, var(--home-about-copper) 82%, transparent);
   background: rgb(184 132 80 / 0.08);
 }
@@ -3176,7 +3187,7 @@ html[data-scene="night"] .about-testimonial__glass {
   font-size: clamp(1.65rem, 3vw, 2.1rem);
   font-style: italic;
   line-height: 1;
-  color: var(--home-about-copper-soft);
+  color: var(--home-about-copper);
 }
 
 .home-about-premium__role {
@@ -3209,7 +3220,7 @@ html[data-scene="night"] .about-testimonial__glass {
   place-items: center;
   width: 1.65rem;
   height: 1.65rem;
-  color: var(--home-about-copper-soft);
+  color: var(--home-about-copper);
 }
 
 .home-about-premium-feature__icon svg {
@@ -3276,7 +3287,7 @@ html[data-scene="night"] .about-testimonial__glass {
 /* ─── Homepage projects showcase (full-width editorial) ─── */
 .home-projects-showcase {
   --home-projects-gold: #c4a574;
-  --home-projects-gold-soft: #d4ad7d;
+  --home-projects-gold-soft: #c4a574;
   position: relative;
   width: 100%;
   padding: clamp(2.75rem, 7vw, 5.25rem) clamp(1rem, 3vw, 2.5rem)
@@ -3472,7 +3483,7 @@ html[data-scene="night"] .about-testimonial__glass {
   min-height: 2.8rem;
   padding: 0 1.5rem;
   border: 1px solid color-mix(in oklab, var(--home-projects-gold) 58%, transparent);
-  color: #edd5a8;
+  color: #c4a574;
   text-decoration: none;
   font-size: 0.8rem;
   font-weight: 600;
@@ -3487,7 +3498,7 @@ html[data-scene="night"] .about-testimonial__glass {
 
 .home-projects-showcase__all-cta:hover {
   transform: translateY(-2px);
-  color: #f8e4bc;
+  color: #c4a574;
   border-color: color-mix(in oklab, var(--home-projects-gold) 86%, transparent);
   background: rgb(196 165 116 / 0.1);
 }
@@ -3527,7 +3538,7 @@ html[data-scene="night"] .about-testimonial__glass {
 
 /* ─── Homepage contact strip (full-width) ─── */
 .home-contact-strip {
-  --home-contact-copper: #b07d5b;
+  --home-contact-copper: #c4a574;
   /* Match day / light theme text on the bright strip (avoid night --color-text). */
   --home-contact-ink: #1c1614;
   position: relative;
@@ -3567,7 +3578,7 @@ html[data-scene="night"] .about-testimonial__glass {
 }
 
 .home-page:lang(he) .home-contact-strip__title {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
 }
 
 .home-contact-strip__title-accent {
@@ -3721,7 +3732,7 @@ html[data-scene="night"] .about-testimonial__glass {
 
 /* ─── Contact page ─── */
 .contact-page {
-  --contact-copper: #b07d5b;
+  --contact-copper: #c4a574;
   --contact-ink: var(--color-text);
   --contact-muted: color-mix(in oklab, var(--color-text) 72%, transparent);
   --contact-surface: color-mix(in oklab, var(--color-bg) 94%, var(--color-text));
@@ -3745,7 +3756,7 @@ html[data-scene="night"] .about-testimonial__glass {
 }
 
 .contact-hero[data-scene="day"] {
-  --contact-hero-gold: #b8925c;
+  --contact-hero-gold: #c4a574;
 }
 
 .contact-hero__image {
@@ -3811,7 +3822,7 @@ html[data-scene="night"] .about-testimonial__glass {
 }
 
 .contact-page:lang(he) .contact-hero__title {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
 }
 
 .contact-hero__lead {
@@ -3899,7 +3910,7 @@ html[data-scene="night"] .about-testimonial__glass {
 .contact-page:lang(he) .contact-details__title,
 .contact-page:lang(he) .contact-form-section__title,
 .contact-page:lang(he) .contact-social__title {
-  font-family: var(--font-assistant), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
 }
 
 .contact-details__lead,
@@ -4149,8 +4160,8 @@ html[data-scene="night"] .about-testimonial__glass {
 
 /* Contact page — dark premium restyle */
 .contact-page {
-  --contact-copper: #d4af37;
-  --contact-copper-soft: #f0dfa0;
+  --contact-copper: #c4a574;
+  --contact-copper-soft: #e8d9c4;
   --contact-ink: #f7f4ec;
   --contact-muted: rgb(239 234 222 / 0.68);
   --contact-surface: rgb(10 10 10 / 0.68);
@@ -4221,7 +4232,7 @@ html[data-scene="night"] .about-testimonial__glass {
 .contact-details__eyebrow,
 .contact-form-section__eyebrow,
 .contact-social__eyebrow {
-  color: var(--contact-copper-soft);
+  color: var(--contact-copper);
   font-family: var(--font-bl-mono, ui-monospace), ui-monospace, monospace;
   font-size: 0.68rem;
   letter-spacing: 0.38em;
@@ -4372,7 +4383,7 @@ html[data-scene="night"] .about-testimonial__glass {
   height: 3.4rem;
   border-color: rgb(212 175 55 / 0.48);
   border-radius: 0;
-  color: var(--contact-copper-soft);
+  color: var(--contact-copper);
   background: rgb(0 0 0 / 0.26);
 }
 
@@ -4460,7 +4471,7 @@ html[data-scene="night"] .about-testimonial__glass {
   min-height: 3.25rem;
   border: 1px solid rgb(212 175 55 / 0.62);
   background: transparent;
-  color: var(--contact-copper-soft);
+  color: var(--contact-copper);
   letter-spacing: 0.03em;
   transition:
     transform 0.25s ease,
@@ -4479,7 +4490,7 @@ html[data-scene="night"] .about-testimonial__glass {
 }
 
 .contact-form__success {
-  color: var(--contact-copper-soft);
+  color: var(--contact-copper);
 }
 
 .contact-social__list {
@@ -4725,7 +4736,7 @@ html[data-scene="night"] .contact-page-redesign {
   justify-content: center;
   gap: 0.8rem;
   margin: 0;
-  color: #d4af37;
+  color: #c4a574;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.34em;
@@ -4736,7 +4747,7 @@ html[data-scene="night"] .contact-page-redesign {
   display: block;
   width: 2.1rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  background: linear-gradient(90deg, transparent, #c4a574, transparent);
 }
 
 .contact-redesign-title {
@@ -4747,6 +4758,20 @@ html[data-scene="night"] .contact-page-redesign {
   line-height: 1.02;
   letter-spacing: -0.035em;
   text-wrap: balance;
+}
+
+html:lang(he) .contact-redesign-title {
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+
+html:lang(en) .contact-redesign-title {
+  font-size: clamp(1.85rem, 3.5vw, 2.85rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
 }
 
 .contact-redesign-lead {
@@ -4815,18 +4840,25 @@ html[data-scene="night"] .contact-page-redesign {
   box-shadow: 0 0 0 3px rgb(212 175 55 / 0.12);
 }
 
+.contact-redesign-submit-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1.35rem;
+}
+
 .contact-redesign-submit {
   display: inline-flex;
   min-height: 3.2rem;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin: 1.35rem auto 0;
+  margin: 0;
   border: 1px solid rgb(212 175 55 / 0.58);
   border-radius: 999px;
   background: rgb(0 0 0 / 0.2);
   padding: 0 2.2rem;
-  color: #d4af37;
+  color: #c4a574;
   font: inherit;
   font-weight: 700;
   cursor: pointer;
@@ -4840,7 +4872,7 @@ html[data-scene="night"] .contact-page-redesign {
 
 .contact-redesign-submit:hover {
   transform: translateY(-2px);
-  border-color: #d4af37;
+  border-color: #c4a574;
   background: rgb(212 175 55 / 0.13);
   color: #fff;
   box-shadow: 0 0 28px rgb(212 175 55 / 0.18);
@@ -4884,7 +4916,7 @@ html[data-scene="night"] .contact-page-redesign {
 }
 
 .contact-redesign-social a:hover {
-  color: #d4af37;
+  color: #c4a574;
   transform: translateY(-2px);
 }
 
@@ -4903,22 +4935,44 @@ html[data-scene="night"] .contact-page-redesign {
 
 .contact-redesign-info {
   position: absolute;
-  inset-inline-start: clamp(5.5rem, 10vw, 9rem);
-  bottom: clamp(3rem, 9vw, 8rem);
+  /* Center in the dark wedge between the form panel and hero image */
+  left: 45%;
+  top: 50%;
+  z-index: 4;
   display: grid;
-  gap: 1rem;
+  gap: 1.65rem;
   width: min(22rem, calc(100% - 2.4rem));
   color: #fff;
   font-style: normal;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+@media (min-width: 1024px) {
+  html:lang(en) .contact-redesign-info {
+    left: 54%;
+  }
 }
 
 .contact-redesign-info-item {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.9rem;
+  gap: 1rem;
   align-items: center;
+  padding-block: 0.15rem;
   color: inherit;
   text-decoration: none;
+}
+
+.contact-redesign-info-item > span:not(.contact-redesign-info-icon) {
+  min-width: 0;
+  text-align: start;
+}
+
+.contact-page-redesign:dir(rtl) .contact-redesign-info span[dir="ltr"] {
+  display: block;
+  width: 100%;
+  text-align: end;
 }
 
 .contact-redesign-info-icon {
@@ -4928,7 +4982,7 @@ html[data-scene="night"] .contact-page-redesign {
   height: 2.7rem;
   border: 1px solid rgb(212 175 55 / 0.34);
   border-radius: 999px;
-  color: #d4af37;
+  color: #c4a574;
   background: rgb(0 0 0 / 0.32);
 }
 
@@ -4945,12 +4999,14 @@ html[data-scene="night"] .contact-page-redesign {
 .contact-redesign-info strong {
   color: rgb(255 255 255 / 0.82);
   font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 .contact-redesign-info span span {
-  margin-top: 0.15rem;
+  margin-top: 0.35rem;
   color: rgb(255 255 255 / 0.64);
   font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 @media (max-width: 1023.98px) {
@@ -4984,8 +5040,10 @@ html[data-scene="night"] .contact-page-redesign {
   }
 
   .contact-redesign-info {
-    inset-inline: 1rem;
-    bottom: 1rem;
+    left: 50%;
+    top: min(31svh, 17rem);
+    width: min(20rem, calc(100% - 2rem));
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -5203,15 +5261,27 @@ html[data-scene="night"] .contact-page-redesign {
   font-size: clamp(0.88rem, 1.9vw, 1.05rem);
   font-weight: 700;
   line-height: 1.42;
-  color: var(--color-accent);
+  color: color-mix(in oklab, var(--color-text) 88%, transparent);
   text-decoration: none;
   transition: opacity 0.2s ease;
+}
+
+.site-footer__developer-link .site-footer__developer-name,
+.site-footer__developer-link .site-footer__developer-sep {
+  color: #fff;
 }
 
 .site-footer__developer-link:hover {
   opacity: 0.88;
   text-decoration: underline;
   text-underline-offset: 0.2em;
+}
+
+.site-footer__developer-link:hover .site-footer__developer-name,
+.site-footer__developer-link:hover .site-footer__developer-sep,
+.site-footer__developer-link:visited .site-footer__developer-name,
+.site-footer__developer-link:visited .site-footer__developer-sep {
+  color: #fff;
 }
 
 .site-footer__developer-link:focus-visible {
@@ -5234,4 +5304,277 @@ html[data-scene="night"] .contact-page-redesign {
   .site-footer__social-link:hover {
     transform: none;
   }
+}
+
+/* ——— Accessibility (Israeli Standard 5568 / WCAG 2.0 AA) ——— */
+:root {
+  --a11y-font-scale: 1;
+}
+
+html {
+  font-size: calc(100% * var(--a11y-font-scale));
+}
+
+.skip-link {
+  position: fixed;
+  inset-inline-start: 1rem;
+  top: 1rem;
+  z-index: 500;
+  transform: translateY(-200%);
+  padding: 0.65rem 1rem;
+  border-radius: 0.35rem;
+  background: #111;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  transition: transform 0.18s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid #c4a574;
+  outline-offset: 2px;
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+.site-header a:focus-visible,
+.site-header button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.contact-redesign-field input:focus-visible,
+.contact-redesign-field textarea:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 2px;
+}
+
+.contact-redesign-submit:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
+}
+
+.contact-redesign-form-error {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgb(220 80 80 / 0.55);
+  border-radius: 0.5rem;
+  background: rgb(220 80 80 / 0.12);
+  color: #fff;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.a11y-widget {
+  position: fixed;
+  z-index: 240;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.65rem;
+}
+
+.a11y-widget--rtl {
+  inset-inline-end: max(1rem, env(safe-area-inset-right, 0px));
+  align-items: flex-end;
+}
+
+.a11y-widget--ltr {
+  inset-inline-start: max(1rem, env(safe-area-inset-left, 0px));
+  align-items: flex-start;
+}
+
+.a11y-widget__toggle {
+  display: grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  border: 1px solid rgb(196 165 116 / 0.55);
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.82);
+  color: #c4a574;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.35);
+  cursor: pointer;
+}
+
+.a11y-widget__toggle:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
+}
+
+.a11y-widget__panel {
+  width: min(18rem, calc(100vw - 2rem));
+  padding: 1rem;
+  border: 1px solid rgb(196 165 116 / 0.35);
+  border-radius: 0.85rem;
+  background: rgb(8 8 8 / 0.96);
+  color: #fff;
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.45);
+}
+
+.a11y-widget__title {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.a11y-widget__group {
+  margin-bottom: 0.75rem;
+}
+
+.a11y-widget__label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.82rem;
+  color: rgb(255 255 255 / 0.78);
+}
+
+.a11y-widget__segmented {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.a11y-widget__segment,
+.a11y-widget__action,
+.a11y-widget__reset {
+  min-height: 2.5rem;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 0.45rem;
+  background: rgb(255 255 255 / 0.04);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.a11y-widget__segment:focus-visible,
+.a11y-widget__action:focus-visible,
+.a11y-widget__reset:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 2px;
+}
+
+.a11y-widget__segment--active,
+.a11y-widget__action--active {
+  border-color: rgb(196 165 116 / 0.75);
+  background: rgb(196 165 116 / 0.16);
+  color: #c4a574;
+}
+
+.a11y-widget__action {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  margin-top: 0.45rem;
+  padding: 0.55rem 0.7rem;
+  text-align: start;
+}
+
+.a11y-widget__reset {
+  width: 100%;
+  margin-top: 0.65rem;
+  font-weight: 600;
+}
+
+.whatsapp-float {
+  position: fixed;
+  z-index: 1000;
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  left: max(1.25rem, env(safe-area-inset-left, 0px));
+  right: auto;
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 1.5px solid rgb(255 255 255 / 0.92);
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  box-shadow:
+    0 10px 28px rgb(0 0 0 / 0.35),
+    0 0 0 0 rgb(37 211 102 / 0.55);
+  animation: whatsapp-float-pulse 2.8s ease-in-out infinite;
+}
+
+.whatsapp-float:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.whatsapp-float:hover {
+  background: #20bd5a;
+}
+
+@keyframes whatsapp-float-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 10px 28px rgb(0 0 0 / 0.35),
+      0 0 0 0 rgb(37 211 102 / 0.55);
+    opacity: 1;
+  }
+
+  50% {
+    box-shadow:
+      0 10px 28px rgb(0 0 0 / 0.35),
+      0 0 0 0.75rem rgb(37 211 102 / 0);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float {
+    animation: none;
+  }
+}
+
+html[data-a11y-reduce-motion="true"] .whatsapp-float {
+  animation: none !important;
+}
+
+html[data-a11y-contrast="high"] {
+  --color-bg: #000;
+  --color-text: #fff;
+  --color-accent: #ffe082;
+}
+
+html[data-a11y-contrast="high"] .site-header,
+html[data-a11y-contrast="high"] .site-footer,
+html[data-a11y-contrast="high"] .contact-redesign-panel--form {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html[data-a11y-links="highlight"] a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  outline: 1px solid rgb(196 165 116 / 0.45);
+  outline-offset: 2px;
+}
+
+html[data-a11y-readable-font="true"] body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}
+
+html[data-a11y-reduce-motion="true"] *,
+html[data-a11y-reduce-motion="true"] *::before,
+html[data-a11y-reduce-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.accessibility-statement a:focus-visible {
+  outline: 2px solid #c4a574;
+  outline-offset: 3px;
 }

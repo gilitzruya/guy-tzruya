@@ -126,6 +126,7 @@ export function AboutJourneySection() {
 
           <ol className="m-0 list-none p-0" aria-label={t("journeyProgressLabel")}>
             {ABOUT_JOURNEY_STEP_KEYS.map((key, index) => {
+              const year = t(`journeySteps.${key}.year`).trim();
               const isActive = activeIndex === index;
               const isRevealed = revealed.has(index) || reducedMotion;
               return (
@@ -139,7 +140,9 @@ export function AboutJourneySection() {
                   } ${isRevealed ? "about-journey__step--revealed" : ""}`}
                 >
                   <span className="about-journey__dot" aria-hidden />
-                  <p className="about-journey__year">{t(`journeySteps.${key}.year`)}</p>
+                  {year ? (
+                    <p className="about-journey__year">{year}</p>
+                  ) : null}
                   <div className="about-journey__card">
                     <h3 className="about-journey__card-title">
                       {t(`journeySteps.${key}.title`)}

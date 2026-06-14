@@ -6,6 +6,7 @@ import { useScene } from "@/components/scene-provider";
 import { ProjectBeforeAfterSlider } from "@/components/project-before-after-slider";
 import { ProjectDetailsSheet } from "@/components/project-details-sheet";
 import { ProjectGalleryDialog } from "@/components/project-gallery-dialog";
+import { TypewriterText } from "@/components/typewriter-text";
 import { PROJECT_SLUGS, type ProjectSlug } from "@/lib/projects";
 import { interiorDesignPageBackgroundStyle } from "@/lib/interior-page-background";
 
@@ -53,11 +54,11 @@ export function ProjectsPage() {
             className="mx-auto flex w-full max-w-5xl flex-col items-center text-center [font-family:var(--font-interior-display),ui-serif,Georgia,serif]"
           >
             <h1 id={projectsHeroHeadingId} className="text-[var(--color-text)]">
-              <span
+              <TypewriterText
+                text={t("heroTitle")}
+                charDelayMs={165}
                 className={`block uppercase leading-[0.92] tracking-[0.14em] [word-spacing:0.35em] text-[clamp(1.75rem,6.8vw,4.25rem)] font-semibold ${heroTitleFx}`}
-              >
-                {t("heroTitle")}
-              </span>
+              />
             </h1>
           </div>
           <p

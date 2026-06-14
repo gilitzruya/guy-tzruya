@@ -4,6 +4,7 @@ import {
   type CSSProperties,
   type SyntheticEvent,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -11,6 +12,15 @@ import {
 
 const POSITION_STEP = 3;
 const DESKTOP_MIN_WIDTH = 1024;
+
+function reportImageLoad(
+  img: HTMLImageElement,
+  onImageLoad?: (aspectRatio: number) => void,
+) {
+  if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+    onImageLoad?.(img.naturalWidth / img.naturalHeight);
+  }
+}
 
 function SliderPhaseImageInner({
   primary,
@@ -42,10 +52,10 @@ function SliderPhaseImageInner({
         if (fallback) setUseFallback(true);
       }}
       onLoad={(event: SyntheticEvent<HTMLImageElement>) => {
-        const img = event.currentTarget;
-        if (img.naturalWidth > 0 && img.naturalHeight > 0) {
-          onImageLoad?.(img.naturalWidth / img.naturalHeight);
-        }
+        reportImageLoad(event.currentTarget, onImageLoad);
+      }}
+      ref={(img) => {
+        if (img?.complete) reportImageLoad(img, onImageLoad);
       }}
     />
   );
@@ -75,6 +85,7 @@ export function BeforeAfterSlider({
   compactMobileHeight = false,
   className = "",
   sizes = "100vw",
+  onImagesReady,
 }: {
   beforeSrc: string;
   afterSrc: string;
@@ -90,6 +101,7 @@ export function BeforeAfterSlider({
   compactMobileHeight?: boolean;
   className?: string;
   sizes?: string;
+  onImagesReady?: () => void;
 }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const hitLayerRef = useRef<HTMLDivElement>(null);
@@ -103,6 +115,17 @@ export function BeforeAfterSlider({
     width: number;
     height: number;
   } | null>(null);
+  const [beforeLoaded, setBeforeLoaded] = useState(false);
+  const [afterLoaded, setAfterLoaded] = useState(false);
+
+  useEffect(() => {
+    setBeforeLoaded(false);
+    setAfterLoaded(false);
+  }, [beforeSrc, afterSrc]);
+
+  useEffect(() => {
+    if (beforeLoaded && afterLoaded) onImagesReady?.();
+  }, [afterLoaded, beforeLoaded, onImagesReady]);
 
   useLayoutEffect(() => {
     const mq = window.matchMedia(`(min-width: ${DESKTOP_MIN_WIDTH}px)`);
@@ -266,9 +289,12 @@ export function BeforeAfterSlider({
           <SliderPhaseImage
             primary={afterSrc}
             fallback={afterFallback}
-            priority={false}
+            priority={priority}
             imgFit={imgFit}
-            onImageLoad={recordContainAspect}
+            onImageLoad={(aspectRatio) => {
+              setAfterLoaded(true);
+              recordContainAspect(aspectRatio);
+            }}
           />
         </div>
 
@@ -282,7 +308,10 @@ export function BeforeAfterSlider({
             fallback={beforeFallback}
             priority={priority}
             imgFit={imgFit}
-            onImageLoad={recordContainAspect}
+            onImageLoad={(aspectRatio) => {
+              setBeforeLoaded(true);
+              recordContainAspect(aspectRatio);
+            }}
           />
         </div>
 

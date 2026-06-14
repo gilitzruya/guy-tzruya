@@ -1,5 +1,5 @@
 /**
- * Manual QA: 4 room types x 7 styles, compare debug panel prompt text.
+ * Manual QA: 4 room types x 6 styles, compare debug panel prompt text.
  * Run: npm test
  */
 

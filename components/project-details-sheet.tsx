@@ -40,14 +40,18 @@ function ListingField({
   label,
   icon,
   children,
+  className,
 }: {
   label: string;
   icon: React.ReactNode;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <div className="border-b border-[color-mix(in_oklab,#c4a574_34%,transparent)] py-4 last:border-b-0">
-      <div className="flex items-start gap-3">
+    <div
+      className={`border-b border-[color-mix(in_oklab,#c4a574_34%,transparent)] py-6 last:border-b-0 sm:py-8 lg:py-10 ${className ?? ""}`}
+    >
+      <div className="flex items-start gap-3.5 sm:gap-4">
         <span
           className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center text-[#c4a574]"
           aria-hidden
@@ -59,7 +63,7 @@ function ListingField({
             {label}
             <span aria-hidden>:</span>
           </p>
-          <div className="mt-1.5 text-pretty text-[1.02rem] leading-relaxed text-[var(--color-text)]/92">
+          <div className="mt-2.5 text-pretty text-[1.02rem] leading-relaxed text-[var(--color-text)]/92 sm:mt-3 sm:text-[1.05rem]">
             {children}
           </div>
         </div>
@@ -79,6 +83,10 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
   const title = t(`items.${slug}.title`);
   const cardSubtitle = t(`items.${slug}.cardSubtitle`);
   const rawBody = t(`items.${slug}.cardBody`);
+  const listingDescription = useMemo(() => {
+    const first = rawBody.split(/\n\n+/).map((p) => p.trim()).filter(Boolean)[0];
+    return first ?? rawBody.trim();
+  }, [rawBody]);
   const paragraphs = useMemo(
     () => rawBody.split(/\n\n+/).map((p) => p.trim()).filter(Boolean),
     [rawBody],
@@ -101,7 +109,7 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
       <div
         dir={dir}
         lang={locale === "he" ? "he" : "en"}
-        className="flex h-full min-h-0 flex-col rounded-[18px] border border-[color-mix(in_oklab,#c4a574_55%,transparent)] bg-[linear-gradient(165deg,rgba(8,9,14,0.97)_0%,rgba(7,9,14,0.95)_48%,rgba(5,7,12,0.97)_100%)] px-4 py-5 shadow-[0_22px_50px_-24px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.08)] sm:px-5 lg:px-6 lg:py-6"
+        className="flex h-full min-h-0 flex-col rounded-[18px] border border-[color-mix(in_oklab,#c4a574_55%,transparent)] bg-[linear-gradient(165deg,rgba(8,9,14,0.97)_0%,rgba(7,9,14,0.95)_48%,rgba(5,7,12,0.97)_100%)] px-4 py-5 shadow-[0_22px_50px_-24px_rgba(0,0,0,0.78),inset_0_1px_0_rgba(255,255,255,0.08)] sm:px-5 sm:py-6 lg:px-6 lg:py-7"
       >
         <div className="flex min-h-0 flex-1 flex-col">
           <div className="shrink-0">
@@ -109,13 +117,14 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
               {t("detailSectionTitle")}
             </h2>
             <div
-              className="mt-3 h-px w-full bg-[linear-gradient(to_left,color-mix(in_oklab,#c4a574_74%,transparent),transparent)]"
+              className="mt-5 h-px w-full bg-[linear-gradient(to_left,color-mix(in_oklab,#c4a574_74%,transparent),transparent)] sm:mt-6 lg:mt-7"
               aria-hidden
             />
           </div>
 
-          <div className="mt-2 shrink-0 overflow-y-auto overscroll-contain">
-            <ListingField
+          <div className="mt-6 flex min-h-0 flex-1 flex-col sm:mt-7 lg:mt-8">
+            <div className="min-h-0 shrink-0 overflow-y-auto overscroll-contain">
+              <ListingField
               label={t("detailLabelClient")}
               icon={
                 <svg viewBox="0 0 24 24" className="size-5" fill="none">
@@ -128,9 +137,9 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
                 </svg>
               }
             >
-              <span className="font-semibold" id={`project-heading-${slug}`}>
+              <h2 className="m-0 font-semibold text-[inherit] text-base" id={`project-heading-${slug}`}>
                 {title}
-              </span>
+              </h2>
             </ListingField>
             <ListingField
               label={t("detailLabelType")}
@@ -147,8 +156,7 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
             >
               <span className="font-semibold">{cardSubtitle}</span>
             </ListingField>
-            <div>
-              <ListingField
+            <ListingField
                 label={t("detailLabelAbout")}
                 icon={
                   <svg viewBox="0 0 24 24" className="size-5" fill="none">
@@ -156,91 +164,29 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
                     <path d="m8 14 8-8M8 18h8" stroke="currentColor" strokeWidth="1.7" />
                   </svg>
                 }
+                className="!border-b-0"
               >
-                <div className="space-y-2.5">
-                  {paragraphs.map((p, i) => (
-                    <p
-                      key={i}
-                      className={
-                        i === 0
-                          ? "text-[0.98rem] font-normal leading-relaxed text-[var(--color-text)]/88"
-                          : "text-[0.93rem] font-light leading-relaxed text-[var(--color-text)]/74"
-                      }
-                    >
-                      {p}
-                    </p>
-                  ))}
-                </div>
+                <p className="text-[0.98rem] font-normal leading-[1.85] text-[var(--color-text)]/88 sm:text-[1rem] sm:leading-[1.9]">
+                  {listingDescription}
+                </p>
               </ListingField>
             </div>
-          </div>
 
-          {onOpenGallery ? (
-            <div
-              className="mt-2 flex min-h-0 flex-1 shrink-0 items-center justify-center"
-            >
-              <button
-                type="button"
-                onClick={onOpenGallery}
-                className="inline-flex items-center justify-center gap-1.5 rounded-md border border-[color-mix(in_oklab,#c4a574_85%,transparent)] bg-transparent px-3.5 py-1.5 text-[0.82rem] font-medium text-[#c4a574] transition-[background-color,border-color,color] hover:bg-[color-mix(in_oklab,#c4a574_10%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#c4a574] focus-visible:outline-offset-2"
-              >
-                <span>{t("viewPhotoGallery")}</span>
-                <span aria-hidden className="text-sm leading-none">
-                  {locale === "he" ? "\u2190" : "\u2192"}
-                </span>
-              </button>
-            </div>
-          ) : null}
-
-          {showTestimonialBlock ? (
-            <div className="mt-0 shrink-0 pt-1">
-              <figure className="overflow-hidden rounded-2xl border border-[color-mix(in_oklab,#c4a574_55%,transparent)] bg-[linear-gradient(170deg,rgba(196,165,116,0.12)_0%,rgba(18,20,28,0.72)_32%,rgba(9,11,17,0.9)_100%)] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] sm:px-5">
-                <div className="flex flex-row items-start gap-3" dir="ltr">
-                  <span
-                    aria-hidden
-                    className="shrink-0 select-none font-serif text-[2rem] leading-none text-[#c4a574] sm:text-[2.2rem]"
-                  >
-                    {"\u201c"}
-                  </span>
-                  <blockquote
-                    className="m-0 min-w-0 flex-1"
-                    dir={locale === "he" ? "rtl" : "ltr"}
-                  >
-                    <p
-                      className={`text-pretty text-[1rem] leading-[1.72] text-[var(--color-text)]/90 ${
-                        locale === "he" ? "text-right" : "text-left"
-                      }`}
-                    >
-                      {testimonialLead ? <span>{testimonialLead}</span> : null}
-                      {testimonialHighlight ? (
-                        <span
-                          className={`mt-2.5 block font-medium ${
-                            locale === "he" ? "text-right" : "text-left"
-                          }`}
-                        >
-                          {testimonialHighlight}
-                        </span>
-                      ) : null}
-                    </p>
-                  </blockquote>
-                </div>
-                <figcaption
-                  className={`mt-5 border-t border-[color-mix(in_oklab,#c4a574_42%,transparent)] pt-3 ${
-                    locale === "he" ? "text-left" : "text-right"
-                  }`}
+            {onOpenGallery ? (
+              <div className="mt-8 flex shrink-0 justify-center border-t border-[color-mix(in_oklab,#c4a574_28%,transparent)] pt-5 sm:mt-9 sm:pt-6">
+                <button
+                  type="button"
+                  onClick={onOpenGallery}
+                  className="inline-flex min-h-[2.5rem] items-center justify-center gap-1.5 rounded-md border border-[color-mix(in_oklab,#c4a574_85%,transparent)] bg-transparent px-4 py-2 text-[0.82rem] font-medium text-[#c4a574] transition-[background-color,border-color,color] hover:bg-[color-mix(in_oklab,#c4a574_10%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#c4a574] focus-visible:outline-offset-2 sm:px-5 sm:text-[0.875rem]"
                 >
-                  <p className="text-lg font-semibold text-[#c4a574]">
-                    {title}
-                  </p>
-                  {testimonialContext ? (
-                    <p className="mt-1 text-sm text-[var(--color-text)]/72">
-                      {testimonialContext}
-                    </p>
-                  ) : null}
-                </figcaption>
-              </figure>
-            </div>
-          ) : null}
+                  <span>{t("viewPhotoGallery")}</span>
+                  <span aria-hidden className="text-sm leading-none">
+                    {locale === "he" ? "\u2190" : "\u2192"}
+                  </span>
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     );
@@ -271,9 +217,9 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
 
         <div className="mt-1 min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <DetailRow label={t("detailLabelClient")}>
-            <span className="font-bold" id={`project-heading-${slug}`}>
+            <h2 className="m-0 font-bold text-[inherit] text-base" id={`project-heading-${slug}`}>
               {title}
-            </span>
+            </h2>
           </DetailRow>
           <DetailRow label={t("detailLabelType")}>
             <span className="font-bold">{cardSubtitle}</span>

@@ -3,12 +3,11 @@
 import Image from "next/image";
 import { Instrument_Serif, DM_Mono } from "next/font/google";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useId, type CSSProperties, type MouseEvent } from "react";
+import { useId, type CSSProperties } from "react";
 import { BuildingLicensingFaqSection } from "@/components/building-licensing-faq-section";
 import { BuildingLicensingProcessSection } from "@/components/building-licensing-process-section";
 import { useScene } from "@/components/scene-provider";
 import { TypewriterText } from "@/components/typewriter-text";
-import { buildingLicensingHeroButtonClass } from "@/lib/building-licensing-hero-button";
 import { interiorDesignPageBackgroundUrl } from "@/lib/interior-page-background";
 import type { LicensingPageConfig } from "@/lib/licensing-page-config";
 
@@ -26,15 +25,6 @@ const blMono = DM_Mono({
   display: "swap",
 });
 
-function scrollToProcess() {
-  const target = document.getElementById("process");
-  if (!target) {
-    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
-    return;
-  }
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-}
 
 export function LicensingPage({ config }: { config: LicensingPageConfig }) {
   const t = useTranslations(config.namespace);
@@ -53,15 +43,9 @@ export function LicensingPage({ config }: { config: LicensingPageConfig }) {
       : "";
 
   const subtitleLang = locale === "he" ? "he" : "en";
-  const heroGhostBtn = buildingLicensingHeroButtonClass(scene);
   const pageStyle = {
     "--bl-header-bg-url": `url("${interiorDesignPageBackgroundUrl(scene)}")`,
   } as CSSProperties;
-
-  const onCtaClick = useCallback((e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    scrollToProcess();
-  }, []);
 
   return (
     <div
@@ -119,19 +103,9 @@ export function LicensingPage({ config }: { config: LicensingPageConfig }) {
             {t("heroSubtitle")}
           </p>
           <div
-            className={`mx-auto mt-10 flex w-full max-w-xl flex-wrap items-center justify-center gap-4 sm:mt-12 sm:gap-5 ${locale === "he" ? "flex-row-reverse" : ""}`}
-          >
-            <a href="#process" onClick={onCtaClick} className={heroGhostBtn}>
-              {t("heroCta")}
-            </a>
-          </div>
-          <div
-            className="mx-auto mt-12 flex flex-col items-center gap-2 opacity-75 sm:mt-14 lg:mt-auto lg:pt-10"
+            className="mx-auto mt-12 flex flex-col items-center sm:mt-14 lg:mt-auto lg:pt-10"
             aria-hidden
           >
-            <span className="text-[0.65rem] font-medium uppercase tracking-[0.42em]">
-              {t("heroScroll")}
-            </span>
             <svg
               width="18"
               height="28"
@@ -152,11 +126,7 @@ export function LicensingPage({ config }: { config: LicensingPageConfig }) {
         </div>
       </section>
 
-      <BuildingLicensingProcessSection
-        namespace={config.namespace}
-        content={config.process}
-        mailtoSubject={config.processMailSubject}
-      />
+      <BuildingLicensingProcessSection namespace={config.namespace} />
       <BuildingLicensingFaqSection namespace={config.namespace} />
     </div>
   );
