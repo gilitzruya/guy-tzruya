@@ -25,6 +25,7 @@ import { interiorDesignPageBackgroundStyle } from "@/lib/interior-page-backgroun
 import { useScene } from "@/components/scene-provider";
 import type { Scene } from "@/lib/scene-storage";
 import type { SimulationQuota } from "@/lib/simulation-usage";
+import { SIMULATION_MAX_FILE_BYTES } from "@/lib/simulation-config";
 
 type Phase = "form" | "generating" | "result";
 
@@ -116,6 +117,44 @@ function RoomTypeIcon({
 
 function isValidImageFile(file: File): boolean {
   return ACCEPTED_TYPES.includes(file.type);
+}
+
+function isFileTooLarge(file: File): boolean {
+  return file.size > SIMULATION_MAX_FILE_BYTES;
+}
+
+type SimulationGenerateResponse = {
+  afterImageUrl?: string;
+  beforeImageUrl?: string;
+  remaining?: number;
+  used?: number;
+  max?: number;
+  error?: string;
+  message?: string;
+};
+
+function simulationApiErrorKey(
+  status: number,
+  error: string | undefined,
+  fileSize: number,
+): string {
+  if (
+    status === 413 ||
+    error === "file_too_large" ||
+    fileSize > SIMULATION_MAX_FILE_BYTES
+  ) {
+    return "fileTooLarge";
+  }
+  if (error === "invalid_body" && fileSize > SIMULATION_MAX_FILE_BYTES / 2) {
+    return "fileTooLarge";
+  }
+  if (error === "missing_style" || error === "missing_prompt") {
+    return "missingStyle";
+  }
+  if (error === "invalid_type") {
+    return "invalidType";
+  }
+  return "generateFailed";
 }
 
 export function SimulationPage({ maxActivations }: { maxActivations: number }) {
@@ -214,6 +253,10 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
       setErrorKey("invalidType");
       return;
     }
+    if (isFileTooLarge(file)) {
+      setErrorKey("fileTooLarge");
+      return;
+    }
     setErrorKey(null);
     setImageFile(file);
     setImagePreviewUrl((prev) => {
@@ -293,6 +336,10 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
   const generate = async () => {
     if (!imageFile || !canSubmit || phase !== "form") return;
+    if (isFileTooLarge(imageFile)) {
+      setErrorKey("fileTooLarge");
+      return;
+    }
     setErrorKey(null);
     setPhase("generating");
 
@@ -306,15 +353,17 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
         method: "POST",
         body,
       });
-      const data = (await res.json()) as {
-        afterImageUrl?: string;
-        beforeImageUrl?: string;
-        remaining?: number;
-        used?: number;
-        max?: number;
-        error?: string;
-        message?: string;
-      };
+
+      let data: SimulationGenerateResponse = {};
+      try {
+        data = (await res.json()) as SimulationGenerateResponse;
+      } catch {
+        setErrorKey(
+          simulationApiErrorKey(res.status, undefined, imageFile.size),
+        );
+        setPhase("form");
+        return;
+      }
 
       if (res.status === 429) {
         setErrorKey("quotaExceeded");
@@ -328,13 +377,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
       }
 
       if (!res.ok) {
-        setErrorKey(
-          data.error === "missing_style" || data.error === "missing_prompt"
-            ? "missingStyle"
-            : data.error === "file_too_large"
-              ? "fileTooLarge"
-              : "generateFailed",
-        );
+        setErrorKey(simulationApiErrorKey(res.status, data.error, imageFile.size));
         setPhase("form");
         return;
       }
@@ -358,7 +401,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
         setPhase("form");
       }
     } catch {
-      setErrorKey("generateFailed");
+      setErrorKey(simulationApiErrorKey(0, undefined, imageFile.size));
       setPhase("form");
     }
   };

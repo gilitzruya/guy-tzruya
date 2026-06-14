@@ -482,7 +482,7 @@
     "errors": {
       "invalidType": "סוג קובץ לא נתמך. השתמשו ב-JPEG, PNG או WebP.",
       "missingStyle": "בחרו סגנון עיצוב.",
-      "fileTooLarge": "הקובץ גדול מדי (מקסימום 8MB).",
+      "fileTooLarge": "הקובץ גדול מדי (מקסימום 4MB).",
       "quotaExceeded": "אין הפעלות נוספות זמינות.",
       "generateFailed": "יצירת ההדמיה נכשלה. נסו שוב בעוד רגע."
     }

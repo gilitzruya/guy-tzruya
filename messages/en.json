@@ -482,7 +482,7 @@
     "errors": {
       "invalidType": "Unsupported file type. Use JPEG, PNG, or WebP.",
       "missingStyle": "Select a design style.",
-      "fileTooLarge": "File is too large (max 8MB).",
+      "fileTooLarge": "File is too large (max 4MB).",
       "quotaExceeded": "No runs remaining.",
       "generateFailed": "Simulation failed. Please try again shortly."
     }

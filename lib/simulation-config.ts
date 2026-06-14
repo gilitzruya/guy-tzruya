@@ -3,7 +3,8 @@ export const SIMULATION_COOKIE_NAME = "gt-simulation-count";
 /** 30 days */
 export const SIMULATION_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
-export const SIMULATION_MAX_FILE_BYTES = 8 * 1024 * 1024;
+/** Safe for Vercel serverless (~4.5 MB request body limit incl. multipart overhead). */
+export const SIMULATION_MAX_FILE_BYTES = 4 * 1024 * 1024;
 
 const ALLOWED_MIME = new Set([
   "image/jpeg",

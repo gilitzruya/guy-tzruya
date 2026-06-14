@@ -47,7 +47,7 @@ export async function SiteHeader() {
           <LanguageSwitcher />
         </nav>
 
-        <div className="ms-auto flex shrink-0 items-center md:hidden">
+        <div className="absolute right-4 top-1/2 z-[2] flex -translate-y-1/2 shrink-0 items-center sm:right-6 md:hidden">
           <MobileNavMenu />
         </div>
       </div>
