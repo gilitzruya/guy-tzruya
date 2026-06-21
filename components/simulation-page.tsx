@@ -415,20 +415,20 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
   const remaining = quota?.remaining ?? 0;
   const generateButtonClass =
-    "inline-flex min-h-[40px] w-fit shrink-0 items-center justify-center rounded-none border border-white bg-transparent px-5 text-sm font-semibold text-white shadow-none transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:-translate-y-0.5 hover:border-white hover:bg-white/14 hover:shadow-[0_0_22px_rgb(255_255_255/_0.22)] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:bg-transparent disabled:hover:shadow-none";
+    "simulation-generate-button inline-flex min-h-[40px] w-fit shrink-0 items-center justify-center rounded-none border border-white bg-transparent px-5 text-sm font-semibold text-white shadow-none transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:-translate-y-0.5 hover:border-white hover:bg-white/14 hover:shadow-[0_0_22px_rgb(255_255_255/_0.22)] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 disabled:hover:bg-transparent disabled:hover:shadow-none";
 
   const imagePanel = (
     <section
       aria-label={t("stepImageTitle")}
-      className="flex min-h-0 flex-col max-lg:shrink-0 lg:h-full lg:min-h-0"
+      className="simulation-upload-section flex min-h-0 flex-col max-lg:shrink-0 lg:h-full lg:min-h-0"
     >
-      <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)] lg:sr-only">
+      <h2 className="simulation-step-title mb-2 text-lg font-semibold text-[var(--color-text)] lg:sr-only">
         {t("stepImageTitle")}
       </h2>
 
       {cameraOpen ? (
-        <div className="relative flex min-h-0 flex-1 flex-col gap-3 lg:min-h-0">
-          <div className="relative min-h-[min(52svh,420px)] flex-1 overflow-hidden rounded-2xl bg-black lg:min-h-0 lg:rounded-3xl">
+        <div className="simulation-camera-panel relative flex min-h-0 flex-1 flex-col gap-3 lg:min-h-0">
+          <div className="simulation-upload-card relative min-h-[min(52svh,420px)] flex-1 overflow-hidden rounded-2xl bg-black lg:min-h-0 lg:rounded-3xl">
             <video
               ref={videoRef}
               className="h-full w-full object-cover"
@@ -437,7 +437,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
               autoPlay
             />
           </div>
-          <div className="flex flex-wrap gap-2 lg:absolute lg:inset-x-4 lg:bottom-4 lg:z-10">
+          <div className="simulation-upload-actions flex flex-wrap gap-2 lg:absolute lg:inset-x-4 lg:bottom-4 lg:z-10">
             <button
               type="button"
               onClick={capturePhoto}
@@ -455,11 +455,11 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
           </div>
         </div>
       ) : (
-        <div className="relative flex min-h-0 flex-1 flex-col lg:min-h-0">
+        <div className="simulation-upload-panel relative flex min-h-0 flex-1 flex-col lg:min-h-0">
           <div
             onDragOver={(e) => e.preventDefault()}
             onDrop={onDrop}
-            className={`relative flex min-h-[min(52svh,420px)] flex-1 flex-col overflow-hidden rounded-2xl border-2 transition-colors lg:min-h-0 lg:rounded-3xl ${
+            className={`simulation-upload-card relative flex min-h-[min(52svh,420px)] flex-1 flex-col overflow-hidden rounded-2xl border-2 transition-colors lg:min-h-0 lg:rounded-3xl ${
               imagePreviewUrl
                 ? "border-[var(--color-accent)]/40 bg-zinc-950/90"
                 : "items-center justify-center gap-4 border-dashed border-[var(--color-text)]/20 bg-[var(--color-bg)]/60 px-6 py-10"
@@ -482,7 +482,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
             )}
 
             <div
-              className={`flex flex-wrap items-center justify-center gap-2 ${
+              className={`simulation-upload-actions flex flex-wrap items-center justify-center gap-2 ${
                 imagePreviewUrl
                   ? "absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent px-4 pb-4 pt-12"
                   : ""
@@ -560,7 +560,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
           </div>
 
           {cameraError ? (
-            <p className="mt-2 text-sm text-red-600">{t("cameraUnavailable")}</p>
+            <p className="simulation-field-note mt-2 text-sm text-red-600">{t("cameraUnavailable")}</p>
           ) : null}
         </div>
       )}
@@ -581,22 +581,27 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
   return (
     <div
-      className="flex h-[100dvh] flex-col overflow-hidden pt-16"
+      className="simulation-page flex min-h-[100dvh] flex-col overflow-visible pt-16 md:h-[100dvh] md:overflow-hidden"
       style={pageBgStyle}
     >
-      <header className="shrink-0 border-b border-[color-mix(in_oklab,var(--color-text)_10%,transparent)] px-4 py-3 sm:px-6">
+      <header className="simulation-hero shrink-0 border-b border-[color-mix(in_oklab,var(--color-text)_10%,transparent)] px-4 py-3 sm:px-6">
         <div
-          className="mx-auto flex max-w-[1600px] flex-col items-center gap-1.5 text-center"
+          className="simulation-hero-inner mx-auto flex max-w-[1600px] flex-col items-center gap-1.5 text-center"
           dir={controlsDir}
         >
-          <h1 className="text-2xl font-semibold text-[var(--color-text)] sm:text-3xl lg:text-[1.65rem] lg:leading-tight">
+          <h1 className="simulation-hero-title text-2xl font-semibold text-[var(--color-text)] sm:text-3xl lg:text-[1.65rem] lg:leading-tight">
             {t("heroTitle")}
           </h1>
-          <p className="flex max-w-[min(100%,52rem)] flex-wrap items-center justify-center gap-x-2 text-sm leading-snug text-[var(--color-text)]/75 lg:flex-nowrap">
-            <span>{t("heroSubtitlePrefix")}</span>
+          <p className="simulation-hero-lead flex max-w-[min(100%,52rem)] flex-wrap items-center justify-center gap-x-2 text-sm leading-snug text-[var(--color-text)]/75 lg:flex-nowrap">
+            <span className="simulation-hero-lead-full">
+              {t("heroSubtitlePrefix")}
+            </span>
+            <span className="simulation-hero-lead-short">
+              {t("heroSubtitleShort")}
+            </span>
             <Link
               href="/contact"
-              className="inline-flex min-h-[2rem] shrink-0 items-center justify-center border border-white/70 bg-transparent px-4 text-sm font-medium text-white transition-[background-color,border-color] hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="simulation-hero-contact inline-flex min-h-[2rem] shrink-0 items-center justify-center border border-white/70 bg-transparent px-4 text-sm font-medium text-white transition-[background-color,border-color] hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {t("heroContactCta")}
             </Link>
@@ -605,7 +610,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
       </header>
 
       {(remaining === 0 && !quotaLoading) || errorKey ? (
-        <div className="mx-auto w-full max-w-[1600px] shrink-0 space-y-2 px-4 pt-2 sm:px-6">
+        <div className="simulation-alerts mx-auto w-full max-w-[1600px] shrink-0 space-y-2 px-4 pt-2 sm:px-6">
           {remaining === 0 && !quotaLoading ? (
             <p
               role="alert"
@@ -627,24 +632,24 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
       <div
         dir="ltr"
-        className="mx-auto grid min-h-0 w-full max-w-[1600px] flex-1 grid-cols-1 gap-4 overflow-hidden px-4 py-3 sm:px-6 max-lg:auto-rows-min lg:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)] lg:gap-6 lg:py-4"
+        className="simulation-mobile-flow mx-auto grid min-h-0 w-full max-w-[1600px] flex-1 grid-cols-1 gap-4 overflow-visible px-4 py-3 sm:px-6 max-lg:auto-rows-min md:overflow-hidden lg:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)] lg:gap-6 lg:py-4"
       >
         {imagePanel}
 
         <aside
           dir={controlsDir}
-          className="flex min-h-0 max-h-[min(42svh,480px)] flex-col gap-3 max-lg:shrink-0 lg:max-h-none lg:h-full"
+          className="simulation-controls flex min-h-0 max-h-[min(42svh,480px)] flex-col gap-3 max-lg:shrink-0 lg:max-h-none lg:h-full"
         >
-          <p className="shrink-0 text-base font-semibold text-[var(--color-text)] sm:text-lg">
+          <p className="simulation-controls-title shrink-0 text-base font-semibold text-[var(--color-text)] sm:text-lg">
             {t("instructionsTitle")}
           </p>
-          <div className="shrink-0 space-y-3">
+          <div className="simulation-room-type-block shrink-0 space-y-3">
             <fieldset className="space-y-2">
               <legend className="sr-only">
                 {t("roomTypeLabel")}
               </legend>
               <div
-                className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4"
+                className="simulation-room-type-grid grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4"
                 role="radiogroup"
                 aria-label={t("roomTypeLabel")}
               >
@@ -665,7 +670,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
                       role="radio"
                       aria-checked={selected}
                       onClick={() => setRoomType(id)}
-                      className={`inline-flex min-h-[42px] items-center justify-center gap-2 rounded-[0.28rem] border px-3 py-2 text-xs font-semibold shadow-[inset_0_1px_0_rgb(255_255_255/_0.05)] transition-[background-color,border-color,color,box-shadow] sm:text-sm ${
+                      className={`simulation-room-type-button inline-flex min-h-[42px] items-center justify-center gap-2 rounded-[0.28rem] border px-3 py-2 text-xs font-semibold shadow-[inset_0_1px_0_rgb(255_255_255/_0.05)] transition-[background-color,border-color,color,box-shadow] sm:text-sm ${
                         selected
                           ? "border-[#c4a574] bg-gradient-to-b from-[#e8d9c4] to-[#c4a574] text-[#17120b] shadow-[0_0_18px_rgb(196_165_116/_0.2),inset_0_1px_0_rgb(255_255_255/_0.38)]"
                           : "border-white/10 bg-[#171717]/90 text-white/88 hover:border-[#c4a574]/45 hover:text-[#c4a574]"
@@ -683,8 +688,8 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
             </fieldset>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pe-1">
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          <div className="simulation-style-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain pe-1">
+            <div className="simulation-style-grid grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
               {INTERIOR_STYLES.map((style) => {
                 const selected = selectedStyleSlug === style.slug;
                 const styleSrc = buildStyleImageSrc(
@@ -702,7 +707,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
                       )
                     }
                     aria-pressed={selected}
-                    className={`group relative aspect-[16/10] w-full overflow-hidden rounded-xl text-start shadow-sm transition-[box-shadow,transform] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] ${
+                    className={`simulation-style-card group relative aspect-[16/10] w-full overflow-hidden rounded-xl text-start shadow-sm transition-[box-shadow,transform] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] ${
                       selected
                         ? "ring-2 ring-[var(--color-accent)] ring-offset-2 ring-offset-[var(--color-bg)]"
                         : "ring-1 ring-[color-mix(in_oklab,var(--color-text)_18%,transparent)]"
@@ -737,6 +742,22 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
                 );
               })}
             </div>
+          </div>
+
+          <div className="simulation-mobile-generate">
+            <button
+              type="button"
+              disabled={!canSubmit || phase !== "form"}
+              onClick={() => void generate()}
+              className={generateButtonClass}
+            >
+              {phase === "generating" ? t("generating") : t("generateButton")}
+            </button>
+            {generateDisabledReason && phase === "form" ? (
+              <p className="simulation-mobile-generate__hint">
+                {t(generateDisabledReason)}
+              </p>
+            ) : null}
           </div>
 
         </aside>

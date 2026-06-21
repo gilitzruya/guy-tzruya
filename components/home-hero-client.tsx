@@ -9,37 +9,15 @@ import {
 } from "react";
 import { useLocale } from "next-intl";
 import { useScene } from "@/components/scene-provider";
+import {
+  crossfadeRevealProgress,
+  HERO_CROSSFADE_MS,
+} from "@/lib/crossfade-reveal";
 
-/** Crossfade wall clock: illustration opacity 1 → 0 over this duration (starts immediately, no black gate). */
-const CROSSFADE_MS = 5000;
-/**
- * First portion of that window: strong linear ramp (~13% wall clock) so the photo becomes
- * visibly plausible early (avoids “stuck on illustration”).
- */
-const CROSSFADE_LINEAR_HEAD = 0.13;
-/** Reveal progress at end of linear head (illustration opacity ≈ 1 − this). */
-const CROSSFADE_LINEAR_REVEAL = 0.32;
 /** When illustration is visually “gone enough”, end intro (don’t wait for wall-clock tail of ease-out). */
 const REVEAL_VISUAL_DONE = 0.99;
 
 const DESKTOP_BREAKPOINT = 768;
-
-function easeOutCubic(t: number): number {
-  const x = Math.min(1, Math.max(0, t));
-  return 1 - (1 - x) ** 3;
-}
-
-/** Maps elapsed fraction [0,1] → reveal progress [0,1] over full CROSSFADE_MS. */
-function crossfadeRevealProgress(t: number): number {
-  const clamped = Math.min(1, Math.max(0, t));
-  if (clamped < CROSSFADE_LINEAR_HEAD) {
-    return (clamped / CROSSFADE_LINEAR_HEAD) * CROSSFADE_LINEAR_REVEAL;
-  }
-  const u = (clamped - CROSSFADE_LINEAR_HEAD) / (1 - CROSSFADE_LINEAR_HEAD);
-  return (
-    CROSSFADE_LINEAR_REVEAL + (1 - CROSSFADE_LINEAR_REVEAL) * easeOutCubic(u)
-  );
-}
 
 type Phase = "drawing" | "done";
 
@@ -135,7 +113,7 @@ export function HomeHeroClient({
         introVisuallyCompleteRef.current = true;
         setPhase("done");
         setRevealProgress(1);
-      }, CROSSFADE_MS);
+      }, HERO_CROSSFADE_MS);
     });
 
     return () => {
@@ -159,7 +137,7 @@ export function HomeHeroClient({
       if (introRunIdRef.current !== rafRunId) return;
 
       const elapsed = now - crossfadeStartRef.current;
-      const t = Math.min(1, elapsed / CROSSFADE_MS);
+      const t = Math.min(1, elapsed / HERO_CROSSFADE_MS);
       const progress = crossfadeRevealProgress(t);
 
       if (

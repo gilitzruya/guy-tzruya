@@ -1,7 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
+import { useTranslations } from "next-intl";
 import {
   applyAccessibilityPreferences,
   clearAccessibilityPreferences,
@@ -10,6 +19,31 @@ import {
   readAccessibilityPreferences,
   writeAccessibilityPreferences,
 } from "@/lib/accessibility-preferences";
+
+type AccessibilityContextValue = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleRef: RefObject<HTMLButtonElement | null>;
+  panelId: string;
+  prefs: AccessibilityPreferences;
+  setFontScale: (fontScale: AccessibilityFontScale) => void;
+  togglePref: (key: keyof Omit<AccessibilityPreferences, "fontScale">) => void;
+  onReset: () => void;
+};
+
+const AccessibilityContext = createContext<AccessibilityContextValue | null>(
+  null,
+);
+
+function useAccessibilityWidget() {
+  const context = useContext(AccessibilityContext);
+  if (!context) {
+    throw new Error(
+      "Accessibility components must be used within AccessibilityProvider",
+    );
+  }
+  return context;
+}
 
 function ContrastIcon() {
   return (
@@ -74,12 +108,171 @@ function AccessibilityIcon() {
   );
 }
 
-export function AccessibilityWidget() {
+function AccessibilityPanel({
+  panelRef,
+  className,
+}: {
+  panelRef: RefObject<HTMLDivElement | null>;
+  className?: string;
+}) {
   const t = useTranslations("Accessibility");
-  const locale = useLocale();
+  const { panelId, prefs, setFontScale, togglePref, onReset } =
+    useAccessibilityWidget();
+
+  return (
+    <div
+      ref={panelRef}
+      id={panelId}
+      role="dialog"
+      aria-modal="false"
+      aria-label={t("menuTitle")}
+      className={`a11y-widget__panel ${className ?? ""}`.trim()}
+    >
+      <p className="a11y-widget__title">{t("menuTitle")}</p>
+
+      <div className="a11y-widget__group">
+        <span className="a11y-widget__label">{t("fontSize")}</span>
+        <div className="a11y-widget__segmented" role="group" aria-label={t("fontSize")}>
+          {(["normal", "large", "xlarge"] as const).map((scale) => (
+            <button
+              key={scale}
+              type="button"
+              className={`a11y-widget__segment${prefs.fontScale === scale ? " a11y-widget__segment--active" : ""}`}
+              aria-pressed={prefs.fontScale === scale}
+              onClick={() => setFontScale(scale)}
+            >
+              {t(`fontScale.${scale}`)}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        className={`a11y-widget__action${prefs.highContrast ? " a11y-widget__action--active" : ""}`}
+        aria-pressed={prefs.highContrast}
+        onClick={() => togglePref("highContrast")}
+      >
+        <ContrastIcon />
+        <span>{t("highContrast")}</span>
+      </button>
+
+      <button
+        type="button"
+        className={`a11y-widget__action${prefs.highlightLinks ? " a11y-widget__action--active" : ""}`}
+        aria-pressed={prefs.highlightLinks}
+        onClick={() => togglePref("highlightLinks")}
+      >
+        <LinkIcon />
+        <span>{t("highlightLinks")}</span>
+      </button>
+
+      <button
+        type="button"
+        className={`a11y-widget__action${prefs.readableFont ? " a11y-widget__action--active" : ""}`}
+        aria-pressed={prefs.readableFont}
+        onClick={() => togglePref("readableFont")}
+      >
+        <ReadableFontIcon />
+        <span>{t("readableFont")}</span>
+      </button>
+
+      <button
+        type="button"
+        className={`a11y-widget__action${prefs.reduceMotion ? " a11y-widget__action--active" : ""}`}
+        aria-pressed={prefs.reduceMotion}
+        onClick={() => togglePref("reduceMotion")}
+      >
+        <MotionIcon />
+        <span>{t("reduceMotion")}</span>
+      </button>
+
+      <button type="button" className="a11y-widget__reset" onClick={onReset}>
+        {t("reset")}
+      </button>
+    </div>
+  );
+}
+
+function AccessibilityToggle({
+  className,
+}: {
+  className?: string;
+}) {
+  const t = useTranslations("Accessibility");
+  const { open, setOpen, toggleRef, panelId } = useAccessibilityWidget();
+
+  return (
+    <button
+      ref={toggleRef}
+      type="button"
+      className={`a11y-widget__toggle ${className ?? ""}`.trim()}
+      aria-expanded={open}
+      aria-controls={panelId}
+      aria-label={open ? t("closeMenu") : t("openMenu")}
+      onClick={() => setOpen((prev) => !prev)}
+    >
+      <AccessibilityIcon />
+    </button>
+  );
+}
+
+export function AccessibilityHeaderToggle() {
+  return <AccessibilityToggle className="a11y-widget__toggle--header" />;
+}
+
+function AccessibilityMobilePanel() {
+  const { open } = useAccessibilityWidget();
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+    const focusable = panel.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    focusable[0]?.focus();
+  }, [open]);
+
+  if (!open) return null;
+
+  return (
+    <AccessibilityPanel
+      panelRef={panelRef}
+      className="a11y-widget__panel--header md:hidden"
+    />
+  );
+}
+
+function AccessibilityDesktopWidget() {
+  const { open } = useAccessibilityWidget();
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+    const focusable = panel.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    focusable[0]?.focus();
+  }, [open]);
+
+  return (
+    <div className="a11y-widget hidden md:flex">
+      {open ? <AccessibilityPanel panelRef={panelRef} /> : null}
+    </div>
+  );
+}
+
+export function AccessibilityProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const panelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [prefs, setPrefs] = useState<AccessibilityPreferences>(() =>
     readAccessibilityPreferences(),
@@ -107,118 +300,46 @@ export function AccessibilityWidget() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  useEffect(() => {
-    if (!open) return;
-    const panel = panelRef.current;
-    if (!panel) return;
-    const focusable = panel.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    );
-    focusable[0]?.focus();
-  }, [open]);
+  const setFontScale = useCallback(
+    (fontScale: AccessibilityFontScale) => {
+      persist({ ...prefs, fontScale });
+    },
+    [persist, prefs],
+  );
 
-  const setFontScale = (fontScale: AccessibilityFontScale) => {
-    persist({ ...prefs, fontScale });
-  };
+  const togglePref = useCallback(
+    (key: keyof Omit<AccessibilityPreferences, "fontScale">) => {
+      persist({ ...prefs, [key]: !prefs[key] });
+    },
+    [persist, prefs],
+  );
 
-  const togglePref = (key: keyof Omit<AccessibilityPreferences, "fontScale">) => {
-    persist({ ...prefs, [key]: !prefs[key] });
-  };
-
-  const onReset = () => {
+  const onReset = useCallback(() => {
     clearAccessibilityPreferences();
     setPrefs(readAccessibilityPreferences());
+  }, []);
+
+  const contextValue: AccessibilityContextValue = {
+    open,
+    setOpen,
+    toggleRef,
+    panelId,
+    prefs,
+    setFontScale,
+    togglePref,
+    onReset,
   };
 
   return (
-    <div
-      className={`a11y-widget ${locale === "he" ? "a11y-widget--rtl" : "a11y-widget--ltr"}`}
-    >
-      {open ? (
-        <div
-          ref={panelRef}
-          id={panelId}
-          role="dialog"
-          aria-modal="false"
-          aria-label={t("menuTitle")}
-          className="a11y-widget__panel"
-        >
-          <p className="a11y-widget__title">{t("menuTitle")}</p>
-
-          <div className="a11y-widget__group">
-            <span className="a11y-widget__label">{t("fontSize")}</span>
-            <div className="a11y-widget__segmented" role="group" aria-label={t("fontSize")}>
-              {(["normal", "large", "xlarge"] as const).map((scale) => (
-                <button
-                  key={scale}
-                  type="button"
-                  className={`a11y-widget__segment${prefs.fontScale === scale ? " a11y-widget__segment--active" : ""}`}
-                  aria-pressed={prefs.fontScale === scale}
-                  onClick={() => setFontScale(scale)}
-                >
-                  {t(`fontScale.${scale}`)}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className={`a11y-widget__action${prefs.highContrast ? " a11y-widget__action--active" : ""}`}
-            aria-pressed={prefs.highContrast}
-            onClick={() => togglePref("highContrast")}
-          >
-            <ContrastIcon />
-            <span>{t("highContrast")}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`a11y-widget__action${prefs.highlightLinks ? " a11y-widget__action--active" : ""}`}
-            aria-pressed={prefs.highlightLinks}
-            onClick={() => togglePref("highlightLinks")}
-          >
-            <LinkIcon />
-            <span>{t("highlightLinks")}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`a11y-widget__action${prefs.readableFont ? " a11y-widget__action--active" : ""}`}
-            aria-pressed={prefs.readableFont}
-            onClick={() => togglePref("readableFont")}
-          >
-            <ReadableFontIcon />
-            <span>{t("readableFont")}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`a11y-widget__action${prefs.reduceMotion ? " a11y-widget__action--active" : ""}`}
-            aria-pressed={prefs.reduceMotion}
-            onClick={() => togglePref("reduceMotion")}
-          >
-            <MotionIcon />
-            <span>{t("reduceMotion")}</span>
-          </button>
-
-          <button type="button" className="a11y-widget__reset" onClick={onReset}>
-            {t("reset")}
-          </button>
-        </div>
-      ) : null}
-
-      <button
-        ref={toggleRef}
-        type="button"
-        className="a11y-widget__toggle"
-        aria-expanded={open}
-        aria-controls={panelId}
-        aria-label={open ? t("closeMenu") : t("openMenu")}
-        onClick={() => setOpen((prev) => !prev)}
-      >
-        <AccessibilityIcon />
-      </button>
-    </div>
+    <AccessibilityContext.Provider value={contextValue}>
+      {children}
+      <AccessibilityMobilePanel />
+      <AccessibilityDesktopWidget />
+    </AccessibilityContext.Provider>
   );
+}
+
+/** @deprecated Use AccessibilityProvider in layout instead. */
+export function AccessibilityWidget() {
+  return <AccessibilityDesktopWidget />;
 }

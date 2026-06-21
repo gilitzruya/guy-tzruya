@@ -106,7 +106,7 @@ export function ProjectsPage() {
                   className={`flex h-full min-h-0 w-full flex-col px-3 pb-6 sm:px-4 sm:pb-8 lg:px-5 lg:pb-10 lg:pt-0 ${index === 0 ? "pt-4" : "pt-2"}`}
                 >
                   <div
-                    className={`flex min-h-0 flex-1 flex-col gap-0 py-3 sm:py-6 lg:grid lg:min-h-0 lg:flex-1 lg:items-stretch lg:gap-x-0 lg:gap-y-0 lg:pb-8 lg:pt-0 ${gridCols}`}
+                    className={`flex min-h-0 flex-1 flex-col gap-0 max-lg:gap-0 py-3 sm:py-6 lg:grid lg:min-h-0 lg:flex-1 lg:items-stretch lg:gap-x-0 lg:gap-y-0 lg:pb-8 lg:pt-0 ${gridCols}`}
                   >
                     <div
                       className={`flex min-h-0 min-w-0 flex-col lg:h-full lg:min-h-0 ${sliderOrder}`}
@@ -133,6 +133,17 @@ export function ProjectsPage() {
                       />
                     </div>
                   </div>
+
+                  {index < PROJECT_SLUGS.length - 1 ? (
+                    <div
+                      className="mt-8 h-px w-full shrink-0 lg:hidden"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent 0%, color-mix(in oklab, #c4a574 42%, transparent) 50%, transparent 100%)",
+                      }}
+                      aria-hidden
+                    />
+                  ) : null}
                 </div>
               </div>
             </section>

@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { AccessibilityBootstrap } from "@/components/accessibility-bootstrap";
-import { AccessibilityWidget } from "@/components/accessibility-widget";
+import { AccessibilityProvider } from "@/components/accessibility-widget";
 import { WhatsAppFloatingButton } from "@/components/whatsapp-floating-button";
 import { SkipLink } from "@/components/skip-link";
 import { SiteFooter } from "@/components/site-footer";
@@ -82,16 +82,17 @@ export default async function LocaleLayout({
       <SceneProvider>
         <HtmlAttributes locale={locale} />
         <AccessibilityBootstrap />
-        <SkipLink />
-        <div className="flex min-h-full flex-col" style={{ fontFamily: fontStack }}>
-          <SiteHeader />
-          <main id="main-content" className="flex-1" tabIndex={-1}>
-            {children}
-          </main>
-          <SiteFooter />
-        </div>
-        <AccessibilityWidget />
-        <WhatsAppFloatingButton />
+        <AccessibilityProvider>
+          <SkipLink />
+          <div className="flex min-h-full flex-col" style={{ fontFamily: fontStack }}>
+            <SiteHeader />
+            <main id="main-content" className="flex-1" tabIndex={-1}>
+              {children}
+            </main>
+            <SiteFooter />
+          </div>
+          <WhatsAppFloatingButton />
+        </AccessibilityProvider>
       </SceneProvider>
     </NextIntlClientProvider>
   );

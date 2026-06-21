@@ -97,7 +97,11 @@ export function HomeServicesSection() {
     >
       <div className="home-services-premium__inner">
         <header className="home-services-premium__header">
-          <p className="home-services-premium__eyebrow">{t("eyebrow")}</p>
+          <p className="home-services-premium__eyebrow">
+            <span className="home-services-premium__eyebrow-line" aria-hidden />
+            {t("eyebrow")}
+            <span className="home-services-premium__eyebrow-line" aria-hidden />
+          </p>
           <h2 id={titleId} className="home-services-premium__title">
             <span>{t("displayTitlePrefix")}</span>{" "}
             <em>{t("displayTitleAccent")}</em>{" "}

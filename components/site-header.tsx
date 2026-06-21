@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { BrandLogo } from "@/components/brand-logo";
+import { AccessibilityHeaderToggle } from "@/components/accessibility-widget";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { MobileNavMenu } from "@/components/mobile-nav-menu";
 import { ServicesNav } from "@/components/services-nav";
@@ -20,12 +21,31 @@ export async function SiteHeader() {
 
   return (
     <SiteHeaderFrame>
-      <div className="relative flex h-16 w-full items-center gap-2 overflow-visible px-4 sm:gap-3 sm:px-6">
+      <div
+        className="grid h-16 w-full grid-cols-3 items-center px-4 sm:px-6 md:hidden"
+        dir="ltr"
+      >
+        <div className="flex items-center justify-start">
+          <BrandLogo label={t("brand")} />
+        </div>
+        <div className="flex items-center justify-center">
+          <AccessibilityHeaderToggle />
+        </div>
+        <div className="flex items-center justify-end">
+          <MobileNavMenu />
+        </div>
+      </div>
+
+      <div className="relative hidden h-16 w-full items-center gap-2 overflow-visible px-4 sm:gap-3 sm:px-6 md:flex">
         <div
           className="absolute left-4 top-1/2 z-[1] flex -translate-y-1/2 shrink-0 items-center sm:left-6"
           dir="ltr"
         >
           <BrandLogo label={t("brand")} />
+        </div>
+
+        <div className="absolute right-4 top-1/2 z-[1] flex -translate-y-1/2 items-center sm:right-6">
+          <AccessibilityHeaderToggle />
         </div>
 
         <nav
@@ -46,10 +66,6 @@ export async function SiteHeader() {
           ))}
           <LanguageSwitcher />
         </nav>
-
-        <div className="absolute right-4 top-1/2 z-[2] flex -translate-y-1/2 shrink-0 items-center sm:right-6 md:hidden">
-          <MobileNavMenu />
-        </div>
       </div>
     </SiteHeaderFrame>
   );

@@ -351,6 +351,8 @@
     "detailLabelClient": "Client",
     "detailLabelType": "Project type",
     "detailLabelAbout": "General description",
+    "moreDetails": "More details",
+    "moreDetailsCollapse": "Hide details",
     "testimonialLabel": "Client note",
     "clientPhotoAlt": "Client portrait",
     "items": {
@@ -450,6 +452,7 @@
     "heroEyebrow": "Smart preview",
     "heroTitle": "Room preview for inspiration",
     "heroSubtitlePrefix": "Get an initial preview for feel and design direction only. For professional, precise planning —",
+    "heroSubtitleShort": "For professional, precise planning",
     "heroContactCta": "Contact us",
     "instructionsTitle": "Choose a room type and design style",
     "quotaRemaining": "{remaining} of {max} runs remaining",
@@ -551,14 +554,19 @@
       "lead": "A curated selection of interior and architecture projects — precise process, rich material language, and results that feel right in every detail.",
       "learnMore": "All projects",
       "viewProject": "View project",
+      "carouselSlideLabel": "Go to project {title}",
+      "carouselPrev": "Previous project",
+      "carouselNext": "Next project",
       "items": {
         "maklaf": {
           "title": "Maklaf",
+          "teaser": "Interior design and residential renovation",
           "summary": "An interior project focused on clear spatial flow and a clean design language tailored to everyday living.",
           "imageAlt": "Maklaf interior design project"
         },
         "shaki": {
           "title": "Avner Chayishaki",
+          "teaser": "Full interior design for a contractor apartment",
           "summary": "A contractor apartment re-planned and fully redesigned with emphasis on comfort, natural light, and detail accuracy.",
           "imageAlt": "Avner Chayishaki interior design project"
         }

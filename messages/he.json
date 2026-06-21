@@ -351,6 +351,8 @@
     "detailLabelClient": "לקוח",
     "detailLabelType": "סוג פרויקט",
     "detailLabelAbout": "תיאור כללי",
+    "moreDetails": "לפרטים נוספים",
+    "moreDetailsCollapse": "הסתר פרטים",
     "testimonialLabel": "המלצה",
     "clientPhotoAlt": "תמונת הלקוח",
     "items": {
@@ -450,6 +452,7 @@
     "heroEyebrow": "הדמיה חכמה",
     "heroTitle": "הדמיית חלל להשראה",
     "heroSubtitlePrefix": "קבלו הדמיה ראשונית לתחושה וכיוון עיצובי בלבד. לתכנון מקצועי ומדויק —",
+    "heroSubtitleShort": "לתכנון מקצועי ומדויק",
     "heroContactCta": "צרו קשר",
     "instructionsTitle": "בחרו סוג חדר וסגנון עיצוב",
     "quotaRemaining": "נותרו {remaining} מתוך {max} הפעלות",
@@ -551,14 +554,19 @@
       "lead": "מבחר פרויקטים בעיצוב פנים ואדריכלות — תהליך מדויק, שפה חומרית עשירה ותוצאה שמרגישה נכונה בכל פרט.",
       "learnMore": "לכל הפרויקטים",
       "viewProject": "לצפייה בפרויקט",
+      "carouselSlideLabel": "מעבר לפרויקט {title}",
+      "carouselPrev": "הפרויקט הקודם",
+      "carouselNext": "הפרויקט הבא",
       "items": {
         "maklaf": {
           "title": "מקלף",
+          "teaser": "עיצוב פנים ושיפוץ למגורים",
           "summary": "מהלך עיצוב פנים שמדגיש זרימה נכונה בין חללים ושפה נקייה שמתאימה לשגרת המגורים.",
           "imageAlt": "פרויקט מקלף - עיצוב פנים"
         },
         "shaki": {
           "title": "אבנר חיישקי",
+          "teaser": "עיצוב פנים מלא לדירת קבלן",
           "summary": "דירת קבלן שעברה תכנון מחדש ועיצוב פנים מלא, עם דגש על נוחות, אור טבעי ודיוק בפרטים.",
           "imageAlt": "פרויקט אבנר חיישקי - עיצוב פנים"
         }
