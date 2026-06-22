@@ -26,6 +26,7 @@ export function LanguageSwitcher({
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
+  const targetLocale = active === "he" ? "en" : "he";
 
   useEffect(() => {
     setOpen(false);
@@ -52,54 +53,23 @@ export function LanguageSwitcher({
   if (variant === "mobile") {
     return (
       <div className="rounded-lg">
-        <button
-          type="button"
+        <Link
+          href={pathname}
+          locale={targetLocale}
+          hrefLang={targetLocale === "he" ? "he-IL" : "en"}
           className="flex w-full items-center justify-between rounded-lg py-3.5 ps-2 pe-2 text-lg font-medium text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
-          onClick={() => setOpen((prev) => !prev)}
-          aria-expanded={open}
-          aria-controls={panelId}
+          aria-label={
+            targetLocale === "he"
+              ? t("langSwitcherAriaToHebrew")
+              : t("langSwitcherAriaToEnglish")
+          }
+          onClick={onNavigate}
         >
           <span>{t("navLanguage")}</span>
-          <NavChevron open={open} className="h-4 w-4" />
-        </button>
-        {open ? (
-          <div
-            id={panelId}
-            className="flex flex-col gap-1 pb-1 ps-4"
-            role="listbox"
-            aria-label={t("navLanguage")}
-          >
-            {LOCALES.map(({ locale, labelKey }) => {
-              const isActive = locale === active;
-              return (
-                <Link
-                  key={locale}
-                  role="option"
-                  href={pathname}
-                  locale={locale}
-                  hrefLang={locale === "he" ? "he-IL" : "en"}
-                  aria-label={
-                    locale === "he"
-                      ? t("langSwitcherAriaToHebrew")
-                      : t("langSwitcherAriaToEnglish")
-                  }
-                  aria-selected={isActive}
-                  className={`rounded-lg py-2.5 ps-3 text-base font-medium transition-colors ${
-                    isActive
-                      ? "text-[var(--color-accent)]"
-                      : "text-[var(--color-text)]/90 hover:text-[var(--color-accent)]"
-                  }`}
-                  onClick={() => {
-                    setOpen(false);
-                    onNavigate?.();
-                  }}
-                >
-                  {t(labelKey)}
-                </Link>
-              );
-            })}
-          </div>
-        ) : null}
+          <span className="text-sm text-[var(--color-accent)]">
+            {t(targetLocale === "he" ? "langHe" : "langEn")}
+          </span>
+        </Link>
       </div>
     );
   }

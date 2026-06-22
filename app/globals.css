@@ -1754,6 +1754,11 @@ html[data-scene="night"] .about-page {
     max-width: none;
   }
 
+  .about-page .about-hero__lead,
+  .about-page .about-hero__features {
+    display: none;
+  }
+
   .about-hero--split .about-hero__feature-icon svg {
     width: 1.15rem !important;
     height: 1.15rem !important;
@@ -1772,7 +1777,7 @@ html[data-scene="night"] .about-page {
     min-height: clamp(9.25rem, 27dvh, 12rem);
     height: clamp(9.25rem, 27dvh, 12rem);
     max-height: clamp(9.25rem, 27dvh, 12rem);
-    margin-top: 0;
+    margin-top: 1.35rem;
   }
 
   .about-hero--split .about-hero__portrait-cover {
@@ -1792,8 +1797,9 @@ html[data-scene="night"] .about-page {
     --about-mobile-body-line: 1.55;
     --about-mobile-caption-size: 0.58rem;
     --about-mobile-card-title-size: 0.86rem;
-    --about-mobile-section-gap: 2.75rem;
-    --about-mobile-block-gap: 1.75rem;
+    --about-mobile-section-gap: 3rem;
+    --about-mobile-block-gap: 1.55rem;
+    --about-mobile-story-gap: 1.35rem;
     font-family: var(--about-mobile-font);
   }
 
@@ -1917,11 +1923,16 @@ html[data-scene="night"] .about-page {
   }
 
   .about-page #about-story .about-story-cinematic {
-    gap: 0;
+    gap: var(--about-mobile-story-gap);
   }
 
   .about-page #about-story .about-story-cinematic__top {
-    gap: var(--about-mobile-block-gap);
+    gap: var(--about-mobile-story-gap);
+  }
+
+  .about-page #about-story .about-story-cinematic__header,
+  .about-page #about-story .about-story__quote {
+    display: none;
   }
 
   .about-page #about-story .about-story__paragraph:first-child {
@@ -1929,7 +1940,16 @@ html[data-scene="night"] .about-page {
   }
 
   .about-page .about-story-cinematic__bottom {
-    margin-top: var(--about-mobile-block-gap);
+    margin-top: var(--about-mobile-story-gap);
+  }
+
+  .about-page #about-story .about-story-cinematic__body {
+    padding-inline-start: 0;
+    border-inline-start: none;
+  }
+
+  .about-page #about-story .about-stats {
+    gap: var(--about-mobile-story-gap);
   }
 
   .about-page .about-journey header + .relative {
@@ -2169,6 +2189,34 @@ html[data-scene="night"] .about-page {
   .about-stats__item {
     min-height: 12.4rem;
     padding-block: 1.45rem 1.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-page #about-story .about-story-cinematic {
+    row-gap: 1.6rem;
+  }
+
+  .about-page #about-story .about-story-cinematic__top {
+    row-gap: 1.6rem;
+  }
+
+  .about-page #about-story .about-story-cinematic__body {
+    margin-top: 1.6rem;
+    padding-inline-start: 0;
+    border-inline-start: none;
+  }
+
+  .about-page #about-story .about-story__paragraph + .about-story__paragraph {
+    margin-top: 1.15rem;
+  }
+
+  .about-page #about-story .about-story-cinematic__bottom {
+    margin-top: 1.6rem;
+  }
+
+  .about-page #about-story .about-stats {
+    gap: 1.15rem;
   }
 }
 
@@ -6737,4 +6785,141 @@ html[data-a11y-reduce-motion="true"] *::after {
     line-height: 1.45;
     text-align: center;
   }
+}
+
+/* English typography unification — keep this late in the cascade so page-specific styles don't override it. */
+.english-display-title {
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  word-spacing: 0.5em;
+}
+
+.english-display-subtitle {
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.42em;
+  word-spacing: 0.6em;
+}
+
+.english-display-subtitle--long {
+  letter-spacing: 0.18em;
+  word-spacing: 0.25em;
+}
+
+.interior-design-hero-title {
+  white-space: nowrap;
+  letter-spacing: clamp(0.12em, 1.15vw, 0.26em);
+  word-spacing: 0.28em;
+}
+
+html:lang(en) .about-display,
+html:lang(en) .about-cta__title,
+html:lang(en) .about-hero__title,
+html:lang(en) .home-services-premium__title,
+html:lang(en) .home-projects-showcase__title,
+html:lang(en) .home-about-premium__name,
+html:lang(en) .home-contact-strip__title,
+html:lang(en) .contact-hero__title,
+html:lang(en) .contact-redesign-title,
+html:lang(en) .contact-details__title,
+html:lang(en) .contact-form-section__title,
+html:lang(en) .contact-social__title,
+html:lang(en) .simulation-hero-title,
+html:lang(en) .simulation-step-title,
+html:lang(en) .simulation-controls-title,
+html:lang(en) .bl-process__title,
+html:lang(en) .bl-faq__title,
+html:lang(en) .bl-cta__title,
+html:lang(en) .site-footer__heading {
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  word-spacing: 0.5em;
+}
+
+html:lang(en) .about-eyebrow,
+html:lang(en) .about-lead,
+html:lang(en) .about-cta__eyebrow,
+html:lang(en) .about-cta__lead,
+html:lang(en) .about-hero__welcome,
+html:lang(en) .about-hero__subtitle,
+html:lang(en) .about-hero__lead,
+html:lang(en) .about-story-cinematic__lead,
+html:lang(en) .about-values-editorial__lead,
+html:lang(en) .home-services-premium__eyebrow,
+html:lang(en) .home-services-premium__lead,
+html:lang(en) .home-projects-showcase__eyebrow,
+html:lang(en) .home-projects-showcase__lead,
+html:lang(en) .home-about-premium__eyebrow,
+html:lang(en) .home-about-premium__subtitle,
+html:lang(en) .home-contact-strip__eyebrow,
+html:lang(en) .home-contact-strip__lead,
+html:lang(en) .contact-hero__eyebrow,
+html:lang(en) .contact-hero__lead,
+html:lang(en) .contact-redesign-eyebrow,
+html:lang(en) .contact-redesign-lead,
+html:lang(en) .contact-details__eyebrow,
+html:lang(en) .contact-details__lead,
+html:lang(en) .contact-form-section__eyebrow,
+html:lang(en) .contact-form-section__lead,
+html:lang(en) .contact-social__eyebrow,
+html:lang(en) .contact-social__lead,
+html:lang(en) .simulation-hero-lead,
+html:lang(en) .simulation-field-note,
+html:lang(en) .bl-process__eyebrow,
+html:lang(en) .bl-process__lead,
+html:lang(en) .bl-faq__eyebrow,
+html:lang(en) .bl-faq__lead,
+html:lang(en) .bl-cta__eyebrow,
+html:lang(en) .bl-cta__lead {
+  font-family: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  word-spacing: 0.25em;
+}
+
+/* Hebrew title typography unification — match the home services display title. */
+html:lang(he) .about-hero__title,
+html:lang(he) .about-display,
+html:lang(he) .about-cta__title,
+html:lang(he) .about-journey__card-title,
+html:lang(he) .about-values-editorial__pillar-title,
+html:lang(he) .home-services-premium__title,
+html:lang(he) .home-services-premium-card__title,
+html:lang(he) .home-services-premium-card__featured-title,
+html:lang(he) .home-projects-showcase__title,
+html:lang(he) .home-projects-carousel__title,
+html:lang(he) .home-projects-carousel__title-link,
+html:lang(he) .home-about-premium__name,
+html:lang(he) .home-about-premium-feature__title,
+html:lang(he) .home-contact-strip__title,
+html:lang(he) .home-contact-strip__item-title,
+html:lang(he) .contact-hero__title,
+html:lang(he) .contact-redesign-title,
+html:lang(he) .contact-details__title,
+html:lang(he) .contact-details__item-title,
+html:lang(he) .contact-form-section__title,
+html:lang(he) .contact-social__title,
+html:lang(he) .simulation-hero-title,
+html:lang(he) .simulation-step-title,
+html:lang(he) .simulation-controls-title,
+html:lang(he) .bl-process__title,
+html:lang(he) .bl-process__step-title,
+html:lang(he) .bl-faq__title,
+html:lang(he) .bl-faq__item-heading,
+html:lang(he) .bl-cta__title,
+html:lang(he) .site-footer__heading,
+html:lang(he) .a11y-widget__title {
+  font-family: var(--font-interior-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+html:lang(he) .licensing-hero-title {
+  letter-spacing: 0.045em;
 }

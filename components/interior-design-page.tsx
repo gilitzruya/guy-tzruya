@@ -254,20 +254,20 @@ export function InteriorDesignPage() {
         >
           <div
             dir="ltr"
-            className="mx-auto flex w-full max-w-5xl flex-col items-center text-center [font-family:var(--font-interior-display),ui-serif,Georgia,serif]"
+            className="mx-auto flex w-full max-w-5xl flex-col items-center text-center"
           >
             <h1 id={interiorHeroHeadingId}>
               <TypewriterText
                 text={t("heroTitle")}
                 charDelayMs={165}
-                className={`block uppercase leading-[0.92] tracking-[0.14em] [word-spacing:0.35em] text-[clamp(2rem,7.8vw,5rem)] font-semibold ${heroTitleFx}`}
+                className={`english-display-title interior-design-hero-title block leading-[0.92] text-[clamp(1.45rem,5.4vw,3.75rem)] ${heroTitleFx}`}
               />
             </h1>
           </div>
           <p
             lang={subtitleLang}
             dir={locale === "he" ? "rtl" : "ltr"}
-            className={`mx-auto mt-10 max-w-2xl text-pretty text-center text-base leading-8 opacity-92 sm:mt-12 sm:text-lg lg:mt-14 ${heroSubtitleFx}`}
+            className={`mx-auto mt-10 max-w-2xl text-pretty text-center text-base leading-8 opacity-92 sm:mt-12 sm:text-lg lg:mt-14 ${locale === "en" ? "english-display-subtitle english-display-subtitle--long" : ""} ${heroSubtitleFx}`}
           >
             {t("heroSubtitle")}
           </p>
@@ -318,10 +318,10 @@ export function InteriorDesignPage() {
           </p>
           <h2
             dir={locale === "he" ? "rtl" : "ltr"}
-            className={`mx-auto mt-4 max-w-4xl leading-[0.95] text-[clamp(1.35rem,4.5vw,2.75rem)] font-semibold text-[var(--color-text)] [font-family:var(--font-interior-display),ui-serif,Georgia,serif] ${
+            className={`mx-auto mt-4 max-w-4xl leading-[0.95] text-[clamp(1.35rem,4.5vw,2.75rem)] text-[var(--color-text)] [font-family:var(--font-interior-display),ui-serif,Georgia,serif] ${
               locale === "he"
-                ? "tracking-normal"
-                : "uppercase tracking-[0.12em] [word-spacing:0.28em]"
+                ? "font-normal tracking-[0.055em]"
+                : "font-semibold uppercase tracking-[0.12em] [word-spacing:0.28em]"
             }`}
           >
             {t("stylesSectionTitle")}
@@ -385,7 +385,9 @@ export function InteriorDesignPage() {
                 </div>
               </div>
               <div className="space-y-3 pb-2 pt-4">
-                <h3 className="text-3xl font-semibold text-[var(--color-text)]">{card.title}</h3>
+                <h3 className="text-3xl font-normal tracking-[0.04em] text-[var(--color-text)] [font-family:var(--font-interior-display),ui-serif,Georgia,serif]">
+                  {card.title}
+                </h3>
                 <p className="text-lg text-[var(--color-text)]/85">{card.subtitle}</p>
                 <p className="text-base leading-7 text-[var(--color-text)]/75">{card.description}</p>
               </div>
@@ -401,20 +403,20 @@ export function InteriorDesignPage() {
         <div className="rounded-2xl border border-[color-mix(in_oklab,#c4a574_42%,transparent)] bg-transparent px-6 py-11 text-center sm:px-10 sm:py-14 lg:px-14">
           <p
             dir="ltr"
-            className="text-[0.7rem] font-medium uppercase tracking-[0.38em] text-[#c4a574] sm:text-xs"
+            className={`text-[0.7rem] text-[#c4a574] sm:text-xs ${locale === "en" ? "english-display-subtitle" : "font-medium uppercase tracking-[0.38em]"}`}
           >
             {t("simulationCtaEyebrow")}
           </p>
           <h2
             id="interior-simulation-cta-heading"
             dir={locale === "he" ? "rtl" : "ltr"}
-            className="mx-auto mt-4 text-[clamp(1.2rem,2.35vw,2.05rem)] font-semibold leading-[1.2] text-[var(--color-text)] [font-family:var(--font-interior-display),ui-serif,Georgia,serif] lg:whitespace-nowrap"
+            className={`mx-auto mt-4 text-[clamp(1.2rem,2.35vw,2.05rem)] leading-[1.2] text-[var(--color-text)] lg:whitespace-nowrap ${locale === "en" ? "english-display-title" : "[font-family:var(--font-interior-display),ui-serif,Georgia,serif] font-normal"}`}
           >
             {t("simulationCtaTitle")}
           </h2>
           <p
             dir={locale === "he" ? "rtl" : "ltr"}
-            className="mx-auto mt-3 max-w-md text-base leading-7 text-[var(--color-text)]/72 sm:mt-4"
+            className={`mx-auto mt-3 max-w-md text-base leading-7 text-[var(--color-text)]/72 sm:mt-4 ${locale === "en" ? "english-display-subtitle english-display-subtitle--long" : ""}`}
           >
             {t("simulationCtaLead")}
           </p>

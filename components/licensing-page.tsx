@@ -84,21 +84,21 @@ export function LicensingPage({ config }: { config: LicensingPageConfig }) {
           }`}
         >
           <div
-            dir="ltr"
-            className="mx-auto flex w-full max-w-5xl flex-col items-center text-center [font-family:var(--font-interior-display),ui-serif,Georgia,serif]"
+            dir={locale === "he" ? "rtl" : "ltr"}
+            className="mx-auto flex w-full max-w-5xl flex-col items-center text-center"
           >
             <h1 id={heroHeadingId}>
               <TypewriterText
                 text={t("heroTitle")}
                 charDelayMs={165}
-                className={`block uppercase leading-[0.92] tracking-[0.14em] [word-spacing:0.35em] text-[clamp(2rem,7.8vw,5rem)] font-semibold ${heroTitleFx}`}
+                className={`licensing-hero-title block leading-[0.92] text-[clamp(2rem,7.8vw,5rem)] ${locale === "en" ? "english-display-title" : "[font-family:var(--font-interior-display),ui-serif,Georgia,serif] font-normal"} ${heroTitleFx}`}
               />
             </h1>
           </div>
           <p
             lang={subtitleLang}
             dir={locale === "he" ? "rtl" : "ltr"}
-            className={`mx-auto mt-10 max-w-2xl text-pretty text-center text-base leading-8 opacity-92 sm:mt-12 sm:text-lg lg:mt-14 ${heroSubtitleFx}`}
+            className={`mx-auto mt-10 max-w-2xl text-pretty text-center text-base leading-8 opacity-92 sm:mt-12 sm:text-lg lg:mt-14 ${locale === "en" ? "english-display-subtitle english-display-subtitle--long" : ""} ${heroSubtitleFx}`}
           >
             {t("heroSubtitle")}
           </p>

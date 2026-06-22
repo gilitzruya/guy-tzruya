@@ -51,20 +51,20 @@ export function ProjectsPage() {
         <div className="flex flex-col justify-center pb-8 pt-28 sm:pt-32 lg:min-h-[50svh] lg:pb-10 lg:pt-28">
           <div
             dir="ltr"
-            className="mx-auto flex w-full max-w-5xl flex-col items-center text-center [font-family:var(--font-interior-display),ui-serif,Georgia,serif]"
+            className="mx-auto flex w-full max-w-5xl flex-col items-center text-center"
           >
             <h1 id={projectsHeroHeadingId} className="text-[var(--color-text)]">
               <TypewriterText
                 text={t("heroTitle")}
                 charDelayMs={165}
-                className={`block uppercase leading-[0.92] tracking-[0.14em] [word-spacing:0.35em] text-[clamp(1.75rem,6.8vw,4.25rem)] font-semibold ${heroTitleFx}`}
+                className={`english-display-title block leading-[0.92] text-[clamp(1.75rem,6.8vw,4.25rem)] ${heroTitleFx}`}
               />
             </h1>
           </div>
           <p
             lang={subtitleLang}
             dir={locale === "he" ? "rtl" : "ltr"}
-            className={`mx-auto mt-5 max-w-2xl text-pretty text-center text-base leading-7 text-[var(--color-text)]/92 sm:text-lg ${heroSubtitleFx}`}
+            className={`mx-auto mt-5 max-w-2xl text-pretty text-center text-base leading-7 text-[var(--color-text)]/92 sm:text-lg ${locale === "en" ? "english-display-subtitle english-display-subtitle--long" : ""} ${heroSubtitleFx}`}
           >
             {t("heroSubtitle")}
           </p>
