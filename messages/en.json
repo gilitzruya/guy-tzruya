@@ -479,9 +479,24 @@
     "missingStyleForGenerate": "Choose a design style to generate a simulation.",
     "missingRoomAndStyle": "Choose a room type and design style to generate a simulation.",
     "generating": "Generating…",
-    "generatingHint": "This can take a few moments. Keep this window open.",
+    "generatingHint": "We are analyzing the photo and designing the room. A high-quality simulation can take up to a minute or more — no need to refresh the page.",
+    "generatingStillWorking": "Still working. High-quality simulations take a little longer to preserve realism and detail.",
+    "generatingSteps": {
+      "analyzing": "Analyzing the room structure",
+      "designing": "Matching furniture, materials, and lighting",
+      "rendering": "Creating a realistic visualization",
+      "preparing": "Preparing the result for display"
+    },
+    "generatingTips": {
+      "light": "Tip: a photo with natural light and a wide angle helps create a more accurate simulation.",
+      "angle": "Tip: try to capture as much of the room as possible, including walls, floor, and openings.",
+      "inspiration": "The simulation is an initial inspiration. For precise personal planning, we would be glad to help."
+    },
     "resultTitle": "Simulation",
-    "backToForm": "New simulation",
+    "resultCtaTitle": "Like this direction?",
+    "resultCtaLead": "We would be glad to turn this inspiration into precise, personal planning.",
+    "resultContactCta": "Schedule a consultation",
+    "backToForm": "Create another simulation",
     "errors": {
       "invalidType": "Unsupported file type. Use JPEG, PNG, or WebP.",
       "missingStyle": "Select a design style.",

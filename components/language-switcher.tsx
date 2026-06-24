@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, Link } from "@/i18n/navigation";
 import { NavChevron } from "@/components/nav-chevron";
@@ -9,6 +9,8 @@ const LOCALES = [
   { locale: "he" as const, labelKey: "langHe" },
   { locale: "en" as const, labelKey: "langEn" },
 ] as const;
+
+const MENU_CLOSE_DELAY_MS = 220;
 
 type LanguageSwitcherProps = {
   /** Compact nav item (desktop) vs stacked mobile panel */
@@ -25,22 +27,48 @@ export function LanguageSwitcher({
   const t = useTranslations("Header");
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
   const panelId = useId();
   const targetLocale = active === "he" ? "en" : "he";
 
-  useEffect(() => {
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }, []);
+
+  const openMenu = useCallback(() => {
+    clearCloseTimer();
+    setOpen(true);
+  }, [clearCloseTimer]);
+
+  const closeMenu = useCallback(() => {
+    clearCloseTimer();
     setOpen(false);
-  }, [pathname]);
+  }, [clearCloseTimer]);
+
+  const scheduleClose = useCallback(() => {
+    clearCloseTimer();
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+      closeTimerRef.current = null;
+    }, MENU_CLOSE_DELAY_MS);
+  }, [clearCloseTimer]);
+
+  useEffect(() => {
+    return clearCloseTimer;
+  }, [clearCloseTimer]);
 
   useEffect(() => {
     if (!open) return;
     const onPointerDown = (event: MouseEvent) => {
       if (!containerRef.current?.contains(event.target as Node)) {
-        setOpen(false);
+        closeMenu();
       }
     };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeMenu();
     };
     document.addEventListener("mousedown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
@@ -48,7 +76,7 @@ export function LanguageSwitcher({
       document.removeEventListener("mousedown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [closeMenu, open]);
 
   if (variant === "mobile") {
     return (
@@ -78,8 +106,8 @@ export function LanguageSwitcher({
     <div
       ref={containerRef}
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onPointerEnter={openMenu}
+      onPointerLeave={scheduleClose}
     >
       <button
         type="button"
@@ -89,8 +117,11 @@ export function LanguageSwitcher({
         className={`inline-flex items-center gap-1 text-sm font-medium transition-colors hover:text-[var(--color-accent)] ${
           open ? "text-[var(--color-accent)]" : "text-[var(--color-text)]/90"
         }`}
-        onClick={() => setOpen((prev) => !prev)}
-        onFocus={() => setOpen(true)}
+        onClick={() => {
+          clearCloseTimer();
+          setOpen((prev) => !prev);
+        }}
+        onFocus={openMenu}
       >
         {t("navLanguage")}
         <NavChevron open={open} />
@@ -125,7 +156,7 @@ export function LanguageSwitcher({
                   ? "text-[var(--color-accent)]"
                   : "text-[var(--color-text)]/90 hover:text-[var(--color-accent)]"
               }`}
-              onClick={() => setOpen(false)}
+              onClick={closeMenu}
             >
               {t(labelKey)}
             </Link>

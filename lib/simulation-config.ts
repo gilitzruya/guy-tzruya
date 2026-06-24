@@ -12,6 +12,8 @@ const ALLOWED_MIME = new Set([
   "image/webp",
 ]);
 
+export type SimulationProvider = "openai" | "replicate";
+
 export function getSimulationMaxActivations(): number {
   const raw = process.env.SIMULATION_MAX_ACTIVATIONS;
   const n = raw ? Number.parseInt(raw, 10) : 3;
@@ -22,6 +24,16 @@ export function isSimulationMock(): boolean {
   return process.env.SIMULATION_MOCK?.toLowerCase() === "true";
 }
 
+export function isSimulationCompareEnabled(): boolean {
+  return process.env.SIMULATION_COMPARE_ENABLED?.toLowerCase() === "true";
+}
+
+export function getSimulationProvider(): SimulationProvider {
+  const provider = process.env.SIMULATION_PROVIDER?.trim().toLowerCase();
+  if (provider === "replicate") return "replicate";
+  return "openai";
+}
+
 export function getReplicateApiToken(): string | undefined {
   const token = process.env.REPLICATE_API_TOKEN?.trim();
   return token || undefined;
@@ -30,6 +42,31 @@ export function getReplicateApiToken(): string | undefined {
 export function getReplicateModel(): string {
   const model = process.env.REPLICATE_MODEL?.trim();
   return model || "adirik/interior-design";
+}
+
+export function getOpenAIApiKey(): string | undefined {
+  const token = process.env.OPENAI_API_KEY?.trim();
+  return token || undefined;
+}
+
+export function getOpenAISimulationModel(): string {
+  const model = process.env.OPENAI_SIMULATION_MODEL?.trim();
+  return model || "gpt-image-1.5";
+}
+
+export function getOpenAIImageSize(): string {
+  const size = process.env.OPENAI_IMAGE_SIZE?.trim();
+  return size || "1024x1024";
+}
+
+export function getOpenAIImageQuality(): string {
+  const quality = process.env.OPENAI_IMAGE_QUALITY?.trim();
+  return quality || "medium";
+}
+
+export function getOpenAIOutputFormat(): string {
+  const format = process.env.OPENAI_OUTPUT_FORMAT?.trim().toLowerCase();
+  return format || "png";
 }
 
 export function isAllowedSimulationMime(mime: string): boolean {

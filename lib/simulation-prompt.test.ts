@@ -19,7 +19,7 @@ import {
   buildSimulationPrompt,
 } from "@/lib/simulation-prompt";
 
-const MAX_PROMPT_WORDS = 70;
+const MAX_PROMPT_WORDS = 135;
 
 const EXPECTED_NEGATIVE_PROMPT =
   "lowres, watermark, banner, logo, contactinfo, text, deformed, blurry, blur, out of focus, out of frame, surreal, extra, ugly, upholstered walls, fabric walls, plush walls, mirror, mirrored, functional, realistic";
@@ -54,9 +54,13 @@ describe("SIMULATION_PROMPTS_MATRIX", () => {
 describe("buildSimulationPrompt", () => {
   for (const styleSlug of SIMULATION_STYLE_SLUGS) {
     for (const roomType of SIMULATION_ROOM_TYPE_IDS) {
-      it(`returns matrix prompt for ${styleSlug} + ${roomType}`, () => {
+      it(`builds generic prompt for ${styleSlug} + ${roomType}`, () => {
         const prompt = buildSimulationPrompt(styleSlug, roomType);
-        assert.equal(prompt, SIMULATION_PROMPTS_MATRIX[roomType][styleSlug]);
+        assert.match(prompt, /^Create a realistic interior design visualization/);
+        assert.match(prompt, /Preserve the original camera angle/);
+        assert.match(prompt, /professional interior photography/);
+        assert.doesNotMatch(prompt, /living-room/);
+        assert.doesNotMatch(prompt, /עיצוב/);
       });
     }
   }
@@ -64,35 +68,33 @@ describe("buildSimulationPrompt", () => {
   it('uses "living room" wording for living-room type', () => {
     const prompt = buildSimulationPrompt("modern-minimalist", "living-room");
     assert.match(prompt, /living room/);
-    assert.match(prompt, /fully furnished/);
-    assert.match(prompt, /sofa seating arrangement/);
+    assert.match(prompt, /sofa arrangement/);
+    assert.match(prompt, /modern minimalist language/);
     assert.doesNotMatch(prompt, /living-room/);
   });
 
-  it("uses furniture-heavy rustic country living room layout", () => {
+  it("uses rustic country language for a living room", () => {
     const prompt = buildSimulationPrompt("rustic-country", "living-room");
-    assert.match(prompt, /heavy solid wood sofa/);
-    assert.match(prompt, /staged architectural layout/);
+    assert.match(prompt, /rustic country language/);
+    assert.match(prompt, /warm natural wood/);
   });
 
-  it("uses premium rustic country tone for kitchen", () => {
+  it("uses practical kitchen wording", () => {
     const prompt = buildSimulationPrompt("rustic-country", "kitchen");
-    assert.match(prompt, /rustic/);
-    assert.match(prompt, /wood/);
+    assert.match(prompt, /function clearly as a kitchen/);
+    assert.match(prompt, /cabinetry/);
   });
 
-  it("uses cinematic hi-tech living room with OLED at the front", () => {
+  it("uses cinematic hi-tech smart home language", () => {
     const prompt = buildSimulationPrompt("high-tech-smart-home", "living-room");
-    assert.match(prompt, /giant wall-mounted OLED screen display/);
-    const oledIndex = prompt.indexOf("giant wall-mounted OLED");
-    assert.ok(oledIndex >= 0 && oledIndex < 80);
-    assert.match(prompt, /cinematic moody smart home living room/);
+    assert.match(prompt, /high-tech smart home language/);
+    assert.match(prompt, /cinematic mood/);
   });
 
-  it("uses cinematic hi-tech bedroom", () => {
+  it("uses restful bedroom wording", () => {
     const prompt = buildSimulationPrompt("high-tech-smart-home", "bedroom");
-    assert.match(prompt, /cybernetic headboard/);
-    assert.match(prompt, /neon ambient/);
+    assert.match(prompt, /function clearly as a bedroom/);
+    assert.match(prompt, /restful composition/);
   });
 
   it("throws for unknown style slug", () => {
@@ -102,15 +104,15 @@ describe("buildSimulationPrompt", () => {
           "unknown-style" as SimulationStyleSlug,
           "kitchen",
         ),
-      /\[PromptMatrix\] Combination not found/,
+      /\[SimulationPrompt\] Combination not found/,
     );
   });
 });
 
-describe("CLIP safety", () => {
+describe("Prompt hygiene", () => {
   for (const styleSlug of SIMULATION_STYLE_SLUGS) {
     for (const roomType of SIMULATION_ROOM_TYPE_IDS) {
-      it(`keeps ${styleSlug} + ${roomType} under CLIP word budget`, () => {
+      it(`keeps ${styleSlug} + ${roomType} concise and brand-safe`, () => {
         const prompt = buildSimulationPrompt(styleSlug, roomType);
         const wordCount = prompt.split(/\s+/).length;
         assert.ok(

@@ -10,10 +10,12 @@ import {
   bufferToDataUri,
   runReplicateInteriorDesign,
 } from "@/lib/simulation-replicate";
+import { runOpenAIInteriorDesign } from "@/lib/simulation-openai";
 import {
   SIMULATION_COOKIE_NAME,
   SIMULATION_MAX_FILE_BYTES,
   getSimulationMaxActivations,
+  getSimulationProvider,
   isAllowedSimulationMime,
   isSimulationMock,
 } from "@/lib/simulation-config";
@@ -84,6 +86,7 @@ export async function POST(request: Request) {
   const beforeDataUri = await bufferToDataUri(buffer, mime);
 
   const apiDebug = buildSimulationApiDebug(
+    imageEntry,
     beforeDataUri,
     prompt,
     negativePrompt,
@@ -96,6 +99,10 @@ export async function POST(request: Request) {
   try {
     if (isSimulationMock()) {
       afterImageUrl = beforeDataUri;
+    } else if (getSimulationProvider() === "openai") {
+      afterImageUrl = await runOpenAIInteriorDesign(imageEntry, prompt, {
+        negativePrompt,
+      });
     } else {
       afterImageUrl = await runReplicateInteriorDesign(beforeDataUri, prompt, {
         negativePrompt,

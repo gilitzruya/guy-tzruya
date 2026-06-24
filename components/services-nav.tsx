@@ -1,10 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { NavChevron } from "@/components/nav-chevron";
 import { HEADER_SERVICE_LINKS } from "@/lib/header-nav";
+
+const MENU_CLOSE_DELAY_MS = 220;
 
 export function ServicesNav() {
   const t = useTranslations("Header");
@@ -12,24 +14,50 @@ export function ServicesNav() {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
 
   const isServicesPath = HEADER_SERVICE_LINKS.some(
     (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
   );
 
-  useEffect(() => {
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }, []);
+
+  const openMenu = useCallback(() => {
+    clearCloseTimer();
+    setOpen(true);
+  }, [clearCloseTimer]);
+
+  const closeMenu = useCallback(() => {
+    clearCloseTimer();
     setOpen(false);
-  }, [pathname]);
+  }, [clearCloseTimer]);
+
+  const scheduleClose = useCallback(() => {
+    clearCloseTimer();
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+      closeTimerRef.current = null;
+    }, MENU_CLOSE_DELAY_MS);
+  }, [clearCloseTimer]);
+
+  useEffect(() => {
+    return clearCloseTimer;
+  }, [clearCloseTimer]);
 
   useEffect(() => {
     if (!open) return;
     const onPointerDown = (event: MouseEvent) => {
       if (!containerRef.current?.contains(event.target as Node)) {
-        setOpen(false);
+        closeMenu();
       }
     };
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeMenu();
     };
     document.addEventListener("mousedown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
@@ -37,14 +65,14 @@ export function ServicesNav() {
       document.removeEventListener("mousedown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [closeMenu, open]);
 
   return (
     <div
       ref={containerRef}
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onPointerEnter={openMenu}
+      onPointerLeave={scheduleClose}
     >
       <button
         type="button"
@@ -54,8 +82,11 @@ export function ServicesNav() {
         className={`inline-flex items-center gap-1 text-sm font-medium transition-colors hover:text-[var(--color-accent)] ${
           isServicesPath || open ? "text-[var(--color-accent)]" : "text-[var(--color-text)]/90"
         }`}
-        onClick={() => setOpen((prev) => !prev)}
-        onFocus={() => setOpen(true)}
+        onClick={() => {
+          clearCloseTimer();
+          setOpen((prev) => !prev);
+        }}
+        onFocus={openMenu}
       >
         {t("navServices")}
         <NavChevron open={open} />
@@ -82,7 +113,7 @@ export function ServicesNav() {
                   ? "text-[var(--color-accent)]"
                   : "text-[var(--color-text)]/90 hover:text-[var(--color-accent)]"
               }`}
-              onClick={() => setOpen(false)}
+              onClick={closeMenu}
             >
               {t(item.labelKey)}
             </Link>
