@@ -256,6 +256,7 @@ function SimulationGeneratingOverlay({
 
 export function SimulationPage({ maxActivations }: { maxActivations: number }) {
   const t = useTranslations("Simulation");
+  const tInterior = useTranslations("InteriorDesign");
   const tProjects = useTranslations("Projects");
   const locale = useLocale();
   const { scene } = useScene();
@@ -667,7 +668,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
   return (
     <div
-      className="simulation-page flex min-h-[100dvh] flex-col overflow-visible pt-16 md:h-[100dvh] md:overflow-hidden"
+      className={`simulation-page flex min-h-[100dvh] flex-col overflow-visible pt-16 md:h-[100dvh] md:overflow-hidden ${locale === "en" ? "english-typography-scope" : ""}`}
       style={pageBgStyle}
     >
       <header className="simulation-hero shrink-0 border-b border-[color-mix(in_oklab,var(--color-text)_10%,transparent)] px-4 py-3 sm:px-6">
@@ -818,10 +819,10 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
                       }`}
                     >
                       <span className="block text-sm font-semibold leading-snug text-white drop-shadow-sm">
-                        {style.title}
+                        {tInterior(`styles.${style.slug}.title`)}
                       </span>
                       <span className="mt-0.5 line-clamp-2 block text-xs leading-snug text-white/85">
-                        {style.subtitle}
+                        {tInterior(`styles.${style.slug}.subtitle`)}
                       </span>
                     </div>
                   </button>

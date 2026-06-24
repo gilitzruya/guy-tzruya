@@ -50,7 +50,7 @@ export function LicensingPage({ config }: { config: LicensingPageConfig }) {
   return (
     <div
       lang={locale}
-      className={`building-licensing-page ${blDisplay.variable} ${blMono.variable} ${scene === "day" ? "building-licensing-page--day" : "building-licensing-page--night"}`}
+      className={`building-licensing-page ${blDisplay.variable} ${blMono.variable} ${scene === "day" ? "building-licensing-page--day" : "building-licensing-page--night"} ${locale === "en" ? "english-typography-scope" : ""}`}
       data-scene={scene}
       style={pageStyle}
     >
@@ -91,7 +91,11 @@ export function LicensingPage({ config }: { config: LicensingPageConfig }) {
               <TypewriterText
                 text={t("heroTitle")}
                 charDelayMs={165}
-                className={`licensing-hero-title block leading-[0.92] text-[clamp(2rem,7.8vw,5rem)] ${locale === "en" ? "english-display-title" : "[font-family:var(--font-interior-display),ui-serif,Georgia,serif] font-normal"} ${heroTitleFx}`}
+                className={`licensing-hero-title block leading-[0.94] ${
+                  locale === "en"
+                    ? "english-route-hero-title--licensing"
+                    : "text-[clamp(2rem,7.8vw,5rem)]"
+                } ${locale === "en" ? "english-display-title" : "[font-family:var(--font-interior-display),ui-serif,Georgia,serif] font-normal"} ${heroTitleFx}`}
               />
             </h1>
           </div>

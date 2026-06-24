@@ -119,7 +119,7 @@ export function ContactPage() {
 
   return (
     <div
-      className="contact-page contact-page-redesign"
+      className={`contact-page contact-page-redesign ${locale === "en" ? "english-typography-scope" : ""}`}
       dir={isRtl ? "rtl" : "ltr"}
       style={pageBackgroundStyle}
     >

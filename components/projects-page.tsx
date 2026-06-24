@@ -37,7 +37,7 @@ export function ProjectsPage() {
     gallerySlug != null ? t(`items.${gallerySlug}.title`) : "";
 
   return (
-    <div className="relative">
+    <div className={`relative ${locale === "en" ? "english-typography-scope" : ""}`}>
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         style={pageBgStyle}
@@ -57,7 +57,11 @@ export function ProjectsPage() {
               <TypewriterText
                 text={t("heroTitle")}
                 charDelayMs={165}
-                className={`english-display-title block leading-[0.92] text-[clamp(1.75rem,6.8vw,4.25rem)] ${heroTitleFx}`}
+                className={`english-display-title block leading-[0.94] ${
+                  locale === "en"
+                    ? "english-route-hero-title--projects"
+                    : "text-[clamp(1.75rem,6.8vw,4.25rem)]"
+                } ${heroTitleFx}`}
               />
             </h1>
           </div>

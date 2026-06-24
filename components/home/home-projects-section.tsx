@@ -579,7 +579,7 @@ export function HomeProjectsSection() {
       id="home-projects"
       aria-labelledby={titleId}
       dir={isRtl ? "rtl" : "ltr"}
-      className="home-projects-showcase scroll-mt-24 sm:scroll-mt-28"
+      className={`home-projects-showcase scroll-mt-24 sm:scroll-mt-28 ${locale === "en" ? "english-typography-scope" : ""}`}
     >
       <div className="home-projects-showcase__inner">
         <header className="home-projects-showcase__header">

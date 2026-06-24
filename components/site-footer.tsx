@@ -112,7 +112,11 @@ export function SiteFooter() {
   const phoneHref = sitePhoneTelHref();
 
   return (
-    <footer className="site-footer mt-auto" aria-label={t("siteLabel")} lang={locale}>
+    <footer
+      className={`site-footer mt-auto ${locale === "en" ? "english-typography-scope" : ""}`}
+      aria-label={t("siteLabel")}
+      lang={locale}
+    >
       <HomeContactCtaSection />
 
       <div

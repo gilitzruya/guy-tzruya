@@ -53,7 +53,7 @@ export function HomeAboutSection() {
       id="home-about"
       aria-labelledby={titleId}
       dir={isRtl ? "rtl" : "ltr"}
-      className="home-about-premium-section relative scroll-mt-24 py-10 sm:scroll-mt-28 sm:py-20 lg:py-24"
+      className={`home-about-premium-section relative scroll-mt-24 py-10 sm:scroll-mt-28 sm:py-20 lg:py-24 ${locale === "en" ? "english-typography-scope" : ""}`}
     >
       <div className="home-about-premium-section__veil" aria-hidden />
       <div className="home-about-premium-section__inner">

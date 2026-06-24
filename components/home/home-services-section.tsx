@@ -93,7 +93,7 @@ export function HomeServicesSection() {
       id="home-services"
       aria-labelledby={titleId}
       dir={isRtl ? "rtl" : "ltr"}
-      className="home-services-premium relative scroll-mt-24 py-10 sm:scroll-mt-28 sm:py-20 lg:py-24"
+      className={`home-services-premium relative scroll-mt-24 py-10 sm:scroll-mt-28 sm:py-20 lg:py-24 ${locale === "en" ? "english-typography-scope" : ""}`}
     >
       <div className="home-services-premium__inner">
         <header className="home-services-premium__header">

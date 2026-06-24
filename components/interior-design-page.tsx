@@ -207,15 +207,23 @@ export function InteriorDesignPage() {
 
   const subtitleLang = locale === "he" ? "he" : "en";
 
+  const heroGhostButtonSize =
+    locale === "en"
+      ? "min-h-[2.35rem] min-w-[8.75rem] px-4 text-[0.68rem] tracking-[0.18em] sm:min-h-[2.55rem] sm:min-w-[9.25rem] sm:px-5 sm:text-[0.72rem]"
+      : "min-h-[3rem] min-w-[10.5rem] px-6 text-xs tracking-[0.22em] sm:min-h-[3.25rem] sm:px-8 sm:text-[0.8125rem]";
+
   const heroGhostBtn =
     scene === "day"
-      ? "inline-flex min-h-[3rem] min-w-[10.5rem] items-center justify-center border border-white/55 bg-black/15 px-6 text-center text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[3px] transition-[background-color,border-color] hover:border-white/80 hover:bg-black/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:min-h-[3.25rem] sm:px-8 sm:text-[0.8125rem]"
-      : "inline-flex min-h-[3rem] min-w-[10.5rem] items-center justify-center border border-[color-mix(in_oklab,var(--color-text)_50%,transparent)] bg-transparent px-6 text-center text-xs font-medium uppercase tracking-[0.22em] text-[var(--color-text)] backdrop-blur-[2px] transition-[background-color,border-color] hover:border-[color-mix(in_oklab,var(--color-text)_75%,transparent)] hover:bg-[color-mix(in_oklab,var(--color-text)_6%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:min-h-[3.25rem] sm:px-8 sm:text-[0.8125rem]";
+      ? `inline-flex items-center justify-center border border-white/55 bg-black/15 text-center font-medium uppercase text-white backdrop-blur-[3px] transition-[background-color,border-color] hover:border-white/80 hover:bg-black/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] ${heroGhostButtonSize}`
+      : `inline-flex items-center justify-center border border-[color-mix(in_oklab,var(--color-text)_50%,transparent)] bg-transparent text-center font-medium uppercase text-[var(--color-text)] backdrop-blur-[2px] transition-[background-color,border-color] hover:border-[color-mix(in_oklab,var(--color-text)_75%,transparent)] hover:bg-[color-mix(in_oklab,var(--color-text)_6%,transparent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] ${heroGhostButtonSize}`;
   const simulationCtaBtn =
     "inline-flex min-h-[3rem] items-center justify-center gap-2 border border-[color-mix(in_oklab,#c4a574_80%,transparent)] bg-transparent px-8 text-sm font-medium tracking-[0.12em] text-[#c4a574] backdrop-blur-[2px] transition-[background-color,border-color,box-shadow] hover:border-[#c4a574] hover:bg-[color-mix(in_oklab,#c4a574_10%,transparent)] hover:shadow-[0_0_28px_-6px_rgba(196,165,116,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c4a574] sm:min-h-[3.25rem] sm:px-10 sm:text-[0.9375rem]";
 
   return (
-    <div className="relative" style={processHeaderBgVar}>
+    <div
+      className={`relative ${locale === "en" ? "english-typography-scope" : ""}`}
+      style={processHeaderBgVar}
+    >
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         style={pageBgStyle}
@@ -260,14 +268,22 @@ export function InteriorDesignPage() {
               <TypewriterText
                 text={t("heroTitle")}
                 charDelayMs={165}
-                className={`english-display-title interior-design-hero-title block leading-[0.92] text-[clamp(1.45rem,5.4vw,3.75rem)] ${heroTitleFx}`}
+                className={`english-display-title interior-design-hero-title block leading-[0.94] ${
+                  locale === "en"
+                    ? "english-route-hero-title--interior"
+                    : "text-[clamp(1.45rem,5.4vw,3.75rem)]"
+                } ${heroTitleFx}`}
               />
             </h1>
           </div>
           <p
             lang={subtitleLang}
             dir={locale === "he" ? "rtl" : "ltr"}
-            className={`mx-auto mt-10 max-w-2xl text-pretty text-center text-base leading-8 opacity-92 sm:mt-12 sm:text-lg lg:mt-14 ${locale === "en" ? "english-display-subtitle english-display-subtitle--long" : ""} ${heroSubtitleFx}`}
+            className={`mx-auto mt-10 max-w-2xl text-pretty text-center opacity-92 sm:mt-12 lg:mt-14 ${
+              locale === "en"
+                ? "english-display-subtitle english-display-subtitle--long text-[0.78rem] leading-6 sm:text-[0.86rem] sm:leading-7 lg:text-[0.92rem]"
+                : "text-base leading-8 sm:text-lg"
+            } ${heroSubtitleFx}`}
           >
             {t("heroSubtitle")}
           </p>

@@ -141,7 +141,7 @@ function ListingLayout({
       <div
         dir={dir}
         lang={locale === "he" ? "he" : "en"}
-        className="lg:hidden px-1 py-4"
+        className="project-details-sheet lg:hidden px-1 py-4"
       >
         <div className="flex flex-col items-center text-center">
           <span
@@ -235,7 +235,7 @@ function ListingLayout({
       <div
         dir={dir}
         lang={locale === "he" ? "he" : "en"}
-        className={`hidden lg:flex h-full min-h-0 flex-col ${desktopCardClassName} px-6 py-7`}
+        className={`project-details-sheet hidden lg:flex h-full min-h-0 flex-col ${desktopCardClassName} px-6 py-7`}
       >
         <div className="flex min-h-0 flex-1 flex-col">
           <div className="shrink-0">
@@ -375,7 +375,7 @@ export function ProjectDetailsSheet(props: ProjectDetailsSheetProps) {
     <div
       dir={dir}
       lang={locale === "he" ? "he" : "en"}
-      className="flex min-h-0 flex-col rounded-2xl bg-[#fdfbf7] px-5 py-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)] sm:px-7 sm:py-8"
+      className="project-details-sheet flex min-h-0 flex-col rounded-2xl bg-[#fdfbf7] px-5 py-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)] sm:px-7 sm:py-8"
     >
       <div className="flex h-full min-h-0 flex-1 flex-col">
         <div className="shrink-0">

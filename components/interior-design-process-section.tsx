@@ -27,7 +27,7 @@ export function InteriorDesignProcessSection() {
   return (
     <div
       lang={locale}
-      className={`building-licensing-page ${blDisplay.variable} ${blMono.variable} ${scene === "day" ? "building-licensing-page--day" : "building-licensing-page--night"}`}
+      className={`building-licensing-page ${blDisplay.variable} ${blMono.variable} ${scene === "day" ? "building-licensing-page--day" : "building-licensing-page--night"} ${locale === "en" ? "english-typography-scope" : ""}`}
       data-scene={scene}
     >
       <BuildingLicensingProcessSection namespace="InteriorDesign" />

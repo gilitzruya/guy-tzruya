@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useLocale } from "next-intl";
 import { AboutHeroSection } from "@/components/about/about-hero-section";
 import { AboutJourneySection } from "@/components/about/about-journey-section";
 import { AboutStorySection } from "@/components/about/about-story-section";
@@ -10,13 +11,14 @@ import { interiorDesignPageBackgroundStyle } from "@/lib/interior-page-backgroun
 
 export function AboutPage() {
   const { scene } = useScene();
+  const locale = useLocale();
   const headerBackgroundStyle = useMemo(
     () => interiorDesignPageBackgroundStyle(scene, "scroll"),
     [scene],
   );
 
   return (
-    <div className="about-page relative overflow-x-clip bg-[var(--color-bg)]">
+    <div className={`about-page relative overflow-x-clip bg-[var(--color-bg)] ${locale === "en" ? "english-typography-scope" : ""}`}>
       <div
         className="about-page__header-backdrop"
         aria-hidden
