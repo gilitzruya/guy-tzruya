@@ -249,7 +249,7 @@ function ListingLayout({
           </div>
 
           <div className="mt-8 flex min-h-0 flex-1 flex-col">
-            <div className="min-h-0 shrink-0 overflow-y-auto overscroll-contain">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <ListingField label={t("detailLabelClient")} icon={clientIcon}>
                 <h2
                   className="m-0 font-semibold text-[inherit] text-base"
