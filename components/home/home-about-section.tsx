@@ -109,7 +109,7 @@ export function HomeAboutSection() {
                 className="home-about-premium__portrait"
               />
             </div>
-            <p className="home-about-premium__signature">{t("signature")}</p>
+            <p className="home-about-premium__signature brand-name-lockup">{t("signature")}</p>
             <p className="home-about-premium__role">{t("role")}</p>
           </div>
         </div>

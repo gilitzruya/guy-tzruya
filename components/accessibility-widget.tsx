@@ -8,8 +8,10 @@ import {
   useId,
   useRef,
   useState,
+  useSyncExternalStore,
   type RefObject,
 } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import {
   applyAccessibilityPreferences,
@@ -221,7 +223,16 @@ export function AccessibilityHeaderToggle() {
   return <AccessibilityToggle className="a11y-widget__toggle--header" />;
 }
 
-function AccessibilityMobilePanel() {
+function useIsClient() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
+
+function AccessibilityMobileFloat() {
+  const isClient = useIsClient();
   const { open } = useAccessibilityWidget();
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -235,13 +246,21 @@ function AccessibilityMobilePanel() {
     focusable[0]?.focus();
   }, [open]);
 
-  if (!open) return null;
+  if (!isClient) {
+    return null;
+  }
 
-  return (
-    <AccessibilityPanel
-      panelRef={panelRef}
-      className="a11y-widget__panel--header md:hidden"
-    />
+  return createPortal(
+  <>
+      <AccessibilityToggle className="a11y-widget__toggle--float" />
+      {open ? (
+        <AccessibilityPanel
+          panelRef={panelRef}
+          className="a11y-widget__panel--float"
+        />
+      ) : null}
+    </>,
+    document.body,
   );
 }
 
@@ -333,7 +352,7 @@ export function AccessibilityProvider({
   return (
     <AccessibilityContext.Provider value={contextValue}>
       {children}
-      <AccessibilityMobilePanel />
+      <AccessibilityMobileFloat />
       <AccessibilityDesktopWidget />
     </AccessibilityContext.Provider>
   );

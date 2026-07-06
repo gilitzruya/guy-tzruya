@@ -38,7 +38,7 @@ export function AboutHeroSection() {
             <span className="about-hero__welcome-line" aria-hidden />
           </p>
 
-          <h1 id={headingId} className="about-hero__title">
+          <h1 id={headingId} className="about-hero__title brand-name-lockup" dir="ltr">
             {t("heroTitle")}
           </h1>
 

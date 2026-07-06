@@ -14,6 +14,10 @@ import {
 } from "react";
 import { BeforeAfterSlider } from "@/components/before-after-slider";
 import {
+  SimulationProgressRing,
+  simulationRunningProgress,
+} from "@/components/simulation-progress-ring";
+import {
   findInteriorStyle,
   INTERIOR_STYLES,
 } from "@/components/interior-design-content";
@@ -159,8 +163,12 @@ function simulationApiErrorKey(
 
 function SimulationGeneratingOverlay({
   t,
+  imagePreviewUrl,
+  complete,
 }: {
   t: ReturnType<typeof useTranslations<"Simulation">>;
+  imagePreviewUrl: string | null;
+  complete: boolean;
 }) {
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const steps = [
@@ -178,7 +186,9 @@ function SimulationGeneratingOverlay({
     steps.length - 1,
     Math.floor(elapsedSeconds / 18),
   );
+  const activeStep = steps[activeStepIndex];
   const activeTip = tips[Math.floor(elapsedSeconds / 14) % tips.length];
+  const progress = complete ? 1 : simulationRunningProgress(elapsedSeconds);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -188,68 +198,86 @@ function SimulationGeneratingOverlay({
   }, []);
 
   return (
-    <div className="absolute inset-0 z-20 flex max-h-full flex-col items-center justify-start overflow-y-auto overscroll-contain bg-black/76 px-4 py-4 text-center text-white backdrop-blur-sm sm:justify-center sm:px-6 sm:py-8">
-      <div
-        className="relative mb-3 size-12 shrink-0 rounded-full border border-white/15 sm:mb-5 sm:size-16"
-        aria-hidden
-      >
-        <div className="absolute inset-1 animate-spin rounded-full border-2 border-white/15 border-t-[#c4a574]" />
-        <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-[#c4a574]">
-          {elapsedSeconds}s
-        </div>
-      </div>
+    <div className="simulation-generating-overlay absolute inset-0 z-20 flex flex-col items-center justify-center overflow-hidden text-center text-white">
+      {imagePreviewUrl ? (
+        <Image
+          src={imagePreviewUrl}
+          alt=""
+          fill
+          unoptimized
+          className="object-cover opacity-35 blur-[1.5px]"
+          aria-hidden
+          sizes="100vw"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-black/85" aria-hidden />
+      )}
+      <div className="absolute inset-0 bg-black/58" aria-hidden />
 
-      <div className="max-w-md">
+      <div className="relative z-10 flex max-h-full w-full max-w-md flex-col items-center justify-center px-4 py-5 sm:max-w-lg sm:px-6 sm:py-8">
+        <SimulationProgressRing
+          progress={progress}
+          size={128}
+          className="mb-4 sm:mb-5"
+        />
+
         <p className="text-base font-semibold sm:text-lg">{t("generating")}</p>
-        <p className="mt-1 text-xs leading-relaxed text-white/78 sm:mt-2 sm:text-sm">
+        <p className="mt-1.5 max-w-sm text-xs leading-relaxed text-white/80 sm:mt-2 sm:text-sm">
           {t("generatingHint")}
         </p>
-      </div>
 
-      <ol
-        className="mt-4 grid w-full max-w-md gap-1.5 text-start sm:mt-6 sm:gap-2"
-        aria-live="polite"
-      >
-        {steps.map((step, index) => {
-          const completed = index < activeStepIndex;
-          const active = index === activeStepIndex;
-          return (
-            <li
-              key={step}
-              className={`flex items-center gap-2 rounded-2xl border px-3 py-1.5 text-xs transition-colors sm:gap-3 sm:py-2 sm:text-sm ${
-                active
-                  ? "border-[#c4a574]/70 bg-[#c4a574]/16 text-white"
-                  : completed
-                    ? "border-white/10 bg-white/10 text-white/70"
-                    : "border-white/10 bg-white/[0.03] text-white/45"
-              }`}
-            >
-              <span
-                className={`flex size-6 shrink-0 items-center justify-center rounded-full border text-[0.68rem] font-semibold sm:text-xs ${
-                  completed
-                    ? "border-[#c4a574] bg-[#c4a574] text-black"
-                    : active
-                      ? "border-[#c4a574] text-[#c4a574]"
-                      : "border-white/20 text-white/35"
+        <p
+          className="mt-3 rounded-full border border-[#c4a574]/55 bg-[#c4a574]/14 px-4 py-1.5 text-xs font-medium text-white sm:mt-4 sm:text-sm lg:hidden"
+          aria-live="polite"
+        >
+          {activeStep}
+        </p>
+
+        <ol
+          className="mt-5 hidden w-full max-w-md gap-1.5 text-start lg:grid lg:gap-2"
+          aria-live="polite"
+        >
+          {steps.map((step, index) => {
+            const completed = index < activeStepIndex;
+            const active = index === activeStepIndex;
+            return (
+              <li
+                key={step}
+                className={`flex items-center gap-2 rounded-2xl border px-3 py-1.5 text-xs transition-colors sm:gap-3 sm:py-2 sm:text-sm ${
+                  active
+                    ? "border-[#c4a574]/70 bg-[#c4a574]/16 text-white"
+                    : completed
+                      ? "border-white/10 bg-white/10 text-white/70"
+                      : "border-white/10 bg-white/[0.03] text-white/45"
                 }`}
               >
-                {completed ? "OK" : index + 1}
-              </span>
-              {step}
-            </li>
-          );
-        })}
-      </ol>
+                <span
+                  className={`flex size-6 shrink-0 items-center justify-center rounded-full border text-[0.68rem] font-semibold sm:text-xs ${
+                    completed
+                      ? "border-[#c4a574] bg-[#c4a574] text-black"
+                      : active
+                        ? "border-[#c4a574] text-[#c4a574]"
+                        : "border-white/20 text-white/35"
+                  }`}
+                >
+                  {completed ? "OK" : index + 1}
+                </span>
+                {step}
+              </li>
+            );
+          })}
+        </ol>
 
-      <p className="mt-3 max-w-md rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 text-xs leading-relaxed text-white/76 sm:mt-5 sm:px-4 sm:py-3 sm:text-sm">
-        {activeTip}
-      </p>
-
-      {elapsedSeconds >= 30 ? (
-        <p className="mt-2 max-w-md text-xs font-medium text-[#c4a574] sm:mt-3">
-          {t("generatingStillWorking")}
+        <p className="mt-3 max-w-sm rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-2 text-xs leading-relaxed text-white/76 sm:mt-4 sm:max-w-md sm:px-4 sm:py-3 sm:text-sm">
+          {activeTip}
         </p>
-      ) : null}
+
+        {elapsedSeconds >= 30 ? (
+          <p className="mt-2 max-w-sm text-xs font-medium text-[#c4a574] sm:mt-3">
+            {t("generatingStillWorking")}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -270,6 +298,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
   const streamRef = useRef<MediaStream | null>(null);
 
   const [phase, setPhase] = useState<Phase>("form");
+  const [generatingComplete, setGeneratingComplete] = useState(false);
   const [quota, setQuota] = useState<SimulationQuota | null>(null);
   const [quotaLoading, setQuotaLoading] = useState(true);
   const [errorKey, setErrorKey] = useState<string | null>(null);
@@ -439,6 +468,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
       return;
     }
     setErrorKey(null);
+    setGeneratingComplete(false);
     setPhase("generating");
 
     const body = new FormData();
@@ -459,6 +489,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
         setErrorKey(
           simulationApiErrorKey(res.status, undefined, imageFile.size),
         );
+        setGeneratingComplete(false);
         setPhase("form");
         return;
       }
@@ -470,20 +501,25 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
           max: data.max ?? maxActivations,
           remaining: 0,
         });
+        setGeneratingComplete(false);
         setPhase("form");
         return;
       }
 
       if (!res.ok) {
         setErrorKey(simulationApiErrorKey(res.status, data.error, imageFile.size));
+        setGeneratingComplete(false);
         setPhase("form");
         return;
       }
 
       if (data.afterImageUrl && data.beforeImageUrl) {
-        void preloadSimulationImage(data.afterImageUrl).catch(() => undefined);
+        await preloadSimulationImage(data.afterImageUrl).catch(() => undefined);
+        setGeneratingComplete(true);
+        await new Promise((resolve) => window.setTimeout(resolve, 600));
         setBeforeSrc(data.beforeImageUrl);
         setAfterSrc(data.afterImageUrl);
+        setGeneratingComplete(false);
         setPhase("result");
         if (
           typeof data.remaining === "number" &&
@@ -496,16 +532,19 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
         }
       } else {
         setErrorKey("generateFailed");
+        setGeneratingComplete(false);
         setPhase("form");
       }
     } catch {
       setErrorKey(simulationApiErrorKey(0, undefined, imageFile.size));
+      setGeneratingComplete(false);
       setPhase("form");
     }
   };
 
   const resetToForm = () => {
     setPhase("form");
+    setGeneratingComplete(false);
     setBeforeSrc(null);
     setAfterSrc(null);
     void fetchQuota();
@@ -642,7 +681,11 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
               )}
             </div>
             {phase === "generating" ? (
-              <SimulationGeneratingOverlay t={t} />
+              <SimulationGeneratingOverlay
+                t={t}
+                imagePreviewUrl={imagePreviewUrl}
+                complete={generatingComplete}
+              />
             ) : null}
           </div>
 
@@ -668,7 +711,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
   return (
     <div
-      className={`simulation-page flex min-h-[100dvh] flex-col overflow-visible pt-16 md:h-[100dvh] md:overflow-hidden ${locale === "en" ? "english-typography-scope" : ""}`}
+      className={`simulation-page flex min-h-[100dvh] flex-col overflow-visible pt-16 md:h-[100dvh] md:overflow-hidden ${phase === "generating" ? "simulation-page--generating" : ""} ${locale === "en" ? "english-typography-scope" : ""}`}
       style={pageBgStyle}
     >
       <header className="simulation-hero shrink-0 border-b border-[color-mix(in_oklab,var(--color-text)_10%,transparent)] px-4 py-3 sm:px-6">

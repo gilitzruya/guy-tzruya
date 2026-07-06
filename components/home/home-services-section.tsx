@@ -79,6 +79,7 @@ function HighlightIcon({ index }: { index: number }) {
 export function HomeServicesSection() {
   const t = useTranslations("Home.services");
   const locale = useLocale();
+  const eyebrowId = useId();
   const titleId = useId();
   const isRtl = locale === "he";
 
@@ -91,23 +92,23 @@ export function HomeServicesSection() {
   return (
     <section
       id="home-services"
-      aria-labelledby={titleId}
+      aria-labelledby={`${eyebrowId} ${titleId}`}
       dir={isRtl ? "rtl" : "ltr"}
       className={`home-services-premium relative scroll-mt-24 py-10 sm:scroll-mt-28 sm:py-20 lg:py-24 ${locale === "en" ? "english-typography-scope" : ""}`}
     >
       <div className="home-services-premium__inner">
         <header className="home-services-premium__header">
-          <p className="home-services-premium__eyebrow">
+          <p id={eyebrowId} className="home-services-premium__eyebrow">
             <span className="home-services-premium__eyebrow-line" aria-hidden />
             {t("eyebrow")}
             <span className="home-services-premium__eyebrow-line" aria-hidden />
           </p>
-          <h2 id={titleId} className="home-services-premium__title">
+          <h2 id={titleId} className="home-services-premium__title lg:hidden">
             <span>{t("displayTitlePrefix")}</span>{" "}
             <em>{t("displayTitleAccent")}</em>{" "}
             <span>{t("displayTitleSuffix")}</span>
           </h2>
-          <p className="home-services-premium__lead">{t("lead")}</p>
+          <p className="home-services-premium__lead lg:hidden">{t("lead")}</p>
         </header>
 
         <div

@@ -22,14 +22,11 @@ export async function SiteHeader() {
   return (
     <SiteHeaderFrame>
       <div
-        className="grid h-16 w-full grid-cols-3 items-center px-4 sm:px-6 md:hidden"
+        className="flex h-16 w-full items-center justify-between px-4 sm:px-6 md:hidden"
         dir="ltr"
       >
         <div className="flex items-center justify-start">
           <BrandLogo label={t("brand")} />
-        </div>
-        <div className="flex items-center justify-center">
-          <AccessibilityHeaderToggle />
         </div>
         <div className="flex items-center justify-end">
           <MobileNavMenu />
