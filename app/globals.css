@@ -6896,6 +6896,20 @@ html[data-a11y-reduce-motion="true"] *::after {
     line-height: 1.45;
     text-align: center;
   }
+
+  .simulation-result-view {
+    height: 100dvh;
+  }
+
+  .simulation-result-view__image {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .simulation-result-view__cta {
+    flex: none;
+    background: rgb(0 0 0 / 0.94);
+  }
 }
 
 /* English typography unification — keep this late in the cascade so page-specific styles don't override it. */

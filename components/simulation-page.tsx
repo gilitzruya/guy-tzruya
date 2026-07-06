@@ -912,8 +912,8 @@ function SimulationResultView({
   const [imagesReady, setImagesReady] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-[150] flex flex-col bg-black pt-16">
-      <div className="relative min-h-0 flex-1 px-3 pb-[9.5rem] pt-3 sm:pb-32 lg:px-5 lg:pb-36">
+    <div className="simulation-result-view fixed inset-0 z-[150] flex flex-col bg-black pt-[env(safe-area-inset-top,0px)]">
+      <div className="simulation-result-view__image relative min-h-0 flex-1 lg:px-5 lg:pt-4">
         {!imagesReady ? (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-black px-6 text-center text-white">
             <div
@@ -938,13 +938,14 @@ function SimulationResultView({
           onImagesReady={() => setImagesReady(true)}
           priority
           fillHeight
-          imageObjectFit="contain"
+          mobileStretch
+          imageObjectFit="cover"
           className={`h-full min-h-0 ${imagesReady ? "" : "invisible"}`}
           sizes="100vw"
         />
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black via-black/88 to-transparent px-4 pb-4 pt-12 sm:px-6 sm:pb-6">
-        <div className="pointer-events-auto mx-auto flex max-w-4xl flex-col items-center gap-3 rounded-3xl border border-white/12 bg-black/58 px-4 py-4 text-center text-white shadow-2xl backdrop-blur-md sm:px-6">
+      <div className="simulation-result-view__cta shrink-0 border-t border-white/10 bg-black px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))] sm:px-6 sm:py-4 lg:pb-6">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 text-center text-white">
           <div>
             <p className="text-base font-semibold sm:text-lg">
               {t("resultCtaTitle")}
@@ -956,14 +957,14 @@ function SimulationResultView({
           <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:justify-center">
             <Link
               href="/contact"
-              className="inline-flex min-h-[42px] items-center justify-center rounded-full bg-[#c4a574] px-6 text-sm font-semibold text-black transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-[#d7bb8b]"
+              className="inline-flex min-h-[42px] w-full items-center justify-center rounded-full bg-[#c4a574] px-6 text-sm font-semibold text-black transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-[#d7bb8b] sm:w-auto"
             >
               {t("resultContactCta")}
             </Link>
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex min-h-[42px] items-center justify-center rounded-full border border-white/25 bg-white/[0.03] px-6 text-sm font-semibold text-white transition-[border-color,background-color,transform] hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
+              className="inline-flex min-h-[42px] w-full items-center justify-center rounded-full border border-white/25 bg-white/[0.03] px-6 text-sm font-semibold text-white transition-[border-color,background-color,transform] hover:-translate-y-0.5 hover:border-white hover:bg-white/10 sm:w-auto"
             >
               {t("backToForm")}
             </button>

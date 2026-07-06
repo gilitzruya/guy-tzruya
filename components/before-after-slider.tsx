@@ -82,6 +82,7 @@ export function BeforeAfterSlider({
   imageObjectFit = "cover",
   fillHeight = false,
   compactMobileHeight = false,
+  mobileStretch = false,
   className = "",
   sizes = "100vw",
   onImagesReady,
@@ -98,6 +99,7 @@ export function BeforeAfterSlider({
   imageObjectFit?: "cover" | "contain";
   fillHeight?: boolean;
   compactMobileHeight?: boolean;
+  mobileStretch?: boolean;
   className?: string;
   sizes?: string;
   onImagesReady?: () => void;
@@ -232,7 +234,9 @@ export function BeforeAfterSlider({
       : { inset: 0 };
 
   const frameClass =
-    fillHeight && compactMobileHeight
+    fillHeight && mobileStretch
+      ? `relative h-full w-full min-h-0 lg:aspect-video lg:h-full lg:min-h-0 lg:max-h-full ${frameBg}`.trim()
+      : fillHeight && compactMobileHeight
       ? `relative w-full max-lg:aspect-[9/16] max-lg:max-h-[min(52svh,480px)] lg:aspect-video lg:h-full lg:min-h-0 lg:max-h-full ${frameBg}`.trim()
       : fillHeight
         ? `relative w-full max-lg:aspect-[9/16] lg:aspect-video lg:min-h-0 lg:flex-1 lg:h-full ${frameBg}`.trim()
