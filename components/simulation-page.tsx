@@ -557,38 +557,38 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
   const imagePanel = (
     <section
       aria-label={t("stepImageTitle")}
-      className="simulation-upload-section flex min-h-0 flex-col max-lg:shrink-0 lg:h-full lg:min-h-0"
+      className="simulation-upload-section flex min-h-0 flex-1 flex-col lg:h-full lg:min-h-0"
     >
       <h2 className="simulation-step-title mb-2 text-lg font-semibold text-[var(--color-text)] lg:sr-only">
         {t("stepImageTitle")}
       </h2>
 
       {cameraOpen ? (
-        <div className="simulation-camera-panel relative flex min-h-0 flex-1 flex-col gap-3 lg:min-h-0">
-          <div className="simulation-upload-card relative min-h-[min(52svh,420px)] flex-1 overflow-hidden rounded-2xl bg-black lg:min-h-0 lg:rounded-3xl">
+        <div className="simulation-camera-panel relative flex min-h-0 flex-1 flex-col lg:min-h-0">
+          <div className="simulation-upload-card simulation-upload-card--filled relative flex min-h-0 flex-1 overflow-hidden rounded-2xl bg-black lg:min-h-0 lg:rounded-3xl">
             <video
               ref={videoRef}
-              className="h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
               playsInline
               muted
               autoPlay
             />
-          </div>
-          <div className="simulation-upload-actions flex flex-wrap gap-2 lg:absolute lg:inset-x-4 lg:bottom-4 lg:z-10">
-            <button
-              type="button"
-              onClick={capturePhoto}
-              className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-full bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-bg)] shadow-lg"
-            >
-              {t("capturePhoto")}
-            </button>
-            <button
-              type="button"
-              onClick={stopCamera}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-text)]/25 bg-[var(--color-bg)]/95 px-5 text-sm font-semibold text-[var(--color-text)] backdrop-blur-sm"
-            >
-              {t("cancelCamera")}
-            </button>
+            <div className="simulation-upload-actions simulation-upload-actions--camera absolute inset-x-0 bottom-0 z-10 flex flex-wrap gap-2 bg-gradient-to-t from-black/85 via-black/55 to-transparent px-4 pb-4 pt-14 lg:inset-x-4 lg:bottom-4 lg:bg-transparent lg:p-0">
+              <button
+                type="button"
+                onClick={capturePhoto}
+                className="inline-flex min-h-[3rem] flex-1 items-center justify-center rounded-full border border-[#c4a574]/72 bg-gradient-to-b from-[#e8d9c4] to-[#c4a574] px-5 text-sm font-semibold text-[#17120b] shadow-lg"
+              >
+                {t("capturePhoto")}
+              </button>
+              <button
+                type="button"
+                onClick={stopCamera}
+                className="inline-flex min-h-[2.75rem] flex-1 items-center justify-center rounded-full border border-white/30 bg-black/50 px-5 text-sm font-semibold text-white backdrop-blur-sm"
+              >
+                {t("cancelCamera")}
+              </button>
+            </div>
           </div>
         </div>
       ) : (
@@ -596,9 +596,9 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
           <div
             onDragOver={(e) => e.preventDefault()}
             onDrop={onDrop}
-            className={`simulation-upload-card relative flex min-h-[min(52svh,420px)] flex-1 flex-col overflow-hidden rounded-2xl border-2 transition-colors lg:min-h-0 lg:rounded-3xl ${
+            className={`simulation-upload-card relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border-2 transition-colors lg:min-h-0 lg:rounded-3xl ${
               imagePreviewUrl
-                ? "border-[var(--color-accent)]/40 bg-zinc-950/90"
+                ? "simulation-upload-card--filled bg-zinc-950/90"
                 : "items-center justify-center gap-4 border-dashed border-[var(--color-text)]/20 bg-[var(--color-bg)]/60 px-6 py-10"
             }`}
           >
@@ -608,7 +608,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
                 alt={t("uploadPreviewAlt")}
                 fill
                 unoptimized
-                className="object-contain"
+                className="object-cover lg:object-contain"
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 priority
               />
@@ -711,7 +711,7 @@ export function SimulationPage({ maxActivations }: { maxActivations: number }) {
 
   return (
     <div
-      className={`simulation-page flex min-h-[100dvh] flex-col overflow-visible pt-16 md:h-[100dvh] md:overflow-hidden ${phase === "generating" ? "simulation-page--generating" : ""} ${locale === "en" ? "english-typography-scope" : ""}`}
+      className={`simulation-page flex min-h-[100dvh] flex-col overflow-visible pt-16 md:h-[100dvh] md:overflow-hidden ${phase === "generating" ? "simulation-page--generating" : ""} ${cameraOpen ? "simulation-page--camera" : ""} ${locale === "en" ? "english-typography-scope" : ""}`}
       style={pageBgStyle}
     >
       <header className="simulation-hero shrink-0 border-b border-[color-mix(in_oklab,var(--color-text)_10%,transparent)] px-4 py-3 sm:px-6">

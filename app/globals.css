@@ -6643,7 +6643,7 @@ html[data-a11y-reduce-motion="true"] *::after {
   .simulation-upload-section {
     order: 1 !important;
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 0;
     min-height: 0;
     max-height: none;
     border: 1px solid rgb(196 165 116 / 0.24);
@@ -6662,11 +6662,13 @@ html[data-a11y-reduce-motion="true"] *::after {
   .simulation-camera-panel {
     min-height: 0;
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .simulation-upload-card {
-    min-height: clamp(52svh, 58svh, 62svh);
     flex: 1;
+    min-height: 0;
     border-width: 1px;
     border-color: rgb(196 165 116 / 0.28);
     border-radius: 0.85rem;
@@ -6674,13 +6676,55 @@ html[data-a11y-reduce-motion="true"] *::after {
     padding: 0.5rem;
   }
 
+  .simulation-upload-card--filled {
+    padding: 0;
+    border: none !important;
+    background: transparent;
+  }
+
+  .simulation-page--camera .simulation-controls {
+    display: none !important;
+  }
+
+  .simulation-page--camera .simulation-upload-section {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .simulation-page--camera .simulation-upload-card {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .simulation-page--camera .simulation-mobile-flow {
+    gap: 0;
+    padding: 0;
+  }
+
   .simulation-page--generating .simulation-upload-section {
     flex: 1 1 auto;
     min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
   }
 
   .simulation-page--generating .simulation-upload-card {
-    min-height: clamp(64svh, 72svh, 78svh);
+    flex: 1;
+    min-height: 0;
     padding: 0;
     border: none;
     background: transparent;
@@ -6688,6 +6732,11 @@ html[data-a11y-reduce-motion="true"] *::after {
 
   .simulation-page--generating .simulation-controls {
     display: none !important;
+  }
+
+  .simulation-page--generating .simulation-mobile-flow {
+    gap: 0;
+    padding: 0;
   }
 
   .simulation-upload-card p {
@@ -6706,6 +6755,13 @@ html[data-a11y-reduce-motion="true"] *::after {
     flex: 1 1 0;
     min-width: min(100%, 8.5rem);
     border-radius: 999px;
+  }
+
+  .simulation-upload-actions--camera button:first-child {
+    min-height: 3rem;
+    border-color: rgb(196 165 116 / 0.72);
+    background: linear-gradient(180deg, #e8d9c4, #c4a574);
+    color: #17120b;
   }
 
   .simulation-upload-actions .simulation-generate-button {
