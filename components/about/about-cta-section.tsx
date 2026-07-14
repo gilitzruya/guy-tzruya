@@ -9,7 +9,7 @@ import {
 import { SITE_SOCIAL, type SiteSocialPlatform } from "@/lib/site-social";
 
 const MAILTO =
-  "mailto:studio@guytzruya.com?subject=Architecture%20and%20design%20inquiry";
+  "mailto:guytzruya.1@gmail.com?subject=Architecture%20and%20design%20inquiry";
 
 const SOCIAL_LINKS: {
   platform: Extract<SiteSocialPlatform, "instagram" | "facebook">;

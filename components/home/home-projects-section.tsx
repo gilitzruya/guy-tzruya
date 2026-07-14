@@ -13,13 +13,27 @@ import {
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
-  HOME_PROJECT_KEYS,
-  type HomeProjectKey,
+  HOME_PROJECT_SLIDES,
+  type HomeProjectSlide,
 } from "@/components/home/home-content";
-import { projectBeforeAfterSrc } from "@/lib/projects";
+import {
+  projectBeforeAfterSrc,
+  projectGalleryImageSrc,
+  type ProjectViewport,
+} from "@/lib/projects";
 
 const AUTOPLAY_MS = 3000;
 const DESKTOP_CROSSFADE_MS = 1000;
+
+function homeSlideImageSrc(
+  slide: HomeProjectSlide,
+  viewport: ProjectViewport,
+): string {
+  if (slide.galleryIndex != null) {
+    return projectGalleryImageSrc(slide.project, slide.galleryIndex, viewport);
+  }
+  return projectBeforeAfterSrc(slide.project, "after", viewport);
+}
 
 function prefersReducedMotion(): boolean {
   if (typeof document === "undefined") return false;
@@ -41,11 +55,11 @@ function CarouselDots({
 
   return (
     <div className="home-projects-carousel__dots" role="tablist" aria-label={label}>
-      {HOME_PROJECT_KEYS.map((project: HomeProjectKey, index) => {
-        const title = t(`items.${project}.title`);
+      {HOME_PROJECT_SLIDES.map((slide, index) => {
+        const title = t(`items.${slide.project}.title`);
         return (
           <button
-            key={project}
+            key={slide.id}
             type="button"
             role="tab"
             className={`home-projects-carousel__dot${activeIndex === index ? " home-projects-carousel__dot--active" : ""}`}
@@ -196,7 +210,7 @@ function HomeProjectsCarouselMobile() {
 
   const advance = useCallback(() => {
     setActiveIndex((current) => {
-      const next = (current + 1) % HOME_PROJECT_KEYS.length;
+      const next = (current + 1) % HOME_PROJECT_SLIDES.length;
       const track = trackRef.current;
       const slide = slideRefs.current[next];
       if (track && slide) {
@@ -250,9 +264,9 @@ function HomeProjectsCarouselMobile() {
         onPointerDown={() => pauseAndSet()}
         onFocusCapture={() => pauseAndSet()}
       >
-        {HOME_PROJECT_KEYS.map((project: HomeProjectKey, index) => (
+        {HOME_PROJECT_SLIDES.map((slide, index) => (
           <article
-            key={project}
+            key={slide.id}
             ref={(node) => {
               slideRefs.current[index] = node;
             }}
@@ -261,13 +275,13 @@ function HomeProjectsCarouselMobile() {
             dir={isRtl ? "rtl" : "ltr"}
           >
             <Link
-              href={`/projects/${project}`}
+              href={`/projects/${slide.project}`}
               className="home-projects-carousel__image-link"
             >
               <div className="home-projects-carousel__image-wrap home-projects-carousel__image-wrap--mobile">
                 <Image
-                  src={projectBeforeAfterSrc(project, "after", "mobile")}
-                  alt={t(`items.${project}.imageAlt`)}
+                  src={homeSlideImageSrc(slide, "mobile")}
+                  alt={t(`items.${slide.project}.imageAlt`)}
                   fill
                   unoptimized
                   priority={index === 0}
@@ -277,8 +291,8 @@ function HomeProjectsCarouselMobile() {
               </div>
               <div className="home-projects-carousel__image-wrap home-projects-carousel__image-wrap--desktop">
                 <Image
-                  src={projectBeforeAfterSrc(project, "after", "desktop")}
-                  alt={t(`items.${project}.imageAlt`)}
+                  src={homeSlideImageSrc(slide, "desktop")}
+                  alt={t(`items.${slide.project}.imageAlt`)}
                   fill
                   unoptimized
                   priority={index === 0}
@@ -290,14 +304,14 @@ function HomeProjectsCarouselMobile() {
             <div className="home-projects-carousel__body">
               <h3 className="home-projects-carousel__title">
                 <Link
-                  href={`/projects/${project}`}
+                  href={`/projects/${slide.project}`}
                   className="home-projects-carousel__title-link"
                 >
-                  {t(`items.${project}.title`)}
+                  {t(`items.${slide.project}.title`)}
                 </Link>
               </h3>
               <p className="home-projects-carousel__teaser">
-                {t(`items.${project}.teaser`)}
+                {t(`items.${slide.project}.teaser`)}
               </p>
             </div>
           </article>
@@ -315,7 +329,7 @@ function HomeProjectsCarouselMobile() {
       />
 
       <p className="sr-only" aria-live="polite">
-        {t(`items.${HOME_PROJECT_KEYS[activeIndex]}.title`)}
+        {t(`items.${HOME_PROJECT_SLIDES[activeIndex].project}.title`)}
       </p>
     </div>
   );
@@ -351,7 +365,7 @@ function HomeProjectsCarouselDesktop() {
 
   const advance = useCallback(() => {
     setActiveIndex((current) => {
-      const next = (current + 1) % HOME_PROJECT_KEYS.length;
+      const next = (current + 1) % HOME_PROJECT_SLIDES.length;
       if (current === next) return current;
       if (prefersReducedMotion()) {
         setExitingIndex(null);
@@ -381,8 +395,8 @@ function HomeProjectsCarouselDesktop() {
   const goToRelative = useCallback(
     (delta: number) => {
       const next =
-        (activeIndex + delta + HOME_PROJECT_KEYS.length) %
-        HOME_PROJECT_KEYS.length;
+        (activeIndex + delta + HOME_PROJECT_SLIDES.length) %
+        HOME_PROJECT_SLIDES.length;
       pauseAndGo(next);
     },
     [activeIndex, pauseAndGo],
@@ -408,9 +422,9 @@ function HomeProjectsCarouselDesktop() {
   }, [clearExiting, exitingIndex]);
 
   useEffect(() => {
-    for (const project of HOME_PROJECT_KEYS) {
+    for (const slide of HOME_PROJECT_SLIDES) {
       const img = new window.Image();
-      img.src = projectBeforeAfterSrc(project, "after", "desktop");
+      img.src = homeSlideImageSrc(slide, "desktop");
     }
   }, []);
 
@@ -449,13 +463,13 @@ function HomeProjectsCarouselDesktop() {
             setIsPaused(true);
           }}
         >
-          {HOME_PROJECT_KEYS.map((project: HomeProjectKey, index) => {
+          {HOME_PROJECT_SLIDES.map((slide, index) => {
             const isActive = activeIndex === index;
             const isExiting = exitingIndex === index;
             const isVisible = isActive || isExiting;
             return (
               <article
-                key={project}
+                key={slide.id}
                 className={getLayerClassName(
                   index,
                   activeIndex,
@@ -469,14 +483,14 @@ function HomeProjectsCarouselDesktop() {
                 dir={isRtl ? "rtl" : "ltr"}
               >
                 <Link
-                  href={`/projects/${project}`}
+                  href={`/projects/${slide.project}`}
                   className="home-projects-carousel__image-link"
                   tabIndex={isActive && !isTransitioning ? 0 : -1}
                 >
                   <div className="home-projects-carousel__image-wrap home-projects-carousel__image-wrap--desktop">
                     <Image
-                      src={projectBeforeAfterSrc(project, "after", "desktop")}
-                      alt={t(`items.${project}.imageAlt`)}
+                      src={homeSlideImageSrc(slide, "desktop")}
+                      alt={t(`items.${slide.project}.imageAlt`)}
                       fill
                       unoptimized
                       priority
@@ -509,13 +523,13 @@ function HomeProjectsCarouselDesktop() {
 
       <div className="home-projects-carousel__footer-row">
         <div className="home-projects-carousel__meta-stage">
-          {HOME_PROJECT_KEYS.map((project: HomeProjectKey, index) => {
+          {HOME_PROJECT_SLIDES.map((slide, index) => {
             const isActive = activeIndex === index;
             const isExiting = exitingIndex === index;
             const isVisible = isActive || isExiting;
             return (
               <div
-                key={project}
+                key={slide.id}
                 className={getLayerClassName(
                   index,
                   activeIndex,
@@ -530,15 +544,15 @@ function HomeProjectsCarouselDesktop() {
               >
                 <h3 className="home-projects-carousel__title">
                   <Link
-                    href={`/projects/${project}`}
+                    href={`/projects/${slide.project}`}
                     className="home-projects-carousel__title-link"
                     tabIndex={isActive && !isTransitioning ? 0 : -1}
                   >
-                    {t(`items.${project}.title`)}
+                    {t(`items.${slide.project}.title`)}
                   </Link>
                 </h3>
                 <p className="home-projects-carousel__teaser">
-                  {t(`items.${project}.teaser`)}
+                  {t(`items.${slide.project}.teaser`)}
                 </p>
               </div>
             );
@@ -553,7 +567,7 @@ function HomeProjectsCarouselDesktop() {
       </div>
 
       <p className="sr-only" aria-live="polite">
-        {t(`items.${HOME_PROJECT_KEYS[activeIndex]}.title`)}
+        {t(`items.${HOME_PROJECT_SLIDES[activeIndex].project}.title`)}
       </p>
     </div>
   );

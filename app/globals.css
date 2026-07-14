@@ -5925,6 +5925,11 @@ html:lang(en) .contact-redesign-title {
     grid-template-rows: minmax(100svh, auto) auto;
   }
 
+  .contact-page-redesign--no-form .contact-redesign-shell {
+    grid-template-areas: "hero";
+    grid-template-rows: minmax(100svh, auto);
+  }
+
   .contact-redesign-panel--form {
     display: contents;
   }
@@ -5953,6 +5958,10 @@ html:lang(en) .contact-redesign-title {
     width: min(100% - 2rem, 22rem);
     margin: clamp(17rem, 43svh, 21rem) auto 0;
     transform: none;
+  }
+
+  .contact-page-redesign--no-form .contact-redesign-info {
+    margin-bottom: 2.5rem;
   }
 
   .contact-redesign-form {

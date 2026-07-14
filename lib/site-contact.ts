@@ -1,5 +1,5 @@
 /** Shared contact details used across the site. */
-export const SITE_EMAIL = "guytzruya@gmail.com";
+export const SITE_EMAIL = "guytzruya.1@gmail.com";
 export const SITE_PHONE_DISPLAY = "054-528-7755";
 
 export function sitePhoneTelHref(phone = SITE_PHONE_DISPLAY): string {

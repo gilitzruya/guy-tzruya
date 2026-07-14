@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 const MAILTO =
-  "mailto:guytzruya@gmail.com?subject=Architecture%20and%20design%20inquiry";
+  "mailto:guytzruya.1@gmail.com?subject=Architecture%20and%20design%20inquiry";
 
 const CONTACT_CHANNELS = ["hours", "phone", "email", "office"] as const;
 type ContactChannel = (typeof CONTACT_CHANNELS)[number];

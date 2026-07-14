@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { useState, type FormEvent } from "react";
 import {
   IconFacebook,
   IconInstagram,
@@ -10,7 +9,6 @@ import {
 } from "@/components/building-licensing-social-icons";
 import { interiorDesignPageBackgroundStyle } from "@/lib/interior-page-background";
 import {
-  buildContactMailto,
   SITE_EMAIL,
   SITE_PHONE_DISPLAY,
   sitePhoneTelHref,
@@ -86,40 +84,14 @@ const INFO_SOCIAL_LINKS: {
 export function ContactPage() {
   const t = useTranslations("Contact");
   const locale = useLocale();
-  const [submitted, setSubmitted] = useState(false);
-  const [formError, setFormError] = useState<string | null>(null);
   const isRtl = locale === "he";
   const pageBackgroundStyle = interiorDesignPageBackgroundStyle("night");
   const whatsappHref =
     SITE_SOCIAL.whatsapp !== "#" ? SITE_SOCIAL.whatsapp : siteWhatsAppHref();
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setFormError(null);
-    const form = event.currentTarget;
-    const data = new FormData(form);
-    const name = String(data.get("name") ?? "").trim();
-    const phone = String(data.get("phone") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
-
-    if (!name || !email || !message) {
-      setFormError(t("formValidationError"));
-      form.querySelector<HTMLElement>("input[name='name'], textarea[name='message'], input[name='email']")?.focus();
-      return;
-    }
-
-    window.location.href = buildContactMailto({
-      subject: t("formMailSubject", { name }),
-      body: t("formMailBody", { name, email, phone, message }),
-    });
-    setSubmitted(true);
-    form.reset();
-  }
-
   return (
     <div
-      className={`contact-page contact-page-redesign ${locale === "en" ? "english-typography-scope" : ""}`}
+      className={`contact-page contact-page-redesign contact-page-redesign--no-form ${locale === "en" ? "english-typography-scope" : ""}`}
       dir={isRtl ? "rtl" : "ltr"}
       style={pageBackgroundStyle}
     >
@@ -136,80 +108,6 @@ export function ContactPage() {
             </h1>
             <p className="contact-redesign-lead">{t("contactIntro")}</p>
           </div>
-
-          <form className="contact-redesign-form" onSubmit={onSubmit} noValidate>
-            {formError ? (
-              <p className="contact-redesign-form-error" role="alert">
-                {formError}
-              </p>
-            ) : null}
-            <div className="contact-redesign-form-row">
-              <label className="contact-redesign-field">
-                <span>{t("formNameLabel")}</span>
-                <input
-                  name="name"
-                  type="text"
-                  required
-                  autoComplete="name"
-                  placeholder={t("formNamePlaceholder")}
-                />
-              </label>
-              <label className="contact-redesign-field">
-                <span>{t("phoneFieldLabel")}</span>
-                <input
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder={SITE_PHONE_DISPLAY}
-                  dir="ltr"
-                />
-              </label>
-            </div>
-
-            <label className="contact-redesign-field">
-              <span>{t("formEmailLabel")}</span>
-              <input
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-                placeholder={t("formEmailPlaceholder")}
-                dir="ltr"
-              />
-            </label>
-
-            <label className="contact-redesign-field">
-              <span>{t("formMessageLabel")}</span>
-              <textarea
-                name="message"
-                required
-                rows={5}
-                placeholder={t("formMessagePlaceholder")}
-              />
-            </label>
-
-            <div className="contact-redesign-submit-wrap">
-              <button type="submit" className="contact-redesign-submit">
-                <span>{t("formSubmit")}</span>
-                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
-                  <path
-                    d="M5 12h14M13 6l6 6-6 6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {submitted ? (
-              <p className="contact-redesign-success" role="status">
-                {t("formSuccess")}
-              </p>
-            ) : null}
-          </form>
         </div>
 
         <div className="contact-redesign-panel contact-redesign-panel--image">

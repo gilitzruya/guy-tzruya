@@ -4,9 +4,9 @@ export const PROJECT_SLUGS = [
   "shaki",
   "hulda-hanavia-4",
   "atliz-bereshit",
-  "ein-gedi-tama-38-1",
   "tzidkiyahu",
   "motza",
+  "ein-gedi-tama-38-1",
   "haran-18-tama-38-1",
 ] as const;
 
@@ -43,13 +43,13 @@ export function projectBeforeAfterSrc(
 
 /** How many `gallery-NN-*` pairs exist per project (see `public/projects/README.md`). */
 export const PROJECT_GALLERY_COUNT: Record<ProjectSlug, number> = {
-  maklaf: 29,
+  maklaf: 25,
   "maklaf-2": 6,
-  shaki: 6,
+  shaki: 5,
   "hulda-hanavia-4": 7,
   "atliz-bereshit": 2,
   "ein-gedi-tama-38-1": 4,
-  tzidkiyahu: 9,
+  tzidkiyahu: 8,
   motza: 2,
   "haran-18-tama-38-1": 4,
 };
